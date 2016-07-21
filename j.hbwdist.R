@@ -46,6 +46,11 @@ mf.util <- exp (sweep (2.235*mf.hwlsl - 0.4198*(mf.hwlsl^2) + 0.02220*(mf.hwlsl^
 
 # Distribution Utility Summary
 ma.utsum <- apply (mf.util, 1, sum)
+
+ma.hwldcls <- log(ma.utsum)
+save (ma.hbwldcls, file="ma.hbwldcls.dat")
+write.table(ma.hbwldcls, sep=",", row.names=F, file="ma.hbwldcls.csv", col.names=c("hbwldcls"))
+
 mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
 # HBW Low Income Raw Distribution Matrix
@@ -68,6 +73,11 @@ mf.util <-exp (sweep (2.097*mf.hwlsm - 0.3995*(mf.hwlsm^2) + 0.02524*(mf.hwlsm^3
 
 # Distribution Utility Summary
 ma.utsum <- apply (mf.util, 1, sum)
+
+ma.hwmdcls <- log(ma.utsum)
+save (ma.hbwmdcls, file="ma.hbwmdcls.dat")
+write.table(ma.hbwmdcls, sep=",", row.names=F, file="ma.hbwmdcls.csv", col.names=c("hbwmdcls"))
+
 mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
 # HBW Middle Income Raw Distribution Matrix
@@ -90,6 +100,11 @@ mf.util <-exp (sweep (1.777*mf.hwlsh  - 0.3908*(mf.hwlsh^2) + 0.02555*(mf.hwlsh^
 
 # Distribution Utility Summary
 ma.utsum <- apply (mf.util, 1, sum)
+
+ma.hwhdcls <- log(ma.utsum)
+save (ma.hbwhdcls, file="ma.hbwhdcls.dat")
+write.table(ma.hbwhdcls, sep=",", row.names=F, file="ma.hbwhdcls.csv", col.names=c("hbwhdcls"))
+
 mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
 # HBW High Income Raw Distribution Matrix

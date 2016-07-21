@@ -52,6 +52,11 @@ mf.util<-exp(sweep(7.595*((mf.hslsl + mf.hslsm + mf.hslsh)/3) -2.839*(((mf.hslsl
                    - 0.6980*mf.waor - 1.873*mf.orwa - 0.4855*mf.we - (0.4855*0.625)*westhill2east - 0.2656*mf.ew -(0.2656*0.625)*east2westhill,
                    2,log(ma.retail + 0.008396*ma.rest + 0.022126*ma.hh),"+"))
 ma.utsum<-apply(mf.util,1,sum)
+
+ma.hbsldcls <- log(ma.utsum)
+save (ma.hbsldcls, file="ma.hbsldcls.dat")
+write.table(ma.hbsldcls, sep=",", row.names=F, file="ma.hbsldcls.csv", col.names=c("hbsldcls"))
+
 mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 mf.hbsdtl<-matrix(0,numzones,numzones)
 mf.hbsdtl[mf.utsum!=0]<-mf.util[mf.utsum!=0]/mf.utsum[mf.utsum!=0]
@@ -69,6 +74,11 @@ mf.util<-exp(sweep(7.595*((mf.hslsl + mf.hslsm + mf.hslsh)/3) -2.839*(((mf.hslsl
                    - 0.6980*mf.waor - 1.873*mf.orwa - 0.4855*mf.we  - (0.4855*0.625)*westhill2east - 0.2656*mf.ew -(0.2656*0.625)*east2westhill,
                    2,log(ma.retail + 0.008396*ma.rest + 0.022126*ma.hh),"+"))
 ma.utsum<-apply(mf.util,1,sum)
+
+ma.hbsmdcls <- log(ma.utsum)
+save (ma.hbsmdcls, file="ma.hbsmdcls.dat")
+write.table(ma.hbsmdcls, sep=",", row.names=F, file="ma.hbsmdcls.csv", col.names=c("hbsmdcls"))
+
 mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 mf.hbsdtm<-matrix(0,numzones,numzones)
 mf.hbsdtm[mf.utsum!=0]<-mf.util[mf.utsum!=0]/mf.utsum[mf.utsum!=0]
@@ -86,6 +96,11 @@ mf.util<-exp(sweep(7.595*((mf.hslsl + mf.hslsm + mf.hslsh)/3) -2.839*(((mf.hslsl
                    - 0.6980*mf.waor - 1.873*mf.orwa - 0.4855*mf.we - (0.4855*0.625)*westhill2east - 0.2656*mf.ew -(0.2656*0.625)*east2westhill,
                    2,log(ma.retail + 0.008396*ma.rest + 0.022126*ma.hh),"+"))
 ma.utsum<-apply(mf.util,1,sum)
+
+ma.hbshdcls <- log(ma.utsum)
+save (ma.hbshdcls, file="ma.hbshdcls.dat")
+write.table(ma.hbshdcls, sep=",", row.names=F, file="ma.hbshdcls.csv", col.names=c("hbshdcls"))
+
 mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 mf.hbsdth<-matrix(0,numzones,numzones)
 mf.hbsdth[mf.utsum!=0]<-mf.util[mf.utsum!=0]/mf.utsum[mf.utsum!=0]

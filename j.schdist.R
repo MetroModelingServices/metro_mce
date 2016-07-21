@@ -64,6 +64,11 @@ mf.util[mf.mdhtt[,]>30]<-0
 
 # Distribution Utility Summary
 ma.utsum <- apply (mf.util, 1, sum)
+
+ma.schdcls <- log(ma.utsum)
+save (ma.schdcls, file="ma.schdcls.dat")
+write.table(ma.schdcls, sep=",", row.names=F, file="ma.schdcls.csv", col.names=c("schdcls"))
+
 mf.utsum <- matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
 # SCHOOL Raw Distribution Matrix

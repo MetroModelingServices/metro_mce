@@ -40,6 +40,10 @@ mf.util [mf.nhwls[,]==0] <- 0
 # NHBW Distribution Utility Summary
 ma.utsum <- apply (mf.util, 1, sum)
 
+ma.nhbwdcls <- log(ma.utsum)
+save (ma.nhbwdcls, file="ma.nhbwdcls.dat")
+write.table(ma.nhbwdcls, sep=",", row.names=F, file="ma.nhbwdcls.csv", col.names=c("nhbwdcls"))
+
 # NHBW Raw Distribution Matrix
 mf.nhbwdt <- (mf.util / ma.utsum) * ma.nhwpu
 mf.nhbwdt [ma.utsum==0] <- 0
