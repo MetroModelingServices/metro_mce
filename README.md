@@ -1,8 +1,9 @@
 # Metro MCE
 
-# Data Export Scripts 
+# Data Export
+The following scripts are used to export all the required data from the R demand model and the EMME supply model.
   - R scripts - revisions to the demand model in order to write out 
-destination choice logsums and the CVAL array - HIAs by car ownership for each TAZ
+destination choice logsums and the CVAL array - HIAs by car ownership for each TAZ - to CSV format
 
 ```
 mf.cval column order, by hia: c <# cars> w <# workers>
