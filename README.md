@@ -16,9 +16,8 @@ CVAL3 (mf.cval[,641:1024])= c1w0, c2w0, c2w1, c3w0, c3w1, c3w2
   - bca_EMME_Export.bat exports all the required full matrices and also calls 
 ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
 
-# MCE Inputs Files 
-
-The MCE tool file and folder setup is as follows:
+# Benefits calculator file and folder setup
+The benefits calculator is implemented with the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.
 
 root folder
   - run_bca.py - run benefit calculator
@@ -78,6 +77,27 @@ root folder
       - mf.cval.csv - CVAL array - HIAs by car ownership for each TAZ
       - skims_mfs.omx - skims bank OMX matrices
 
-# MCE tool
+# Running the benefits calculator
+The benefits calculator is currently run on the command line as follows: ```python run_bca.py```
 
-The MCE benefits calculator is implemented with the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate calculations.
+This program does the following:
+  - reads the settings and input data 
+  - runs the demographic aggregate processor
+    - each row in the data table to solve is an origin zone and this processor calculates communities of concern (COC) based on zone data
+    - ```orca.run(['demographics_aggregate_processor'])```
+  - runs the auto ownership aggregate processor
+    - each row in the data table to solve is an origin zone and this processor calculates zonal auto own differences
+    - ```orca.run(['auto_ownership_aggregate_processor'])```
+  - runs the person trips aggregate processor 
+    - each row in the data table to solve is an OD pair and this processor calculates trip differences it requires the access to input zone tables, the COC coding, trip matrices and skim matrices.  The new ```person_trips_aggregate_manifest.csv``` file tells this processor what data it can use and how to reference it.  The following input data tables are required: ```assign_mfs.omx```, ```ma.<purpose|income>dcls.csv```, ```mf.cval.csv```, and ```skims_mfs.omx```
+    - ```orca.run(['person_trips_aggregate_processor'])```
+  - runs the aggregate markets (i.e. trucks) processor
+    - ```orca.run(['aggregate_trips_processor'])```
+  - runs the time period and daily link processors
+    - daily will be linkMD1 * scalingFactorMD1 + linkPM2 * scalingFactorPM2
+    - ```orca.run(['link_daily_processor'])```
+    - ```orca.run(['link_processor'])```
+
+  - write results
+    - ```orca.run(['write_results'])```
+    - ```orca.run(['print_results'])```
