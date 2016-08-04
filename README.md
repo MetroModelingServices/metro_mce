@@ -29,6 +29,8 @@ root folder
   - run_bca.py - run benefit calculator
   - configs folder - configuration settings
       - settings.yaml
+      - link_data_manifest.csv
+      - aggregate_data_manifest.csv
       - aggregate_trips.csv
       - auto_ownership.csv
       - demographics.csv
