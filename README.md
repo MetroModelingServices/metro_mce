@@ -99,6 +99,6 @@ This program does the following:
     - daily will be linkMD1 * scalingFactorMD1 + linkPM2 * scalingFactorPM2
     - ```orca.run(['link_daily_processor'])```
     - ```orca.run(['link_processor'])```
-  - write results
+  - writes results
     - ```orca.run(['write_results'])```
     - ```orca.run(['print_results'])```
