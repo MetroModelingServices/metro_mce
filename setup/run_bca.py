@@ -31,7 +31,9 @@ orca.run(['auto_ownership_aggregate_processor'])
 #the COC coding, trip matrices and skim matrices.  The new 
 #person_trips_aggregate_manifest.csv file tells this processor what data it can
 #use and how to reference it.  The following input data tables are required: 
-#assign_mfs.omx, ma.<purpose|income>dcls.csv, mf.cval.csv, and skims_mfs.omx
+#assign_mfs.omx, ma.<purpose|income>dcls.csv, mf.cval.csv, and skims_mfs.omx.
+#Maybe the ma.<purpose|income>dcls.csv files should be added to the 
+#mf.cval.csv before input to the bca tool?
 orca.run(['person_trips_aggregate_processor'])
 
 #truck aggregate markets
