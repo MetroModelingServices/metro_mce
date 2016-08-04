@@ -22,17 +22,16 @@ The MCE tool file and folder setup is as follows:
 root folder
   - run_bca.py - run benefit calculator
   - configs folder - configuration settings
-      - settings.yaml
-      - link_data_manifest.csv
-      - aggregate_data_manifest.csv
-      - aggregate_trips.csv
-      - auto_ownership.csv
-      - demographics.csv
-      - link.csv
-      - link_daily.csv
-      - configs/person_trips.csv
-      - physical_activity_person.csv
-      - physical_activity_trip.csv
+      - settings.yaml - overall settings
+      - link_data_manifest.csv - list of link assignment result files by time period to process
+      - link.csv - expressions for link assignment results by time period
+      - link_daily.csv - expressions for daily link assignment results
+      - aggregate_data_manifest.csv - list of aggregate market matrices to expose to the aggregate market trip processor
+      - aggregate_trips.csv - expressions for aggregate markets
+      - person_trips_aggregate_manifest.csv - list of person trip aggregate tables and matrices to expose to the person trip aggregate processor
+      - demographics_aggregate.csv - expressions for aggregate zonal level processor - i.e. coding of communities of concern
+      - auto_ownership_aggregate.csv - expressions for aggregate zonal level processor - i.e. auto ownership
+      - person_trips_aggregate.csv - expressions for aggregate OD-pair level processor - i.e. trip measures
   - base scenario folder - such as 2040 No Build
       - assign_mfs.omx - assignment bank OMX matrices
       - linksMD1.csv - link MD1 assignment results
@@ -77,3 +76,7 @@ root folder
       - ma.schdcls.csv - sch destination choice logsums
       - mf.cval.csv - CVAL array - HIAs by car ownership for each TAZ
       - skims_mfs.omx - skims bank OMX matrices
+
+# MCE tool
+
+The MCE benefits calculator is implemented with the FHWA bca4abm calculator, which also does aggregation calculators.  See https://github.com/RSGInc/bca4abm.
