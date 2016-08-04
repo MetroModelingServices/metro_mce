@@ -25,7 +25,7 @@ ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.co
 
 The MCE tool file and folder setup is as follows:
 
-root
+root folder
   - run_bca.py - run benefit calculator
   - configs folder - configuration settings
       - settings.yaml
