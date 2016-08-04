@@ -86,18 +86,19 @@ This program does the following:
     - each row in the data table to solve is an origin zone and this processor calculates communities of concern (COC) based on zone data
     - ```orca.run(['demographics_aggregate_processor'])```
   - runs the auto ownership aggregate processor
-    - each row in the data table to solve is an origin zone and this processor calculates zonal auto own differences
+    - each row in the data table to solve is an origin zone and this processor calculates zonal auto ownership differences
     - ```orca.run(['auto_ownership_aggregate_processor'])```
   - runs the person trips aggregate processor 
-    - each row in the data table to solve is an OD pair and this processor calculates trip differences it requires the access to input zone tables, the COC coding, trip matrices and skim matrices.  The new ```person_trips_aggregate_manifest.csv``` file tells this processor what data it can use and how to reference it.  The following input data tables are required: ```assign_mfs.omx```, ```ma.<purpose|income>dcls.csv```, ```mf.cval.csv```, and ```skims_mfs.omx```
+    - each row in the data table to solve is an OD pair and this processor calculates trip differences.  It requires access to input zone tables, the COC coding, trip matrices and skim matrices.  The new ```person_trips_aggregate_manifest.csv``` file tells this processor what data it can use and how to reference it.  The following input data tables are required: ```assign_mfs.omx```, ```ma.<purpose|income>dcls.csv```, ```mf.cval.csv```, and ```skims_mfs.omx```
     - ```orca.run(['person_trips_aggregate_processor'])```
   - runs the aggregate markets (i.e. trucks) processor
+    - The ```aggregate_data_manifest.csv``` file tells this processor what data it can use and how to reference it.    
     - ```orca.run(['aggregate_trips_processor'])```
   - runs the time period and daily link processors
+    - The ```link_data_manifest.csv``` file tells this processor what data it can use and how to reference it.    
     - daily will be linkMD1 * scalingFactorMD1 + linkPM2 * scalingFactorPM2
     - ```orca.run(['link_daily_processor'])```
     - ```orca.run(['link_processor'])```
-
   - write results
     - ```orca.run(['write_results'])```
     - ```orca.run(['print_results'])```
