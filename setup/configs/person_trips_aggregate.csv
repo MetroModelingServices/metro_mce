@@ -1,0 +1,99 @@
+Description,Target,Expression
+,_work, trips.tour_purpose.map(TOUR_PURPOSE_WORK_MAP)
+#,,
+monetized auto ivt,auto_time, -0.5 * trips.hh_expansion_factor * (trips.build_auto_time - trips.base_auto_time) * _work.map(WORK_IVT_VOT_MAP)/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+monetized transit ivt,transit_time, -0.5 * trips.hh_expansion_factor * (trips.build_transit_time - trips.base_transit_time) * _work.map(WORK_IVT_VOT_MAP)/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+monetized transit wait time,transit_wait_time, -0.5 * trips.hh_expansion_factor * (trips.build_transit_wait - trips.base_transit_wait) * _work.map(WORK_WAIT_VOT_MAP)/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+monetized transit walk time,transit_walk_time, -0.5 * trips.hh_expansion_factor * (trips.build_transit_walk - trips.base_transit_walk) * _work.map(WORK_WALK_VOT_MAP)/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+monetized bike time,bike_time, -0.5 * trips.hh_expansion_factor * (trips.build_bike_time - trips.base_bike_time) * _work.map(WORK_IVT_VOT_MAP)/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+monetized walk time,walk_time, -0.5 * trips.hh_expansion_factor * (trips.build_walk_time - trips.base_walk_time) * _work.map(WORK_WALK_VOT_MAP)/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+toll cost,toll, -0.5 * trips.hh_expansion_factor * (trips.build_toll_cost - trips.base_toll_cost) * TOLL_INCLUSION_FACTOR * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+fuel cost,fuel, -0.5 * trips.hh_expansion_factor * (trips.build_fuel_cost - trips.base_fuel_cost) * FUEL_INCLUSION_FACTOR * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+park cost,park, -0.5 * trips.hh_expansion_factor * (trips.build_park_cost - trips.base_park_cost) * PARK_INCLUSION_FACTOR * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+fare cost,fare, -0.5 * trips.hh_expansion_factor * (trips.build_fare_cost - trips.base_fare_cost) * FARE_INCLUSION_FACTOR * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+#,,
+,monetized_time_old_method, auto_time+transit_time+transit_wait_time+transit_walk_time+bike_time+walk_time
+,cost_old_method, toll+fuel+park+fare
+total benefit,total_old_method, monetized_time_old_method + cost_old_method
+#,,
+first trip of outbound halftour,_tour_proxy,(trips.half_tour_idx==1) & (trips.half_tour_seg_idx==1)
+work tour,_work_tour,(trips.tour_purpose==1)
+school tour,_school_tour,(trips.tour_purpose==2)
+escort tour,_escort_tour,(trips.tour_purpose==3)
+chore tour,_chore_tour,(trips.tour_purpose==4)
+shop tour,_shop_tour,(trips.tour_purpose==5)
+meal tour,_meal_tour,(trips.tour_purpose==6)
+social tour,_social_tour,(trips.tour_purpose==7)
+VOT by purpose,_vot_purpose,_work_tour.map(VOT_MAP)
+VOT for work,_vot_work,(_work_tour*_vot_purpose).max()
+VOT for school,_vot_school,(_school_tour*_vot_purpose).max()
+VOT for escort,_vot_escort,(_escort_tour*_vot_purpose).max()
+VOT for chore,_vot_chore,(_chore_tour*_vot_purpose).max()
+VOT for shop,_vot_shop,(_shop_tour*_vot_purpose).max()
+VOT for meal,_vot_meal,(_meal_tour*_vot_purpose).max()
+VOT for social,_vot_social,(_social_tour*_vot_purpose).max()
+utils per minute,_utils_per_min, trips.tour_purpose.map(TOUR_PURPOSE_UTILS_PER_MIN_MAP)
+utils per minute work,_upm_work,(_work_tour*_utils_per_min).max()
+utils per minute school,_upm_school,(_school_tour*_utils_per_min).max()
+utils per minute escort,_upm_escort,(_escort_tour*_utils_per_min).max()
+utils per minute chore,_upm_chore,(_chore_tour*_utils_per_min).max()
+utils per minute shop,_upm_shop,(_shop_tour*_utils_per_min).max()
+utils per minute meal,_upm_meal,(_meal_tour*_utils_per_min).max()
+utils per minute social,_upm_social,(_social_tour*_utils_per_min).max()
+work logsum in base,_base_work_ls,((_work_tour&_tour_proxy)*trips.base_ls*trips.hh_expansion_factor).sum()
+school logsum in base,_base_school_ls,((_school_tour&_tour_proxy)*trips.base_ls*trips.hh_expansion_factor).sum()
+escort logsum in base,_base_escort_ls,((_escort_tour&_tour_proxy)*trips.base_ls*trips.hh_expansion_factor).sum()
+chore logsum in base,_base_chore_ls,((_chore_tour&_tour_proxy)*trips.base_ls*trips.hh_expansion_factor).sum()
+shop logsum in base,_base_shop_ls,((_shop_tour&_tour_proxy)*trips.base_ls*trips.hh_expansion_factor).sum()
+meal logsum in base,_base_meal_ls,((_meal_tour&_tour_proxy)*trips.base_ls*trips.hh_expansion_factor).sum()
+social logsum in base,_base_social_ls,((_social_tour&_tour_proxy)*trips.base_ls*trips.hh_expansion_factor).sum()
+work logsum in build,_build_work_ls,((_work_tour&_tour_proxy)*trips.build_ls*trips.hh_expansion_factor).sum()
+school logsum in build,_build_school_ls,((_school_tour&_tour_proxy)*trips.build_ls*trips.hh_expansion_factor).sum()
+escort logsum in build,_build_escort_ls,((_escort_tour&_tour_proxy)*trips.build_ls*trips.hh_expansion_factor).sum()
+chore logsum in build,_build_chore_ls,((_chore_tour&_tour_proxy)*trips.build_ls*trips.hh_expansion_factor).sum()
+shop logsum in build,_build_shop_ls,((_shop_tour&_tour_proxy)*trips.build_ls*trips.hh_expansion_factor).sum()
+meal logsum in build,_build_meal_ls,((_meal_tour&_tour_proxy)*trips.build_ls*trips.hh_expansion_factor).sum()
+social logsum in build,_build_social_ls,((_social_tour&_tour_proxy)*trips.build_ls*trips.hh_expansion_factor).sum()
+total no of work tours in base,_base_work_tours,(_tour_proxy&_work_tour&trips.base*trips.hh_expansion_factor).sum()
+total no of school tours in base,_base_school_tours,(_tour_proxy&_school_tour&trips.base*trips.hh_expansion_factor).sum()
+total no of escort tours in base,_base_escort_tours,(_tour_proxy&_escort_tour&trips.base*trips.hh_expansion_factor).sum()
+total no of chore tours in base,_base_chore_tours,(_tour_proxy&_chore_tour&trips.base*trips.hh_expansion_factor).sum()
+total no of shop tours in base,_base_shop_tours,(_tour_proxy&_shop_tour&trips.base*trips.hh_expansion_factor).sum()
+total no of meal tours in base,_base_meal_tours,(_tour_proxy&_meal_tour&trips.base*trips.hh_expansion_factor).sum()
+total no of social tours in base,_base_social_tours,(_tour_proxy&_social_tour&trips.base*trips.hh_expansion_factor).sum()
+total no of work tours in build,_build_work_tours,(_tour_proxy&_work_tour&trips.build*trips.hh_expansion_factor).sum()
+total no of school tours in build,_build_school_tours,(_tour_proxy&_school_tour&trips.build*trips.hh_expansion_factor).sum()
+total no of escort tours in build,_build_escort_tours,(_tour_proxy&_escort_tour&trips.build*trips.hh_expansion_factor).sum()
+total no of chore tours in build,_build_chore_tours,(_tour_proxy&_chore_tour&trips.build*trips.hh_expansion_factor).sum()
+total no of shop tours in build,_build_shop_tours,(_tour_proxy&_shop_tour&trips.build*trips.hh_expansion_factor).sum()
+total no of meal tours in build,_build_meal_tours,(_tour_proxy&_meal_tour&trips.build*trips.hh_expansion_factor).sum()
+total no of social tours in build,_build_social_tours,(_tour_proxy&_social_tour&trips.build*trips.hh_expansion_factor).sum()
+,_base_work_avgLS,_base_work_ls/_base_work_tours
+,_base_school_avgLS,_base_school_ls/_base_school_tours
+,_base_escort_avgLS,_base_escort_ls/_base_escort_tours
+,_base_chore_avgLS,_base_chore_ls/_base_chore_tours
+,_base_shop_avgLS,_base_shop_ls/_base_shop_tours
+,_base_meal_avgLS,_base_meal_ls/_base_meal_tours
+,_base_social_avgLS,_base_social_ls/_base_social_tours
+,_build_work_avgLS,_build_work_ls/_build_work_tours
+,_build_school_avgLS,_build_school_ls/_build_school_tours
+,_build_escort_avgLS,_build_escort_ls/_build_escort_tours
+,_build_chore_avgLS,_build_chore_ls/_build_chore_tours
+,_build_shop_avgLS,_build_shop_ls/_build_shop_tours
+,_build_meal_avgLS,_build_meal_ls/_build_meal_tours
+,_build_social_avgLS,_build_social_ls/_build_social_tours
+,_roh_benefit_work,(0.5*(_build_work_tours+_base_work_tours)*(_build_work_avgLS-_base_work_avgLS)/_upm_work)*(_vot_work/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,_roh_benefit_school,(0.5*(_build_school_tours+_base_school_tours)*(_build_school_avgLS-_base_school_avgLS)/_upm_school)*(_vot_school/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,_roh_benefit_escort,(0.5*(_build_escort_tours+_base_escort_tours)*(_build_escort_avgLS-_base_escort_avgLS)/_upm_escort)*(_vot_escort/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,_roh_benefit_chore,(0.5*(_build_chore_tours+_base_chore_tours)*(_build_chore_avgLS-_base_chore_avgLS)/_upm_chore)*(_vot_chore/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,_roh_benefit_shop,(0.5*(_build_shop_tours+_base_shop_tours)*(_build_shop_avgLS-_base_shop_avgLS)/_upm_shop)*(_vot_shop/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,_roh_benefit_meal,(0.5*(_build_meal_tours+_base_meal_tours)*(_build_meal_avgLS-_base_meal_avgLS)/_upm_meal)*(_vot_meal/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,_roh_benefit_social,(0.5*(_build_social_tours+_base_social_tours)*(_build_social_avgLS-_base_social_avgLS)/_upm_social)*(_vot_social/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,roh_benefit_work_avg,_roh_benefit_work.mean()/ trips.tour_purpose.count()
+,roh_benefit_school_avg,_roh_benefit_school.mean()/ trips.tour_purpose.count()
+,roh_benefit_escort_avg,_roh_benefit_escort.mean()/ trips.tour_purpose.count()
+,roh_benefit_chore_avg,_roh_benefit_chore.mean()/ trips.tour_purpose.count()
+,roh_benefit_shop_avg,_roh_benefit_shop.mean()/ trips.tour_purpose.count()
+,roh_benefit_meal_avg,_roh_benefit_meal.mean()/ trips.tour_purpose.count()
+,roh_benefit_social_avg,_roh_benefit_social.mean()/ trips.tour_purpose.count()
+,roh_benefit_total_avg,roh_benefit_work_avg+roh_benefit_school_avg+roh_benefit_escort_avg+roh_benefit_chore_avg+roh_benefit_shop_avg+roh_benefit_meal_avg+roh_benefit_social_avg
