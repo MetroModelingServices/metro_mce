@@ -79,4 +79,4 @@ root folder
 
 # MCE tool
 
-The MCE benefits calculator is implemented with the FHWA bca4abm calculator, which also does aggregation calculators.  See https://github.com/RSGInc/bca4abm.
+The MCE benefits calculator is implemented with the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregation calculations.
