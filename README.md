@@ -27,8 +27,8 @@ root folder
       - link_data_manifest.csv - list of link assignment result files by time period to process
       - link.csv - expressions for link assignment results by time period
       - link_daily.csv - expressions for daily link assignment results
-      - aggregate_data_manifest.csv - list of aggregate market matrices to expose to the aggregate market trip processor
-      - aggregate_trips.csv - expressions for aggregate markets
+      - aggregate_data_manifest.csv - list of aggregate market (i.e. trucks) matrices to expose to the aggregate market trip processor
+      - aggregate_trips.csv - expressions for aggregate markets (i.e. trucks)
       - person_trips_aggregate_manifest.csv - list of person trip aggregate tables and matrices to expose to the person trip aggregate processor
       - demographics_aggregate.csv - expressions for aggregate zonal level processor - i.e. coding of communities of concern
       - auto_ownership_aggregate.csv - expressions for aggregate zonal level processor - i.e. auto ownership
