@@ -1,9 +1,7 @@
 # Metro MCE
 
 # Data Export Scripts 
-
-## R scripts
-The R scripts are revisions to the demand model in order to write out 
+  - R scripts - revisions to the demand model in order to write out 
 destination choice logsums and the CVAL array - HIAs by car ownership for each TAZ
 
 ```
@@ -13,12 +11,8 @@ CVAL1 (mf.cval[,257:448]) = c1w2, c1w3, c2w3
 CVAL2 (mf.cval[,449:640]) = c1w1, c2w2, c3w3 
 CVAL3 (mf.cval[,641:1024])= c1w0, c2w0, c2w1, c3w0, c3w1, c3w2
 ```
-
-## Python
-ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file
-
-## Batch 
-bca_EMME_Export.bat exports all the required full matrices and also calls 
+  - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file
+  - bca_EMME_Export.bat exports all the required full matrices and also calls 
 ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
 
 # MCE Inputs Files 
