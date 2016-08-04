@@ -59,7 +59,7 @@ root folder
       - ma.schdcls.csv - sch destination choice logsums
       - mf.cval.csv - CVAL array - HIAs by car ownership for each TAZ
       - skims_mfs.omx - skims bank OMX matrices
-   - build scenario folder - such as 2040 Build
+  - build scenario folder - such as 2040 Build
       - assign_mfs.omx - assignment bank OMX matrices
       - linksMD1.csv - link MD1 assignment results
       - linksPM2.csv - link PM2 assignment results
