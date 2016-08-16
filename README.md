@@ -6,12 +6,11 @@ The following scripts are used to export all the required data from the R demand
 destination choice logsums and the CVAL array - HIAs by car ownership for each TAZ - to CSV format
 
 ```
-mf.cval column order, by hia: c <# cars> w <# workers>
-CVAL0 (mf.cval[,1:256]) = c0w0, c0w1, c0w2, c0w3
-CVAL1 (mf.cval[,257:448]) = c1w2, c1w3, c2w3
-CVAL2 (mf.cval[,449:640]) = c1w1, c2w2, c3w3 
-CVAL3 (mf.cval[,641:1024])= c1w0, c2w0, c2w1, c3w0, c3w1, c3w2
+mf.cval column order - A flows first, then I, H, W, C
+x = seq(1:4)
+expand.grid(paste("a",x), paste("i",x), paste("h",x), paste("w",x), paste("c",x))
 ```
+
   - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file
   - bca_EMME_Export.bat exports all the required full matrices and also calls 
 ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
