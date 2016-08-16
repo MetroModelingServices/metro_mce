@@ -3,10 +3,10 @@ The Oregon Metro Multi-Criteria Evaluation (MCE) toolkit supports transportation
 # Data Export
 The following scripts are used to export all the required data from the R demand model and the EMME supply model.
   - R scripts - revisions to the demand model in order to write out 
-destination choice logsums and the CVAL array - HIAs by car ownership for each TAZ - to CSV format
+destination choice logsums and the CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format
 
 ```
-mf.cval column order - A flows first, then I, H, W, C
+mf.cval column order - A (age of head) flows first, then I (income), H (size), W (workers), C (cval, cars to workers)
 x = seq(1:4)
 expand.grid(paste("a",x), paste("i",x), paste("h",x), paste("w",x), paste("c",x))
 ```
