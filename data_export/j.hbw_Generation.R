@@ -18,11 +18,9 @@ source(paste(R.path, "j.whia.R", sep='/'))
 
 source(paste(R.path, "j.chwi.R", sep='/'))
    save (mf.cval, file="mf.cval.dat")
-# mf.cval column order, by hia: c <# cars> w <# workers>
-# CVAL0 (mf.cval[,1:256]) = c0w0, c0w1, c0w2, c0w3
-# CVAL1 (mf.cval[,257:448]) = c1w2, c1w3, c2w3
-# CVAL2 (mf.cval[,449:640]) = c1w1, c2w2, c3w3 
-# CVAL3 (mf.cval[,641:1024])= c1w0, c2w0, c2w1, c3w0, c3w1, c3w2
+colnames = expand.grid(paste("a",seq(1:4),sep=""), paste("i",seq(1:4),sep=""), paste("h",seq(1:4),sep=""), paste("w",seq(1:4),sep=""), paste("c",seq(1:4),sep=""))
+colnames = apply(colnames, 1, function(x) paste(x, collapse=""))
+colnames(mf.cval) = colnames
 write.table(mf.cval, sep=",", row.names=F, file="mf.cval.csv")
 
 ####  Calculate auto and transit composite skims for lot choice later
