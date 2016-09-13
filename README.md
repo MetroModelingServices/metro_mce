@@ -30,10 +30,10 @@ root folder
       - link_daily.csv - expressions for daily link assignment results
       - aggregate_data_manifest.csv - list of aggregate market (i.e. trucks) matrices to expose to the aggregate market trip processor
       - aggregate_trips.csv - expressions for aggregate markets (i.e. trucks)
-      - person_trips_aggregate_manifest.csv - list of person trip aggregate tables and matrices to expose to the person trip aggregate processor
-      - demographics_aggregate.csv - expressions for aggregate zonal level processor - i.e. coding of communities of concern
-      - auto_ownership_aggregate.csv - expressions for aggregate zonal level processor - i.e. auto ownership
-      - person_trips_aggregate.csv - expressions for aggregate OD-pair level processor - i.e. trip measures
+      - OD_aggregate_manifest.csv - list of OD aggregate tables and matrices to expose to the OD aggregate processor
+      - demographics_aggregate.csv - expressions for aggregate zonal level processor - i.e. coding of communities of concern / market segments
+      - zone_aggregate.csv - expressions for aggregate zonal level processor - i.e. auto ownership and destination choice logsums like FHWA
+      - OD_aggregate.csv - expressions for aggregate OD-pair level processor - i.e. trip measures
   - base scenario folder - such as 2040 No Build
       - assign_mfs.omx - assignment bank OMX matrices
       - linksMD1.csv - link MD1 assignment results
@@ -85,14 +85,14 @@ The benefits calculator is currently run on the command line as follows: ```pyth
 This program does the following:
   - reads the settings and input data 
   - runs the demographic aggregate processor
-    - each row in the data table to solve is an origin zone and this processor calculates communities of concern (COC) based on zone data
+    - each row in the data table to solve is an origin zone and this processor calculates communities of concern (COC) / market segments based on zone data
     - ```orca.run(['demographics_aggregate_processor'])```
-  - runs the auto ownership aggregate processor
-    - each row in the data table to solve is an origin zone and this processor calculates zonal auto ownership differences
-    - ```orca.run(['auto_ownership_aggregate_processor'])```
-  - runs the person trips aggregate processor 
-    - each row in the data table to solve is an OD pair and this processor calculates trip differences.  It requires access to input zone tables, the COC coding, trip matrices and skim matrices.  The new ```person_trips_aggregate_manifest.csv``` file tells this processor what data it can use and how to reference it.  The following input data tables are required: ```assign_mfs.omx```, ```ma.<purpose|income>dcls.csv```, ```mf.cval.csv```, and ```skims_mfs.omx```.  Maybe the ```ma.<purpose|income>dcls.csv``` files should be added to the ```mf.cval.csv``` before input to the bca tool?
-    - ```orca.run(['person_trips_aggregate_processor'])```
+  - runs the zone aggregate processor
+    - each row in the data table to solve is an origin zone and this processor calculates zonal auto ownership differences and destination choice logsums
+    - ```orca.run(['zone_aggregate_processor'])```
+  - runs the OD trips aggregate processor 
+    - each row in the data table to solve is an OD pair and this processor calculates trip differences.  It requires access to input zone tables, the COC coding, trip matrices and skim matrices.  The new ```OD_aggregate_manifest.csv``` file tells this processor what data it can use and how to reference it.  The following input data tables are required: ```assign_mfs.omx```, ```skims_mfs.omx```, and the results of the zonal_aggregate_processor.  
+    - ```orca.run(['OD_aggregate_processor'])```
   - runs the aggregate markets (i.e. trucks) processor
     - The ```aggregate_data_manifest.csv``` file tells this processor what data it can use and how to reference it.    
     - ```orca.run(['aggregate_trips_processor'])```

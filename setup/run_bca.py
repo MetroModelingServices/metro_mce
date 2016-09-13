@@ -19,22 +19,23 @@ orca.add_injectable('input_source', 'read_from_csv')
 orca.run(['initialize_stores'])
 
 #each row in the data table to solve is an origin zone and this processor 
-#calculates communities of concern (COC) based on zone data
+#calculates communities of concern (COC) / market segments based on mf.cval.csv
 orca.run(['demographics_aggregate_processor'])
 
 #each row in the data table to solve is an origin zone and this 
-#processor calculates zonal auto ownership differences
-orca.run(['auto_ownership_aggregate_processor'])
+#processor calculates zonal auto ownership differences as well as the
+#differences in the destination choice logsums - ma.<purpose|income>dcls.csv
+#Maybe the ma.<purpose|income>dcls.csv files should be added to the 
+#mf.cval.csv before input to the bca tool?
+orca.run(['zone_aggregate_processor'])
 
 #each row in the data table to solve is an OD pair and this processor 
 #calculates trip differences.  It requires the access to input zone tables, 
 #the COC coding, trip matrices and skim matrices.  The new 
-#person_trips_aggregate_manifest.csv file tells this processor what data it can
+#OD_aggregate_manifest.csv file tells this processor what data it can
 #use and how to reference it.  The following input data tables are required: 
-#assign_mfs.omx, ma.<purpose|income>dcls.csv, mf.cval.csv, and skims_mfs.omx.
-#Maybe the ma.<purpose|income>dcls.csv files should be added to the 
-#mf.cval.csv before input to the bca tool?
-orca.run(['person_trips_aggregate_processor'])
+#assign_mfs.omx, inputs and results of the zone aggregate processor, and skims_mfs.omx.
+orca.run(['OD_aggregate_processor'])
 
 #truck aggregate markets
 orca.run(['aggregate_trips_processor'])
