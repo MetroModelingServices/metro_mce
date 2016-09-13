@@ -16,6 +16,8 @@ colnames = apply(colnames,1,function(x) paste(x, collapse=""))
   - bca_EMME_Export.bat exports all the required full matrices and also calls 
 ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
 
+The mce_reliability_prep.py codes freeway interchange nodes and upstream and downstream distances using EMME Modeller.
+
 # Benefits calculator file and folder setup
 The benefits calculator is implemented with the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.
 
