@@ -6,7 +6,7 @@ The following scripts are used to export all the required data from the R demand
 destination choice logsums and the CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format
 
 ```
-mf.cval column order - A (age of head) flows first, I (income), H (size), W (workers), C (cval, cars to workers)
+mf.cval column order - A (age of head) flows first, I (income), H (size), W (workers), C (car ownership)
 colnames = expand.grid(paste("a",seq(1:4),sep=""), paste("i",seq(1:4),sep=""), paste("h",seq(1:4),sep=""), paste("w",seq(1:4),sep=""), paste("c",seq(1:4),sep=""))
 colnames = apply(colnames,1,function(x) paste(x, collapse=""))
 
