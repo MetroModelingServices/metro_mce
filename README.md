@@ -35,81 +35,91 @@ root folder
       - zone_aggregate.csv - expressions for aggregate zonal level processor - i.e. auto ownership and destination choice logsums like FHWA
       - OD_aggregate.csv - expressions for aggregate OD-pair level processor - i.e. trip measures
   - base scenario folder - such as 2040 No Build
-      - assign_mfs.omx - assignment bank OMX matrices
-      - linksMD1.csv - link MD1 assignment results
-      - linksPM2.csv - link PM2 assignment results
-      - ma.collpr.csv - hbc productions
-      - ma.hboprh.csv - hbo high inc productions
-      - ma.hboprl.csv - hbo low inc productions
-      - ma.hboprm.csv - hbo mid inc productions
-      - ma.hbrprh.csv - hbr high inc productions
-      - ma.hbrprl.csv - hbr low inc productions
-      - ma.hbrprm.csv - hbr mid inc productions
-      - ma.hbsprh.csv - hbs high inc productions
-      - ma.hbsprl.csv - hbs low inc productions
-      - ma.hbsprm.csv - hbs mid inc productions
-      - ma.hbwprh.csv - hbw high inc productions
-      - ma.hbwprl.csv - hbw low inc productions
-      - ma.hbwprm.csv - hbw mid inc productions
-      - ma.nhnwpr.csv - nhbnw productions
-      - ma.nhwpr.csv - nhbw productions
-      - ma.schdcls.csv - sch productions
-      - ma.hbcdcls.csv - hbc destination choice logsums
-      - ma.hbohdcls.csv - hbo high inc destination choice logsums
-      - ma.hboldcls.csv - hbo low inc destination choice logsums
-      - ma.hbomdcls.csv - hbo mid inc destination choice logsums
-      - ma.hbrhdcls.csv - hbr high inc destination choice logsums
-      - ma.hbrldcls.csv - hbr low inc destination choice logsums
-      - ma.hbrmdcls.csv - hbr mid inc destination choice logsums
-      - ma.hbshdcls.csv - hbs high inc destination choice logsums
-      - ma.hbsldcls.csv - hbs low inc destination choice logsums
-      - ma.hbsmdcls.csv - hbs mid inc destination choice logsums
-      - ma.hbwhdcls.csv - hbw high inc destination choice logsums
-      - ma.hbwldcls.csv - hbw low inc destination choice logsums
-      - ma.hbwmdcls.csv - hbw mid inc destination choice logsums
-      - ma.nhbnwdcls.csv - nhbnw destination choice logsums
-      - ma.nhbwdcls.csv - nhbw destination choice logsums
-      - ma.schdcls.csv - sch destination choice logsums
-      - mf.cval.csv - CVAL array - HIAs by car ownership for each TAZ
-      - skims_mfs.omx - skims bank OMX matrices
+      - link
+        - linksMD1.csv - link MD1 assignment results
+        - linksPM2.csv - link PM2 assignment results
+      - OD  
+        - assign_mfs.omx - assignment bank OMX matrices
+        - skims_mfs.omx - skims bank OMX matrices
+      - Zone 
+        - mf.cval.csv - see above
+        - Productions
+          - ma.collpr.csv - hbc 
+          - ma.hboprh.csv - hbo high inc 
+          - ma.hboprl.csv - hbo low inc 
+          - ma.hboprm.csv - hbo mid inc 
+          - ma.hbrprh.csv - hbr high inc 
+          - ma.hbrprl.csv - hbr low inc 
+          - ma.hbrprm.csv - hbr mid inc 
+          - ma.hbsprh.csv - hbs high inc 
+          - ma.hbsprl.csv - hbs low inc 
+          - ma.hbsprm.csv - hbs mid inc 
+          - ma.hbwprh.csv - hbw high inc 
+          - ma.hbwprl.csv - hbw low inc 
+          - ma.hbwprm.csv - hbw mid inc 
+          - ma.nhnwpr.csv - nhbnw 
+          - ma.nhwpr.csv - nhbw 
+          - ma.schdcls.csv - sch 
+        - Destination choice logsums
+          - ma.hbcdcls.csv - hbc 
+          - ma.hbohdcls.csv - hbo high inc 
+          - ma.hboldcls.csv - hbo low inc 
+          - ma.hbomdcls.csv - hbo mid inc 
+          - ma.hbrhdcls.csv - hbr high inc 
+          - ma.hbrldcls.csv - hbr low inc 
+          - ma.hbrmdcls.csv - hbr mid inc 
+          - ma.hbshdcls.csv - hbs high inc 
+          - ma.hbsldcls.csv - hbs low inc 
+          - ma.hbsmdcls.csv - hbs mid inc 
+          - ma.hbwhdcls.csv - hbw high inc 
+          - ma.hbwldcls.csv - hbw low inc 
+          - ma.hbwmdcls.csv - hbw mid inc 
+          - ma.nhbnwdcls.csv - nhbnw 
+          - ma.nhbwdcls.csv - nhbw 
+          - ma.schdcls.csv - sch 
   - build scenario folder - such as 2040 Build
-      - assign_mfs.omx - assignment bank OMX matrices
-      - linksMD1.csv - link MD1 assignment results
-      - linksPM2.csv - link PM2 assignment results
-      - ma.collpr.csv - hbc productions
-      - ma.hboprh.csv - hbo high inc productions
-      - ma.hboprl.csv - hbo low inc productions
-      - ma.hboprm.csv - hbo mid inc productions
-      - ma.hbrprh.csv - hbr high inc productions
-      - ma.hbrprl.csv - hbr low inc productions
-      - ma.hbrprm.csv - hbr mid inc productions
-      - ma.hbsprh.csv - hbs high inc productions
-      - ma.hbsprl.csv - hbs low inc productions
-      - ma.hbsprm.csv - hbs mid inc productions
-      - ma.hbwprh.csv - hbw high inc productions
-      - ma.hbwprl.csv - hbw low inc productions
-      - ma.hbwprm.csv - hbw mid inc productions
-      - ma.nhnwpr.csv - nhbnw productions
-      - ma.nhwpr.csv - nhbw productions
-      - ma.schdcls.csv - sch productions
-      - ma.hbcdcls.csv - hbc destination choice logsums
-      - ma.hbohdcls.csv - hbo high inc destination choice logsums
-      - ma.hboldcls.csv - hbo low inc destination choice logsums
-      - ma.hbomdcls.csv - hbo mid inc destination choice logsums
-      - ma.hbrhdcls.csv - hbr high inc destination choice logsums
-      - ma.hbrldcls.csv - hbr low inc destination choice logsums
-      - ma.hbrmdcls.csv - hbr mid inc destination choice logsums
-      - ma.hbshdcls.csv - hbs high inc destination choice logsums
-      - ma.hbsldcls.csv - hbs low inc destination choice logsums
-      - ma.hbsmdcls.csv - hbs mid inc destination choice logsums
-      - ma.hbwhdcls.csv - hbw high inc destination choice logsums
-      - ma.hbwldcls.csv - hbw low inc destination choice logsums
-      - ma.hbwmdcls.csv - hbw mid inc destination choice logsums
-      - ma.nhbnwdcls.csv - nhbnw destination choice logsums
-      - ma.nhbwdcls.csv - nhbw destination choice logsums
-      - ma.schdcls.csv - sch destination choice logsums
-      - mf.cval.csv - CVAL array - HIAs by car ownership for each TAZ
-      - skims_mfs.omx - skims bank OMX matrices
+      - link
+        - linksMD1.csv - link MD1 assignment results
+        - linksPM2.csv - link PM2 assignment results
+      - OD  
+        - assign_mfs.omx - assignment bank OMX matrices
+        - skims_mfs.omx - skims bank OMX matrices
+      - Zone 
+        - mf.cval.csv - see above
+        - Productions
+          - ma.collpr.csv - hbc 
+          - ma.hboprh.csv - hbo high inc 
+          - ma.hboprl.csv - hbo low inc 
+          - ma.hboprm.csv - hbo mid inc 
+          - ma.hbrprh.csv - hbr high inc 
+          - ma.hbrprl.csv - hbr low inc 
+          - ma.hbrprm.csv - hbr mid inc 
+          - ma.hbsprh.csv - hbs high inc 
+          - ma.hbsprl.csv - hbs low inc 
+          - ma.hbsprm.csv - hbs mid inc 
+          - ma.hbwprh.csv - hbw high inc 
+          - ma.hbwprl.csv - hbw low inc 
+          - ma.hbwprm.csv - hbw mid inc 
+          - ma.nhnwpr.csv - nhbnw 
+          - ma.nhwpr.csv - nhbw 
+          - ma.schdcls.csv - sch 
+        - Destination choice logsums
+          - ma.hbcdcls.csv - hbc 
+          - ma.hbohdcls.csv - hbo high inc 
+          - ma.hboldcls.csv - hbo low inc 
+          - ma.hbomdcls.csv - hbo mid inc 
+          - ma.hbrhdcls.csv - hbr high inc 
+          - ma.hbrldcls.csv - hbr low inc 
+          - ma.hbrmdcls.csv - hbr mid inc 
+          - ma.hbshdcls.csv - hbs high inc 
+          - ma.hbsldcls.csv - hbs low inc 
+          - ma.hbsmdcls.csv - hbs mid inc 
+          - ma.hbwhdcls.csv - hbw high inc 
+          - ma.hbwldcls.csv - hbw low inc 
+          - ma.hbwmdcls.csv - hbw mid inc 
+          - ma.nhbnwdcls.csv - nhbnw 
+          - ma.nhbwdcls.csv - nhbw 
+          - ma.schdcls.csv - sch 
 
 # Running the benefits calculator
 The benefits calculator is currently run on the command line as follows: ```python run_bca.py```
