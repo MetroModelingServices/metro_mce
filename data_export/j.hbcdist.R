@@ -14,6 +14,7 @@ ma.utsum <- apply (mf.util, 1, sum)
 ma.hbcdcls <- log(ma.utsum)
 save (ma.hbcdcls, file="ma.hbcdcls.dat")
 write.table(ma.hbcdcls, sep=",", row.names=F, file="ma.hbcdcls.csv", col.names=c("hbcdcls"))
+write.table(ma.collpr, sep=",", row.names=F, file="ma.collpr.csv", col.names=c("hbcpr"))
 
 # College Raw Distribution Matrix
 mf.colldt <- (mf.util / ma.utsum) * ma.collpr

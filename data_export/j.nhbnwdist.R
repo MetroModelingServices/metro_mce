@@ -43,6 +43,7 @@ ma.utsum <- apply (mf.util, 1, sum)
 ma.nhbnwdcls <- log(ma.utsum)
 save (ma.nhbnwdcls, file="ma.nhbnwdcls.dat")
 write.table(ma.nhbnwdcls, sep=",", row.names=F, file="ma.nhbnwdcls.csv", col.names=c("nhbnwdcls"))
+write.table(ma.nhnwpr, sep=",", row.names=F, file="ma.nhnwpr.csv", col.names=c("nhnwpr"))
 
 # NHBNW Raw Distribution Matrix
 mf.nhnwdt <- (mf.util / ma.utsum) * ma.nhnwpu

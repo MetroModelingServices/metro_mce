@@ -3,7 +3,7 @@ The Oregon Metro Multi-Criteria Evaluation (MCE) toolkit supports transportation
 # Data Export
 The following scripts are used to export all the required data from the R demand model and the EMME supply model.
   - R scripts - revisions to the demand model in order to write out 
-destination choice logsums and the CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format
+trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format
 
 ```
 mf.cval column order - A (age of head) flows first, I (income), H (size), W (workers), C (car ownership)
@@ -38,6 +38,22 @@ root folder
       - assign_mfs.omx - assignment bank OMX matrices
       - linksMD1.csv - link MD1 assignment results
       - linksPM2.csv - link PM2 assignment results
+      - ma.collpr.csv - hbc productions
+      - ma.hboprh.csv - hbo high inc productions
+      - ma.hboprl.csv - hbo low inc productions
+      - ma.hboprm.csv - hbo mid inc productions
+      - ma.hbrprh.csv - hbr high inc productions
+      - ma.hbrprl.csv - hbr low inc productions
+      - ma.hbrprm.csv - hbr mid inc productions
+      - ma.hbsprh.csv - hbs high inc productions
+      - ma.hbsprl.csv - hbs low inc productions
+      - ma.hbsprm.csv - hbs mid inc productions
+      - ma.hbwprh.csv - hbw high inc productions
+      - ma.hbwprl.csv - hbw low inc productions
+      - ma.hbwprm.csv - hbw mid inc productions
+      - ma.nhnwpr.csv - nhbnw productions
+      - ma.nhwpr.csv - nhbw productions
+      - ma.schdcls.csv - sch productions
       - ma.hbcdcls.csv - hbc destination choice logsums
       - ma.hbohdcls.csv - hbo high inc destination choice logsums
       - ma.hboldcls.csv - hbo low inc destination choice logsums
@@ -60,6 +76,22 @@ root folder
       - assign_mfs.omx - assignment bank OMX matrices
       - linksMD1.csv - link MD1 assignment results
       - linksPM2.csv - link PM2 assignment results
+      - ma.collpr.csv - hbc productions
+      - ma.hboprh.csv - hbo high inc productions
+      - ma.hboprl.csv - hbo low inc productions
+      - ma.hboprm.csv - hbo mid inc productions
+      - ma.hbrprh.csv - hbr high inc productions
+      - ma.hbrprl.csv - hbr low inc productions
+      - ma.hbrprm.csv - hbr mid inc productions
+      - ma.hbsprh.csv - hbs high inc productions
+      - ma.hbsprl.csv - hbs low inc productions
+      - ma.hbsprm.csv - hbs mid inc productions
+      - ma.hbwprh.csv - hbw high inc productions
+      - ma.hbwprl.csv - hbw low inc productions
+      - ma.hbwprm.csv - hbw mid inc productions
+      - ma.nhnwpr.csv - nhbnw productions
+      - ma.nhwpr.csv - nhbw productions
+      - ma.schdcls.csv - sch productions
       - ma.hbcdcls.csv - hbc destination choice logsums
       - ma.hbohdcls.csv - hbo high inc destination choice logsums
       - ma.hboldcls.csv - hbo low inc destination choice logsums

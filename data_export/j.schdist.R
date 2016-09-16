@@ -68,6 +68,7 @@ ma.utsum <- apply (mf.util, 1, sum)
 ma.schdcls <- log(ma.utsum)
 save (ma.schdcls, file="ma.schdcls.dat")
 write.table(ma.schdcls, sep=",", row.names=F, file="ma.schdcls.csv", col.names=c("schdcls"))
+write.table(ma.schpr, sep=",", row.names=F, file="ma.schpr.csv", col.names=c("schpr"))
 
 mf.utsum <- matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 

@@ -50,6 +50,7 @@ ma.utsum <- apply (mf.util, 1, sum)
 ma.hbwldcls <- log(ma.utsum)
 save (ma.hbwldcls, file="ma.hbwldcls.dat")
 write.table(ma.hbwldcls, sep=",", row.names=F, file="ma.hbwldcls.csv", col.names=c("hbwldcls"))
+write.table(ma.hbwprl, sep=",", row.names=F, file="ma.hbwprl.csv", col.names=c("hbwprl"))
 
 mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
@@ -77,6 +78,7 @@ ma.utsum <- apply (mf.util, 1, sum)
 ma.hbwmdcls <- log(ma.utsum)
 save (ma.hbwmdcls, file="ma.hbwmdcls.dat")
 write.table(ma.hbwmdcls, sep=",", row.names=F, file="ma.hbwmdcls.csv", col.names=c("hbwmdcls"))
+write.table(ma.hbwprm, sep=",", row.names=F, file="ma.hbwprm.csv", col.names=c("hbwprm"))
 
 mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
@@ -104,6 +106,7 @@ ma.utsum <- apply (mf.util, 1, sum)
 ma.hbwhdcls <- log(ma.utsum)
 save (ma.hbwhdcls, file="ma.hbwhdcls.dat")
 write.table(ma.hbwhdcls, sep=",", row.names=F, file="ma.hbwhdcls.csv", col.names=c("hbwhdcls"))
+write.table(ma.hbwprh, sep=",", row.names=F, file="ma.hbwprh.csv", col.names=c("hbwprh"))
 
 mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
