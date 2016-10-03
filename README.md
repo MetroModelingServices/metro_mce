@@ -1,4 +1,4 @@
-The Oregon Metro Multi-Criteria Evaluation (MCE) toolkit supports transportation planning alternatives analysis by estimating the “Social Return on Investment” of alternatives in a quantitative manner.
+The [Oregon Metro](http://www.oregonmetro.gov/) Multi-Criteria Evaluation (MCE) toolkit supports transportation planning alternatives analysis by estimating the “Social Return on Investment” of alternatives in a quantitative manner.
 
 # Data Export
 The following scripts are used to export all the required data from the R demand model and the EMME supply model.
