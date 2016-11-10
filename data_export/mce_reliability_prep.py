@@ -154,9 +154,9 @@ if __name__ == "__main__":
           -0.00462 * link["@spd50p"] + 0.00310 * link["@signal"] + -0.00633 * link["@stop"] )
 
       #regression answer is unreliability as std dev per mile per mean travel time
-      #so multiply by the link travel time and length and then square-it to get total unreliability variance for the whole link
+      #so multiply by the link travel time and then square-it to get total unreliability variance for the whole link
       #then skim it since variance is additive and then take the sqrt(skim) at the end to get unreliability in units of travel time 
-      link["@relvar"] = (link["@relvar"] * link["auto_time"] * link["length"])**2
+      link["@relvar"] = (link["@relvar"] * link["auto_time"])**2
     
     print("reliability link attribute @relvar calculated")
       
