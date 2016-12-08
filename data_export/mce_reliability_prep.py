@@ -121,11 +121,11 @@ if __name__ == "__main__":
       if link.volume_delay_func == freeway_vdf: #freeway
         
         vc = link["auto_volume"] / link["@mb"]
-        link["@losc"] = 1 if ( vc >= 0.7 ) else 0
-        link["@losd"] = 1 if ( vc >= 0.8 ) else 0
-        link["@lose"] = 1 if ( vc >= 0.9 ) else 0
-        link["@losfl"] = 1 if ( vc >= 1.0 ) else 0
-        link["@losfh"] = 1 if ( vc >= 1.1 ) else 0
+        link["@losc"] = (1 if ( vc >= 0.7 ) else 0) * (vc - 0.69)
+        link["@losd"] = (1 if ( vc >= 0.8 ) else 0) * (vc - 0.79)
+        link["@lose"] = (1 if ( vc >= 0.9 ) else 0) * (vc - 0.89)
+        link["@losfl"] = (1 if ( vc >= 1.0 ) else 0) * (vc - 0.99)
+        link["@losfh"] = (1 if ( vc >= 1.2 ) else 0) * (vc - 1.19)
         link["@spd70"] = 1 if ( link["@speed"] == 70 ) else 0
         link["@updist"] = 0.0001 if ( link["@updist"] == 0 ) else link["@updist"]
         link["@dwdist"] = 0.0001 if ( link["@dwdist"] == 0 ) else link["@dwdist"]
@@ -136,8 +136,8 @@ if __name__ == "__main__":
       elif link.volume_delay_func in [2,4,9]: #arterial
         
         vc = link["auto_volume"] / link["@mb"]
-        link["@loscart"] = 1 if ( vc >= 0.7 ) else 0
-        link["@losflart"] = 1 if ( vc >= 1.0 ) else 0
+        link["@loscart"] = (1 if ( vc >= 0.7 ) else 0) * (vc - 0.69)
+        link["@losflart"] = (1 if ( vc >= 1.0 ) else 0) * (vc - 0.99)
         link["@lanes2"] = 1 if ( link["num_lanes"] == 2 ) else 0
         link["@lanes3"] = 1 if ( link["num_lanes"] == 3 ) else 0
         link["@lanes4"] = 1 if ( link["num_lanes"] == 4 ) else 0
@@ -153,9 +153,9 @@ if __name__ == "__main__":
           0.04470 * link["@lanes4"] + 0.00757 * link["@spd35"] + 0.00910 * link["@spd40"] + 0.00810 * link["@spd45"] + -0.00229 * link["@spd50"] + 
           -0.00462 * link["@spd50p"] + 0.00310 * link["@signal"] + -0.00633 * link["@stop"] )
 
-      #regression answer is unreliability as std dev per mile per mean travel time
+      #regression answer is unreliability as std dev of mean travel time - bigger values are worse
       #so multiply by the link travel time and then square-it to get total unreliability variance for the whole link
-      #then skim it since variance is additive and then take the sqrt(skim) at the end to get unreliability in units of travel time 
+      #then skim it since variance is additive and then take the sqrt(skim) at the end to get unreliability in units of travel time
       link["@relvar"] = (link["@relvar"] * link["auto_time"])**2
     
     print("reliability link attribute @relvar calculated")
