@@ -1,9 +1,15 @@
 The [Oregon Metro](http://www.oregonmetro.gov/) Multi-Criteria Evaluation (MCE) toolkit supports transportation planning alternatives analysis by estimating the quantitative “Social Return on Investment” of alternative transportation investment scenarios.
 
-# Data Export
-The following scripts are used to export all the required data from the R demand model and the EMME supply model.
-  - R scripts - revisions to the demand model in order to write out 
-trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format
+The MCE toolkit consists of three core tools:
+  - Benefits calculator - calculates monetized benefits of transportation projects
+  - Project costing workbook - calculates total project costs by type and Net Present Value
+  - Visuals workbook - takes as input the benefits and costs, calculates BC ratios, and summaries the results in various forms
+
+# Benefits Calculator
+
+## Data Export for Benefits Calculator
+The scripts in this folder are used to export the required data from the R travel demand model and the EMME travel supply model for import into the benefits calculator.
+  - Various R scripts - revisions to the demand model in order to write out trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format
 
 ```
 mf.cval column order - A (age of head) flows first, I (income), H (size), W (workers), C (car ownership)
@@ -12,14 +18,14 @@ colnames = apply(colnames,1,function(x) paste(x, collapse=""))
 ```
 
   - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file
-  - bca_EMME_Export.bat exports all the required full matrices and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
-  - mce_reliability_prep.py codes freeway interchange nodes, upstream and downstream distances, and calculates the link reliability measure for skimming.  Run it after assignment and then skim the link @relvar attr 
+  - bca_EMME_Export.bat exports the required matrices (mfs) and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
+  - mce_reliability_prep.py codes freeway interchange nodes, upstream and downstream distances, and calculates the link reliability measure for skimming.  Run it after assignment and then skim the link @relvar attr.
   - convert_modechoice_pa_omx.R writes the demand model mode choice PA trip matrices to OMX matrices.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   
-# Benefits calculator file and folder setup
-The benefits calculator is implemented with the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.
+## Benefits Calculator File and Folder Setup
+The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.
 
-root folder
+*root folder*
   - run_bca.py - run benefit calculator
   - configs folder - configuration settings
       - settings.yaml - overall settings
@@ -75,7 +81,7 @@ root folder
   - build scenario folder - same files as the base scenario folder
   - moves_2010_summer_running_rates.csv - MOVES emissions rate table
 
-# Running the benefits calculator
+## Running the benefits calculator
 The benefits calculator is currently run on the command line as follows: ```python run_bca.py```
 
 The benefit calculator run steps are:
@@ -100,3 +106,9 @@ The benefit calculator run steps are:
   - writes results
     - ```orca.run(['write_four_step_results'])```
     - ```orca.run(['print_results'])```
+
+# Project Costing Workbook
+Calculates total project costs by type and Net Present Value
+
+# Visuals Workbook
+Takes as input the benefits and costs, calculates BC ratios, and summaries the results in various forms
