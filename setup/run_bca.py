@@ -15,6 +15,8 @@ from bca4abm import tracing
 from bca4abm import bca4abm as bca
 
 parent_dir = os.path.dirname(__file__)
+if not os.path.exists(os.path.join(parent_dir, 'output')):
+    os.makedirs(os.path.join(parent_dir, 'output'))
 orca.add_injectable('configs_dir', os.path.join(parent_dir, 'configs'))
 orca.add_injectable('data_dir', os.path.join(parent_dir, 'data'))
 orca.add_injectable('output_dir', os.path.join(parent_dir, 'output'))
