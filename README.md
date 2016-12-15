@@ -7,7 +7,7 @@ The MCE toolkit consists of three core tools:
 
 # Benefits Calculator
 
-## Data Export for Benefits Calculator
+## Travel Model Data Export
 The scripts in this folder are used to export the required data from the R travel demand model and the EMME travel supply model for import into the benefits calculator.
   - Various R scripts - revisions to the demand model in order to write out trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format
 
@@ -23,7 +23,8 @@ colnames = apply(colnames,1,function(x) paste(x, collapse=""))
   - convert_modechoice_pa_omx.R writes the demand model mode choice PA trip matrices to OMX matrices.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   
 ## Benefits Calculator File and Folder Setup
-The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.
+The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To install bca4abm, download the
+repository and then run ```python setup.py install```.
 
 *root folder*
   - run_bca.py - run benefit calculator
@@ -108,7 +109,8 @@ The benefit calculator run steps are:
     - ```orca.run(['print_results'])```
 
 # Project Costing Workbook
-Calculates total project costs by type and Net Present Value
+The project cost workbook calculates total project costs by type and Net Present Value.  Instructions are on the first worksheet.
 
 # Visuals Workbook
-Takes as input the benefits and costs, calculates BC ratios, and summaries the results in various forms
+The visuals workbook takes as input the outputs of the benefits calculator and the project costing workbook, 
+calculates BC ratios, and summaries the results in various forms.  Instructions are on the first worksheet.
