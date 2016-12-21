@@ -23,8 +23,8 @@ colnames = apply(colnames,1,function(x) paste(x, collapse=""))
   - convert_modechoice_pa_omx.R writes the demand model mode choice PA trip matrices to OMX matrices.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   
 ## Benefits Calculator File and Folder Setup
-The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To install bca4abm, download the
-repository and then run ```python setup.py install```.
+The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To 
+install bca4abm, download the repository and then run ```python setup.py install```.  
 
 *root folder*
   - run_bca.py - run benefit calculator
@@ -107,6 +107,30 @@ The benefit calculator run steps are:
   - writes results
     - ```orca.run(['write_four_step_results'])```
     - ```orca.run(['print_results'])```
+
+## Outputs 
+The benefits calculator outputs the following files to the ```outputs``` folder:
+  - Standard outputs
+    - bca.log - logs the model steps run
+    - bca_results.h5 - HDF5 file of resulting tables
+      - summary_table - overall results for each benefit calculated
+      - coc_results - benefits by COC for each benefit calculated
+      - zone_demographics - aggregate demographics and zone processor results by zone
+      - aggregate_results - aggregate od processor results
+      - link_daily_benefits - link daily processor results by link
+    - If ```dump``` in the settings file is True, then it writes the following CSV files:
+      - zone_demographics.csv - aggregate demographics processor results
+      - aggregate_results.csv - aggregate od processor results
+      - link_daily_benefits.csv - link daily processor results by link
+  - Trace outputs if a trace OD pair is defined:
+    - hhtrace.log - logs the trace files produced as a result of tracing model expressions for the OD pair define in ```trace_od``` in the setting file  
+    - aggregate_demographics.csv - all expression results for the traced ozone and all values for the traced dzone
+    - aggregate_zone.csv - all expression results for the traced ozone and all values for the traced dzone
+    - aggregate_od.csv - all expression results for the traced OD pair
+    - link_daily_results_base.csv - all expression results for links with a @zone in the traced OD pair in the base scenario
+    - link_daily_results_build.csv - all expression results for links with a @zone in the traced OD pair in the build scenario
+
+Additional useful documentation on how to setup and run the bca4abm tool is [here](https://github.com/RSGInc/bca4abm/wiki).
 
 # Project Costing Workbook
 The project cost workbook calculates total project costs by type and Net Present Value.  Instructions are on the first worksheet.
