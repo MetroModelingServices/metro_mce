@@ -3,7 +3,7 @@ The [Oregon Metro](http://www.oregonmetro.gov/) Multi-Criteria Evaluation (MCE) 
 The MCE toolkit consists of three core tools:
   - Benefits calculator - calculates monetized benefits of transportation projects
   - Project costing workbook - calculates total project costs by type and Net Present Value
-  - Visuals workbook - takes as input the benefits and costs, calculates BC ratios, and summaries the results in various forms
+  - Visuals workbook - takes as input the benefits and costs, calculates B/C ratios, and summarizes and visualizes the results
 
 # Benefits Calculator
 
