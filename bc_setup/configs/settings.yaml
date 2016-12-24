@@ -134,7 +134,13 @@ locals_aggregate_od:
   
 #### Link Daily Processor
 
-link_daily_file_name: linksMD1.csv
+link_daily_file_names:
+  - linksMD1.csv
+  - linksPM2.csv
+
+link_daily_index_fields:
+  - i
+  - j
 
 link_daily_table_column_map:
   i: i
@@ -144,15 +150,16 @@ link_daily_table_column_map:
   "@zone": zone
   "@mtvol": mtvol
   "@htvol": htvol
+  "@speed": speed
   length: length
   num_lanes: num_lanes
-  volume_delay_func: vdf
+  volume_delay_func: volume_delay_func
   "@urbrur": urbrur
   "@divhwy": divhwy
   "@waterf": waterf
   "@noisef": noisef
 
-# specify column name to enable od tracing (if not specified, just trace first link)
+# specify column name to enable zone tracing for both the o and the d zone
 link_daily_od_column: zone
 
 locals_link_daily:
@@ -160,6 +167,14 @@ locals_link_daily:
   LINK_OFFPEAK_TOD_SHARE_AUTO: 8.7
   LINK_PEAK_TOD_SHARE_TRANSIT: 3.2
   LINK_OFFPEAK_TOD_SHARE_TRANSIT: 6.1
+  #SPF coefficients
+  SPF_RS_A: -11.63
+  SPF_RS_B: 1.33
+  SPF_RS_Y: 1.00
+  SPF_INT_A: -10.99
+  SPF_INT_B: 1.07
+  SPF_INT_Y: 0.23
+  #CMF settings
   CMF_RS: 1.0
   CALIBRATION_RS: 1.0
   CMF_INT: 1.0
@@ -188,6 +203,25 @@ locals_link_daily:
   NOISE_COST_HEVTRUCKS_FREEWAY: 41.955
   NOISE_COST_HEVTRUCKS_ARTERIAL: 44.17
   NOISE_COST_HEVTRUCKS_COLLECTOR: 8.71
+  #Vehicle operating cost
+  GAS_COST: 2.80
+  TRUCK_GAS_COST: 3.08
+  GALLON_TO_BTU: 120524
+  CAR_COST_PER_MILE: 0.0628
+  TRUCK_COST_PER_MILE: 0.5070
+  #emissions
+  GRAMS_TO_METRIC_TONS: 0.000001
+  CO2_COST: 51.81
+  PM25_COST: 459000
+  PM10_COST: 139000
+  NOX_COST: 7300
+  VOCS_COST: 37900
+  CO2_PTYPE: 98
+  PM25_PTYPE: 110
+  PM10_PTYPE: 100
+  NOX_PTYPE: 3
+  VOCS_PTYPE: 87
+  FUEL_CONSUMPTION_PTYPE: 92
 
 tables_link_daily:
   EMISSIONS: moves_2010_summer_running_rates.csv
