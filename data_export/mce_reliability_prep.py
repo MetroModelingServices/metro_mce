@@ -120,7 +120,7 @@ if __name__ == "__main__":
       
       if link.volume_delay_func == freeway_vdf: #freeway
         
-        vc = link["auto_volume"] / link["@mb"]
+        vc = link["auto_volume"] / link["ul3"]
         link["@losc"] = (1 if ( vc >= 0.7 ) else 0) * (vc - 0.69)
         link["@losd"] = (1 if ( vc >= 0.8 ) else 0) * (vc - 0.79)
         link["@lose"] = (1 if ( vc >= 0.9 ) else 0) * (vc - 0.89)
@@ -135,7 +135,7 @@ if __name__ == "__main__":
       
       elif link.volume_delay_func in [2,4,9]: #arterial
         
-        vc = link["auto_volume"] / link["@mb"]
+        vc = link["auto_volume"] / link["ul3"]
         link["@loscart"] = (1 if ( vc >= 0.7 ) else 0) * (vc - 0.69)
         link["@losflart"] = (1 if ( vc >= 1.0 ) else 0) * (vc - 0.99)
         link["@lanes2"] = 1 if ( link["num_lanes"] == 2 ) else 0
