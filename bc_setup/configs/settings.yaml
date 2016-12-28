@@ -111,8 +111,12 @@ aggregate_od_matrices:
   assign_mfs: assign_mfs.omx
   skims_mfs: skims_mfs.omx
   mode_choice_pa: mode_choice_pa.omx
-
+  park_cost: parking_cost.omx
+  
 locals_aggregate_od:
+  #time-of-day factors
+  HBC_PK: 0.407
+  HBC_OP: 0.593
   #value-of-time ($/hour; currently all equal, USDOT)
   VOT_HBC: 14.66
   VOT_HBO: 14.66
@@ -124,6 +128,7 @@ locals_aggregate_od:
   VOT_SCH: 14.66
   VOT_MEDTRK: 25.00
   VOT_HVYTRK: 38.00
+  VOT_DRIVE_TRANSIT: 14.66
   #Simple ITHIM
   POPULATION: 3000000
   WALK_SPEED: 3

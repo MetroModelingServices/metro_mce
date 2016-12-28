@@ -21,6 +21,7 @@ colnames = apply(colnames,1,function(x) paste(x, collapse=""))
   - bca_EMME_Export.bat exports the required matrices (mfs) and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
   - mce_reliability_prep.py codes freeway interchange nodes, upstream and downstream distances, and calculates the link reliability measure for skimming.  Run it after assignment and then skim the link @relvar attr.
   - convert_modechoice_pa_omx.R writes the demand model mode choice PA trip matrices to OMX matrices.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
+  - parking_costs_to_omx.R converts the short term and long term parking cost by zone to an OMX matrix.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   
 ## Benefits Calculator File and Folder Setup
 The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To 
@@ -42,6 +43,7 @@ install bca4abm, download the repository and then run ```python setup.py install
         - assign_mfs.omx - assignment bank matrices
         - skims_mfs.omx - skims bank matrices
         - mode_choice_pa.omx - mode choice production-attraction matrices
+        - parking_cost.omx - parking costs at the destination
       - Zone 
         - mf.cval.csv - see above
         - cocs.csv - externally defined COC share of households by zone
