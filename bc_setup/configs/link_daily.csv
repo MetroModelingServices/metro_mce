@@ -62,9 +62,9 @@ Silos,Description,Target,Expression
 , total INT PDO crash,_int_crashes_pdo,_crashes_int * INT_CRASH_PDO
 , total INT injury crash,_int_crashes_inj,_crashes_int * INT_CRASH_INJURY
 , total INT fatal crash,_int_crashes_fat,_crashes_int * INT_CRASH_FATAL
-*, total annual  PDO crashes,total_pdo_crashes,_rs_crashes_pdo + _int_crashes_pdo
-*, total annual injury crashes,total_inj_crashes,_rs_crashes_inj + _int_crashes_inj
-*, total annual fatal crashes,total_fat_crashes,_rs_crashes_fat + _int_crashes_fat
+, total annual  PDO crashes,total_pdo_crashes,_rs_crashes_pdo + _int_crashes_pdo
+, total annual injury crashes,total_inj_crashes,_rs_crashes_inj + _int_crashes_inj
+, total annual fatal crashes,total_fat_crashes,_rs_crashes_fat + _int_crashes_fat
 *, total crashes cost,cost_of_crashes_benefit,(total_pdo_crashes * CRASH_COST_PDO + total_inj_crashes * CRASH_COST_INJURY + total_fat_crashes * CRASH_COST_FATAL) * DISCOUNT_RATE
 #surface water,,,
 *,water pollution cost,water_pollution_cost,_waterf * _vmt_total * WATER_POLLUTION_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -81,7 +81,7 @@ Silos,Description,Target,Expression
 , ,_freeway_noise_cost,_auto_noise_cost_fwy + _mtrucks_noise_cost_fwy + _htrucks_noise_cost_fwy
 , ,_arterial_noise_cost,_auto_noise_cost_art + _mtrucks_noise_cost_art + _htrucks_noise_cost_art
 , ,_collector_noise_cost,_auto_noise_cost_col + _mtrucks_noise_cost_col + _htrucks_noise_cost_col
-*, total noise cost,total_noise_cost,_noisef * (_freeway_noise_cost + _arterial_noise_cost + _collector_noise_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+*,noise pollution cost,total_noise_cost,_noisef * (_freeway_noise_cost + _arterial_noise_cost + _collector_noise_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 #emissions lookup table,,,
 ,set lookup index on table,_EMISSIONS_TABLE,EMISSIONS.set_index(EMISSIONS['Ltype'] + '_' +  EMISSIONS['Speed'].astype(str))
 ,,_ltype,_freeway * 1 + _arterial * 2 + _collector * 3 + _ramp * 4
@@ -95,18 +95,18 @@ Silos,Description,Target,Expression
 ,,_pm10_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
 ,,_nox_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
 ,,_vocs_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
-*,co2 emissions cost,emissions_co2,_co2_rate * _vmt_total * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,pm25 emissons cost,emissions_pm25,_pm25_rate * _vmt_total * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,pm10 emissions cost,emissions_pm10,_pm10_rate * _vmt_total * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,nox emissions costs,emissions_nox,_nox_rate * _vmt_total * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,vocs emissions costs,emissions_vocs,_vocs_rate * _vmt_total * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,co2 emissions cost,emissions_co2,_co2_rate * _vmt_total * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25,_pm25_rate * _vmt_total * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10,_pm10_rate * _vmt_total * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox,_nox_rate * _vmt_total * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs,_vocs_rate * _vmt_total * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 *,total emissions cost,emissions,emissions_co2 + emissions_pm25 + emissions_pm10 + emissions_nox + emissions_vocs
 #vehicle operating costs ,,,
 ,,_fuelconsump_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
 ,,auto_fuel_cost,_auto_volume_daily * _length * _fuelconsump_rate * GALLON_TO_BTU * GAS_COST
 ,,truck_fuel_cost,_truck_volume_daily * _length * _fuelconsump_rate * GALLON_TO_BTU * TRUCK_GAS_COST
-*,fuel auto op cost,fuel_cost,(auto_fuel_cost + truck_fuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+*,fuel auto operating cost,fuel_cost,(auto_fuel_cost + truck_fuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 #vehicle operating costs - non-fuel,,,
 ,,auto_nonfuel_cost,_auto_volume_daily * _length * CAR_COST_PER_MILE
 ,,truck_nonfuel_cost,_truck_volume_daily * _length * TRUCK_COST_PER_MILE
-*,nonfuel auto op cost,nonfuel_cost,(auto_nonfuel_cost + truck_nonfuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+*,nonfuel auto operating cost,nonfuel_cost,(auto_nonfuel_cost + truck_nonfuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
