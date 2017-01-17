@@ -6,7 +6,10 @@
 #Settings
 folder = "C:\\Users\\ben.stabler\\Desktop\\"
 omxFileName = "mode_choice_pa.omx"
-matNames = c("mf.hwda.lowinc.dat")
+matNames = c("mf.hwda.lowinc.dat",
+             "mf.hwda.medinc.dat",
+             "mf.hwda.highinc.dat"
+             )
 numZones = 2162
 
 #Create OMX matrix
