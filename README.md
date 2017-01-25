@@ -5,6 +5,8 @@ The MCE toolkit consists of three core tools:
   - Project costing workbook - calculates total project costs by type and Net Present Value
   - Visuals workbook - takes as input the benefits and costs, calculates B/C ratios, and summarizes and visualizes the results
 
+Note that you need [Git LFS](https://git-lfs.github.com/) to download this repo due to the large OMX files.
+
 # Benefits Calculator
 
 ## Travel Model Data Export
@@ -20,7 +22,7 @@ colnames = apply(colnames,1,function(x) paste(x, collapse=""))
   - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file
   - bca_EMME_Export.bat exports the required matrices (mfs) and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
   - mce_reliability_prep.py codes freeway interchange nodes, upstream and downstream distances, and calculates the link reliability measure for skimming.  Run it after assignment and then skim the link @relvar attr.
-  - convert_modechoice_pa_omx.R writes the demand model mode choice PA trip matrices to OMX matrices.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
+  - convert_modechoice_pa_omx_part1.R and convert_modechoice_pa_omx_part2.R write the demand model mode choice PA trip matrices to OMX matrices.  These scripts required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   - parking_costs_to_omx.R converts the short term and long term parking cost by zone to an OMX matrix.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   
 ## Benefits Calculator File and Folder Setup
