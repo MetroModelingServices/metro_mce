@@ -110,13 +110,14 @@ locals_aggregate_zone:
 aggregate_od_matrices:
   assign_mfs: assign_mfs.omx
   skims_mfs: skims_mfs.omx
-  mode_choice_pa: mode_choice_pa.omx
+  mode_choice_pa1: mode_choice_pa_part1.omx
+  mode_choice_pa2: mode_choice_pa_part2.omx
   park_cost: parking_cost.omx
   
 locals_aggregate_od:
   #time-of-day factors
-  HBC_PK: 0.407
-  HBC_OP: 0.593
+  HBW_PK: 0.50
+  HBW_OP: 0.50
   #value-of-time ($/hour; currently all equal, USDOT)
   VOT_HBC: 14.66
   VOT_HBO: 14.66
@@ -150,21 +151,62 @@ link_daily_index_fields:
 link_daily_table_column_map:
   i: i
   j: j
-  "@hvol": hvol
-  "@svol": svol
-  "@zone": zone
-  "@mtvol": mtvol
-  "@htvol": htvol
-  "@speed": speed
-  length: length
-  num_lanes: num_lanes
-  volume_delay_func: volume_delay_func
-  "@urbrur": urbrur
-  "@divhwy": divhwy
-  "@waterf": waterf
-  "@noisef": noisef
-  "@signal": signal
-  "@stop": stop
+  "@zone" : zone
+  "@amrmp" : amrmp
+  "@cap" : cap
+  "@divhwy" : divhwy
+  "@dwdist" : dwdist
+  "@fwcap" : fwcap
+  "@htkad" : htkad
+  "@htvol" : htvol
+  "@hvol" : hvol
+  "@lanes2" : lanes2
+  "@lanes3" : lanes3
+  "@lanes4" : lanes4
+  "@losc" : losc
+  "@loscart" : loscart
+  "@losd" : losd
+  "@lose" : lose
+  "@losfh" : losfh
+  "@losfl" : losfl
+  "@losflart" : losflart
+  "@mb" : mb
+  "@mdrmp" : mdrmp
+  "@mpa" : mpa
+  "@mtkad" : mtkad
+  "@mtvol" : mtvol
+  "@noisef" : noisef
+  "@pmrmp" : pmrmp
+  "@relvar" : relvar
+  "@signal" : signal
+  "@spd35" : spd35
+  "@spd40" : spd40
+  "@spd45" : spd45
+  "@spd50" : spd50
+  "@spd50p" : spd50p
+  "@spd70" : spd70
+  "@speed" : speed
+  "@stop" : stop
+  "@svol" : svol
+  "@tknet" : tknet
+  "@tkpth" : tkpth
+  "@trkad" : trkad
+  "@ul3" : total link capacity
+  "@updist" : updist
+  "@urbrur" : urbrur
+  "@waterf" : waterf
+  "@barrier" : barrier
+  additional_volume : additional_volume
+  auto_time : auto_time
+  auto_volume : auto_volume
+  data1 : data1
+  data2 : data2
+  data3 : data3
+  length : length
+  num_lanes : num_lanes
+  type : type
+  vertices : vertices
+  volume_delay_func : volume_delay_func
 
 # specify column name to enable zone tracing for both the o and the d zone
 link_daily_od_column: zone

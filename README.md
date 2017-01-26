@@ -39,12 +39,71 @@ install bca4abm, download the repository and then run ```python setup.py install
       - link_daily.csv - expressions for link calculations - safety, vehicle operating costs, emissions, water, noise 
   - base scenario folder
       - link
-        - linksMD1.csv - link MD1 assignment results
-        - linksPM2.csv - link PM2 assignment results
+        - linksMD1.csv - link MD1 assignment results with the following fields:
+          - i - i node
+          - j - j node
+          - @zone - zone
+          - @amrmp - ?
+          - @cap - capacity
+          - @divhwy - divided highway
+          - @dwdist - ?
+          - @fwcap - ?
+          - @htkad - ?
+          - @htvol - heavy truck volume
+          - @hvol - hov volume
+          - @lanes2 - is a 2 lane link
+          - @lanes3 - is a 3 lane link
+          - @lanes4 - is a 4 lane link
+          - @losc - los c
+          - @loscart - los c arterial
+          - @losd - los d
+          - @lose - los e
+          - @losfh - los f high
+          - @losfl - los f low
+          - @losflart - los f low arterial
+          - @mb - ?
+          - @mdrmp - ?
+          - @mpa - ?
+          - @mtkad - ?
+          - @mtvol - med truck volume
+          - @noisef - noise benefit adjustment factor
+          - @pmrmp - ?
+          - @relvar - reliability variance 
+          - @signal - to node is a signal
+          - @spd35 - is 35mph 
+          - @spd40 - is 40mph 
+          - @spd45 - is 45mph 
+          - @spd50 - is 50mph 
+          - @spd50p - is 50mph 
+          - @spd70 - is 70mph 
+          - @speed - speed
+          - @stop - to node is a stop
+          - @svol - sov volume
+          - @tknet - ? 
+          - @tkpth - ?
+          - @trkad - ?
+          - @ul3 - ?
+          - @updist - upstream ramp distance
+          - @urbrur - urban or rural
+          - @waterf - water benefit adjustment factor
+          - @barrier - barrier 
+          - additional_volume - ? 
+          - auto_time - ?
+          - auto_volume - total auto volume
+          - data1 - ? 
+          - data2 - ?
+          - data3 - ?
+          - length - link length
+          - num_lanes - number of lanes
+          - type - link type 
+          - vertices - ?
+          - volume_delay_func - vdf code
+        - linksPM2.csv - link PM2 assignment results with the same fields
       - OD  
         - assign_mfs.omx - assignment bank matrices
         - skims_mfs.omx - skims bank matrices
-        - mode_choice_pa.omx - mode choice production-attraction matrices
+        - mode_choice_pa_part1.omx - half of the mode choice production-attraction matrices
+        - mode_choice_pa_part2.omx - half of the mode choice production-attraction matrices
         - parking_cost.omx - parking costs at the destination
       - Zone 
         - mf.cval.csv - see above
