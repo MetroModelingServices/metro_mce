@@ -5,7 +5,7 @@ provenance: example_4step.configs
 
 dump: True
 
-trace_od: [5, 11]
+trace_od: [6, 11]
 
 # values available to all processors
 globals:
@@ -216,26 +216,65 @@ locals_link_daily:
   LINK_OFFPEAK_TOD_SHARE_AUTO: 8.7
   LINK_PEAK_TOD_SHARE_TRANSIT: 3.2
   LINK_OFFPEAK_TOD_SHARE_TRANSIT: 6.1
-  #SPF coefficients
-  SPF_RS_A: -11.63
-  SPF_RS_B: 1.33
-  SPF_RS_Y: 1.00
-  SPF_INT_A: -10.99
-  SPF_INT_B: 1.07
-  SPF_INT_Y: 0.23
-  #CMF settings
-  CMF_RS: 1.0
-  CALIBRATION_RS: 1.0
-  CMF_INT: 1.0
-  CALIBRATION_INT: 1.0
-  # Distribution of RS crashes
-  RS_CRASH_PDO: 0.679
-  RS_CRASH_INJURY: 0.308
-  RS_CRASH_FATAL: 0.013
-  # Distribution of INT crashes
-  INT_CRASH_PDO: 0.679
-  INT_CRASH_INJURY: 0.308
-  INT_CRASH_FATAL: 0.013
+  #Average Lane width
+  LW_FWY: 12
+  LW_HWY: 11.5
+  LW_ART: 11.5
+  #Average Inside Shoulder Width
+  ISW_FWY: 8
+  ISW_HWY: 3
+  ISW_ART: 0
+  #Average Outside Shoulder Width
+  OSW_FWY: 11
+  OSW_HWY: 10
+  OSW_ART: 10
+  #Crash Type Calibration Constants
+  #Freeways
+  CfwyF: 1.0
+  CfwyI: 1.0
+  CfwyP: 1.0
+  #Rural Multi Lane
+  CrxlF: 1.0
+  CrxlI: 1.0
+  CrxlP: 1.0
+  #Rural Multi Lane Intersections
+  CrxlF_X: 1.0
+  CrxlI_X: 1.0
+  CrxlP_X: 1.0
+  #Rural 2 Lane
+  Cr2lF: 1.0
+  Cr2lI: 1.0
+  Cr2lP: 1.0
+  #Rural 2 Lane Intersections
+  Cr2lF_X: 1.0
+  Cr2lI_X: 1.0
+  Cr2lP_X: 1.0
+  #Urban Arterials
+  CurbF: 1.0
+  CurbI: 1.0
+  CurbP: 1.0
+  #Urban Arterials Intersections
+  CurbF_X: 1.0
+  CurbI_X: 1.0
+  CurbP_X: 1.0
+  # Proportion of fatal in F/I crashes from TN
+  PERCENT_FATAL: 0.0188
+  #Distribution of crashes on rural 2 lane highways
+  R2L_PDO: 0.679
+  R2L_F: 0.013
+  #Number of driveways within roadway segment of driveway type
+  #Major Commercial
+  DMJC: 0.01
+  #Minor Commercial
+  DMNC: 0.01
+  #Major Industrial/Institutional
+  DMJI: 0.01
+  #Minor Industrial/Institutional
+  DMNI: 0.01
+  #Major Residential
+  DMJR: 0.01
+  #Minor Residential
+  DMNR: 0.01
   # Crash costs in Dollars
   CRASH_COST_PDO: 2500
   CRASH_COST_INJURY: 25000
