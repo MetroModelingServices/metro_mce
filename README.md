@@ -169,7 +169,7 @@ The benefits calculator outputs the following files to the ```outputs``` folder:
   - Standard outputs with the setting ```dump``` set to True:
     - **aggregate_results.csv - overall results for each benefit calculated by COC, including everybody**
     - zone_demographics.csv - aggregate demographics processor results
-    - ? - aggregate zone processor results
+    - aggregate_zone_benefits.csv - aggregate zone processor results
     - aggregate_od_benefits.csv - aggregate od processor results
     - link_daily_benefits.csv - link daily processor results
     - bca.log - logs the model steps run
@@ -210,6 +210,6 @@ The steps to run the complete toolkit from start to finish are:
     2. The results are in the Present Value Sum table on the PV_Summary tab
   - Visuals Workbook
     1. Setup a visuals workbook.  Make sure to review and update the settings as needed, including setting the correct year for visualization/analysis.  
-    2. Copy the aggregate_results.csv data to the Benefits tab.  Set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
-    3. Copy the Present Value Sum table data to the Costs tab.  Set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
+    2. Copy the aggregate_results.csv data to the Benefits tab and set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
+    3. Copy the Present Value Sum table data to the Costs tab and set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
     4. Configure the visuals as needed and enjoy
