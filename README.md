@@ -15,12 +15,8 @@ The scripts in this folder are used to export the required data from the R trave
 
 ```
 mf.cval column order - A (age of head) flows first, I (income), H (size), W (workers), C (cars)
-colnames = expand.grid( 
-    paste("a",seq(1:4),sep=""), 
-    paste("i",seq(1:4),sep=""), 
-    paste("h",seq(1:4),sep=""), 
-    paste("w",seq(1:4),sep=""), 
-    paste("c",seq(1:4),sep="") )
+colnames = expand.grid( paste("a",seq(1:4),sep=""), paste("i",seq(1:4),sep=""), 
+  paste("h",seq(1:4),sep=""), paste("w",seq(1:4),sep=""), paste("c",seq(1:4),sep="") )
 colnames = apply(colnames,1,function(x) paste(x, collapse=""))
 ```
 
