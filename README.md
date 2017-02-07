@@ -14,7 +14,7 @@ The scripts in this folder are used to export the required data from the R trave
   - Various R scripts - these demand model scripts were revised to output trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format
 
 ```
-mf.cval column order - A (age of head) flows first, I (income), H (size), W (workers), C (car ownership)
+mf.cval column order - A (age of head) flows first, I (income), H (size), W (workers), C (cars)
 colnames = expand.grid( 
     paste("a",seq(1:4),sep=""), 
     paste("i",seq(1:4),sep=""), 
@@ -24,8 +24,8 @@ colnames = expand.grid(
 colnames = apply(colnames,1,function(x) paste(x, collapse=""))
 ```
 
- - convert_modechoice_pa_omx_part1.R and convert_modechoice_pa_omx_part2.R write the demand model mode choice PA trip matrices to OMX matrices.  These scripts required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
-   - parking_costs_to_omx.R converts the short term and long term parking cost by zone to an OMX matrix.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
+  - convert_modechoice_pa_omx_part1.R and convert_modechoice_pa_omx_part2.R write the demand model mode choice PA trip matrices to OMX matrices.  These scripts required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
+  - parking_costs_to_omx.R converts the short term and long term parking cost by zone to an OMX matrix.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   - mce_reliability_prep.py codes freeway interchange nodes, upstream and downstream distances, and calculates the link reliability measure for skimming.  Run it after assignment and then skim the link @relvar attr.
   - bca_EMME_Export.bat exports the required matrices (mfs) and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
   - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file.  The required link fields are listed below.
@@ -224,4 +224,4 @@ The steps to run the complete toolkit from start to finish are:
     1. Setup a visuals workbook.  Make sure to review and update the settings as needed, including setting the correct year for visualization/analysis.  
     2. Copy the aggregate_results.csv data to the Benefits tab.  Set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
     3. Copy the Present Value Sum table data to the Costs tab.  Set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
-    4. Configure the visuals as needed.
+    4. Configure the visuals as needed and enjoy
