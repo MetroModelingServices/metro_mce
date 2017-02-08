@@ -11,15 +11,7 @@ Note that you need [Git LFS](https://git-lfs.github.com/) to download this repo 
 
 ## Travel Model Data Export
 The scripts in this folder are used to export the required data from the R travel demand model and the EMME travel supply model for import into the benefits calculator.
-  - Various R scripts - these demand model scripts were revised to output trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format
-
-```
-mf.cval column order - A (age of head) flows first, I (income), H (size), W (workers), C (cars)
-colnames = expand.grid( paste("a",seq(1:4),sep=""), paste("i",seq(1:4),sep=""), 
-  paste("h",seq(1:4),sep=""), paste("w",seq(1:4),sep=""), paste("c",seq(1:4),sep="") )
-colnames = apply(colnames,1,function(x) paste(x, collapse=""))
-```
-
+  - Various R scripts - these demand model scripts were revised to output trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format. See the j.hbw_Generation.R script for the mf.cval column order.
   - convert_modechoice_pa_omx_part1.R and convert_modechoice_pa_omx_part2.R write the demand model mode choice PA trip matrices to OMX matrices.  These scripts required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   - parking_costs_to_omx.R converts the short term and long term parking cost by zone to an OMX matrix.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   - mce_reliability_prep.py codes freeway interchange nodes, upstream and downstream distances, and calculates the link reliability measure for skimming.  Run it after assignment and then skim the link @relvar attr.
@@ -177,7 +169,7 @@ The benefits calculator outputs the following files to the ```outputs``` folder:
   - Standard outputs with the setting ```dump``` set to True:
     - **aggregate_results.csv - overall results for each benefit calculated by COC, including everybody**
     - zone_demographics.csv - aggregate demographics processor results
-    - ? - aggregate zone processor results
+    - aggregate_zone_benefits.csv - aggregate zone processor results
     - aggregate_od_benefits.csv - aggregate od processor results
     - link_daily_benefits.csv - link daily processor results
     - bca.log - logs the model steps run
@@ -218,6 +210,6 @@ The steps to run the complete toolkit from start to finish are:
     2. The results are in the Present Value Sum table on the PV_Summary tab
   - Visuals Workbook
     1. Setup a visuals workbook.  Make sure to review and update the settings as needed, including setting the correct year for visualization/analysis.  
-    2. Copy the aggregate_results.csv data to the Benefits tab.  Set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
-    3. Copy the Present Value Sum table data to the Costs tab.  Set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
+    2. Copy the aggregate_results.csv data to the Benefits tab and set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
+    3. Copy the Present Value Sum table data to the Costs tab and set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
     4. Configure the visuals as needed and enjoy
