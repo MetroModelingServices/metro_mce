@@ -482,23 +482,23 @@ Silos,Description,Target,Expression
 , total annual  PDO crashes,total_pdo_crashes,_p_crashes_fwy+_p_crashes_rxl+_p_crashes_r2l+_p_crashes_urb
 , total annual injury crashes,total_inj_crashes,_i_crashes_fwy+_i_crashes_rxl+_i_crashes_r2l+_i_crashes_urb
 , total annual fatal crashes,total_fat_crashes,_f_crashes_fwy+_f_crashes_rxl+_f_crashes_r2l+_f_crashes_urb
-*, total crashes cost,cost_of_crashes_benefit,(total_pdo_crashes * CRASH_COST_PDO + total_inj_crashes * CRASH_COST_INJURY + total_fat_crashes * CRASH_COST_FATAL) * DISCOUNT_RATE
+*,roadway safety cost benefit,safety_cost_benefit,((total_pdo_crashes * CRASH_COST_PDO + total_inj_crashes * CRASH_COST_INJURY + total_fat_crashes * CRASH_COST_FATAL) * DISCOUNT_RATE) * -1
 #surface water,,,
-*,water pollution cost,water_pollution_cost,_waterf * _vmt_total * WATER_POLLUTION_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+*,surface water pollution cost benefit,surface_water_pollution_cost_benefit,(_waterf * _vmt_total * WATER_POLLUTION_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
 #noise,,,
-, Auto freeway noise cost,_auto_noise_cost_fwy,(_freeway | _ramp ) * _auto_volume_daily * (NOISE_COST_AUTO_FREEWAY /1000)
-, Med trucks freeway noise cost,_mtrucks_noise_cost_fwy,(_freeway | _ramp )  *_med_truck_volume_daily * (NOISE_COST_MEDTRUCKS_FREEWAY/1000)
-, Heavy trucks freeway noise cost,_htrucks_noise_cost_fwy,(_freeway | _ramp )  *_heavy_truck_volume_daily * (NOISE_COST_HEVTRUCKS_FREEWAY/1000)
-, Auto arterial noise cost,_auto_noise_cost_art,_arterial * _auto_volume_daily * (NOISE_COST_AUTO_ARTERIAL/1000)
-, Med trucks arterial noise cost,_mtrucks_noise_cost_art,_arterial *_med_truck_volume_daily * (NOISE_COST_MEDTRUCKS_ARTERIAL/1000)
-, Heavy trucks arterial noise cost,_htrucks_noise_cost_art,_arterial *_heavy_truck_volume_daily * (NOISE_COST_HEVTRUCKS_ARTERIAL/1000)
-, Auto collector noise cost,_auto_noise_cost_col,_collector * _auto_volume_daily * (NOISE_COST_AUTO_COLLECTOR/1000)
-, Med trucks collector noise cost,_mtrucks_noise_cost_col,_collector *_med_truck_volume_daily * (NOISE_COST_MEDTRUCKS_COLLECTOR/1000)
-, Heavy trucks collector noise cost,_htrucks_noise_cost_col,_collector *_heavy_truck_volume_daily * (NOISE_COST_HEVTRUCKS_COLLECTOR/1000)
+, Auto freeway noise cost,_auto_noise_cost_fwy,(_freeway | _ramp ) * _auto_volume_daily * _length * (NOISE_COST_AUTO_FREEWAY /1000)
+, Med trucks freeway noise cost,_mtrucks_noise_cost_fwy,(_freeway | _ramp )  *_med_truck_volume_daily * _length *(NOISE_COST_MEDTRUCKS_FREEWAY/1000)
+, Heavy trucks freeway noise cost,_htrucks_noise_cost_fwy,(_freeway | _ramp )  *_heavy_truck_volume_daily * _length *(NOISE_COST_HEVTRUCKS_FREEWAY/1000)
+, Auto arterial noise cost,_auto_noise_cost_art,_arterial * _auto_volume_daily *_length *(NOISE_COST_AUTO_ARTERIAL/1000)
+, Med trucks arterial noise cost,_mtrucks_noise_cost_art,_arterial *_med_truck_volume_daily *_length * (NOISE_COST_MEDTRUCKS_ARTERIAL/1000)
+, Heavy trucks arterial noise cost,_htrucks_noise_cost_art,_arterial *_heavy_truck_volume_daily *_length *(NOISE_COST_HEVTRUCKS_ARTERIAL/1000)
+, Auto collector noise cost,_auto_noise_cost_col,_collector * _auto_volume_daily * _length *(NOISE_COST_AUTO_COLLECTOR/1000)
+, Med trucks collector noise cost,_mtrucks_noise_cost_col,_collector *_med_truck_volume_daily * _length *(NOISE_COST_MEDTRUCKS_COLLECTOR/1000)
+, Heavy trucks collector noise cost,_htrucks_noise_cost_col,_collector *_heavy_truck_volume_daily * _length *(NOISE_COST_HEVTRUCKS_COLLECTOR/1000)
 , ,_freeway_noise_cost,_auto_noise_cost_fwy + _mtrucks_noise_cost_fwy + _htrucks_noise_cost_fwy
 , ,_arterial_noise_cost,_auto_noise_cost_art + _mtrucks_noise_cost_art + _htrucks_noise_cost_art
 , ,_collector_noise_cost,_auto_noise_cost_col + _mtrucks_noise_cost_col + _htrucks_noise_cost_col
-*,noise pollution cost,total_noise_cost,_noisef * (_freeway_noise_cost + _arterial_noise_cost + _collector_noise_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+*,noise pollution cost benefit,noise_pollution_cost_benefit,(_noisef * (_freeway_noise_cost + _arterial_noise_cost + _collector_noise_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
 #emissions lookup table,,,
 ,set lookup index on table,_EMISSIONS_TABLE,EMISSIONS.set_index(EMISSIONS['Ltype'] + '_' +  EMISSIONS['Speed'].astype(str))
 ,,_ltype,_freeway * 1 + _arterial * 2 + _collector * 3 + _ramp * 4
@@ -517,13 +517,14 @@ Silos,Description,Target,Expression
 ,pm10 emissions cost,emissions_pm10,_pm10_rate * _vmt_total * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,nox emissions costs,emissions_nox,_nox_rate * _vmt_total * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,vocs emissions costs,emissions_vocs,_vocs_rate * _vmt_total * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,total emissions cost,emissions,emissions_co2 + emissions_pm25 + emissions_pm10 + emissions_nox + emissions_vocs
-#vehicle operating costs ,,,
-,,_fuelconsump_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
-,,auto_fuel_cost,_auto_volume_daily * _length * _fuelconsump_rate * GALLON_TO_BTU * GAS_COST
-,,truck_fuel_cost,_truck_volume_daily * _length * _fuelconsump_rate * GALLON_TO_BTU * TRUCK_GAS_COST
-*,fuel auto operating cost,fuel_cost,(auto_fuel_cost + truck_fuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+*,emissions cost benefit,emissions_cost_benefit,(emissions_co2 + emissions_pm25 + emissions_pm10 + emissions_nox + emissions_vocs) * -1
+#vehicle operating costs - fuel,,,
+,million BTUs per mile,_fuelconsump_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,auto_fuel_cost,((_auto_volume_daily * _length * _fuelconsump_rate) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost,((_truck_volume_daily * _length * _fuelconsump_rate) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,fuel auto operating cost,fuel_cost,((auto_fuel_cost + truck_fuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
 #vehicle operating costs - non-fuel,,,
 ,,auto_nonfuel_cost,_auto_volume_daily * _length * CAR_COST_PER_MILE
 ,,truck_nonfuel_cost,_truck_volume_daily * _length * TRUCK_COST_PER_MILE
-*,nonfuel auto operating cost,nonfuel_cost,(auto_nonfuel_cost + truck_nonfuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nonfuel auto operating cost,nonfuel_cost,((auto_nonfuel_cost + truck_nonfuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
+*,vehicle operating cost benefit,veh_operating_cost_benefit,fuel_cost + nonfuel_cost

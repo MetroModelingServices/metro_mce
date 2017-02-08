@@ -18,7 +18,7 @@ Silos,Description,Target,Expression
 # calculate auto ownership benefit,,,
 ,base scenario auto ownership cost,base_auto_ownership_cost,base_auto_ownership * ANNUAL_COST_PER_VEHICLE
 ,build scenario auto ownership cost,build_auto_ownership_cost,build_auto_ownership * ANNUAL_COST_PER_VEHICLE
-*,auto ownership cost benefit,auto_ownership_benefit, build_auto_ownership_cost - base_auto_ownership_cost
+*,vehicle ownership cost benefit,veh_ownership_cost_benefit,(build_auto_ownership_cost - base_auto_ownership_cost) * -1
 # calculate productions by purpose for accessibility benefit,,,
 ,hbc productions in base scenario,base_prod_hbc,zones.base_hbcpr
 ,hbo productions in base scenario,base_prod_hbo,zones.base_hboprl + zones.base_hboprm + zones.base_hboprh
@@ -53,7 +53,7 @@ Silos,Description,Target,Expression
 ,nhbnw logsum in build scenario,build_ls_nhbnw,zones.build_nhbnwdcls
 ,nhbw logsum in build scenario,build_ls_nhbw,zones.build_nhbwdcls
 ,sch logsum in build scenario,build_ls_sch,zones.build_schdcls
-#calculate accessibility benefit,,,
+#calculate travel options benefit,,,
 ,,access_benefit_hbc,(0.5*(base_prod_hbc + build_prod_hbc)*(build_ls_hbc - base_ls_hbc)/UPM_HBC)*(VOT_HBC/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,access_benefit_hbo,(0.5*(base_prod_hbo + build_prod_hbo)*(build_ls_hbo - base_ls_hbo)/UPM_HBO)*(VOT_HBO/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,access_benefit_hbr,(0.5*(base_prod_hbr + build_prod_hbr)*(build_ls_hbr - base_ls_hbr)/UPM_HBR)*(VOT_HBR/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -62,4 +62,4 @@ Silos,Description,Target,Expression
 ,,access_benefit_nhbnw,(0.5*(base_prod_nhbnw + build_prod_nhbnw)*(build_ls_nhbnw - base_ls_nhbnw)/UPM_NHBNW)*(VOT_NHBNW/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,access_benefit_nhbw,(0.5*(base_prod_nhbw + build_prod_nhbw)*(build_ls_nhbw - base_ls_nhbw)/UPM_NHBW)*(VOT_NHBW/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,access_benefit_sch,(0.5*(base_prod_sch + build_prod_sch)*(build_ls_sch - base_ls_sch)/UPM_SCH)*(VOT_SCH/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,accessibility benefit,access_benefit_total,access_benefit_hbc + access_benefit_hbo + access_benefit_hbr + access_benefit_hbs + access_benefit_hbw + access_benefit_nhbnw + access_benefit_nhbw + access_benefit_sch
+*,travel options benefit,travel_options_benefit,access_benefit_hbc + access_benefit_hbo + access_benefit_hbr + access_benefit_hbs + access_benefit_hbw + access_benefit_nhbnw + access_benefit_nhbw + access_benefit_sch

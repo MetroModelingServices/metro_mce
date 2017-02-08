@@ -41,17 +41,7 @@ Silos,Description,Target,Expression
 ,,hbw_wtransit_am_travel_time_benefit, -0.5 * HBW_PK * (base_wtransit_pa_trips_hbw + build_wtransit_pa_trips_hbw) * ((build_wtransit_am_travel_time - base_wtransit_am_travel_time) * VOT_HBW/60.0)
 ,,hbw_wtransit_md_travel_time_benefit, -0.5 * HBW_OP * (base_wtransit_pa_trips_hbw + build_wtransit_pa_trips_hbw) * ((build_wtransit_md_travel_time - base_wtransit_md_travel_time) * VOT_HBW/60.0)
 ,hbw wtransit benefit,hbw_wtransit_travel_time_benefit,(hbw_wtransit_am_travel_time_benefit + hbw_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,hbw travel time benefit,hbw_travel_time_benefit,hbw_da_travel_time_benefit + hbw_dp_travel_time_benefit + hbw_p_travel_time_benefit + hbw_wtransit_travel_time_benefit
-#travel time reliability; CURRENTLY ONLY HBW UNTIL WE GET ALL THE REQUIRED DATA,,,
-,,base_am_reliability,"np.sqrt( skims_mfs_base[""mf5""] )"
-,,build_am_reliability,"np.sqrt( skims_mfs_build[""mf5""] )"
-,,base_md_reliability,"np.sqrt( skims_mfs_base[""mf5""] )"
-,,build_md_reliability,"np.sqrt( skims_mfs_build[""mf5""] )"
-,,daily_build_hbw_auto_trips,build_da_pa_trips_hbw + build_dp_pa_trips_hbw + build_p_pa_trips_hbw
-,,daily_base_hbw_auto_trips,base_da_pa_trips_hbw + base_dp_pa_trips_hbw + base_p_pa_trips_hbw
-,,hbw_am_reliability_benefit, -0.5 * HBW_PK * (daily_build_hbw_auto_trips + daily_base_hbw_auto_trips) * ((build_am_reliability - base_am_reliability) * VOT_HBW/60.0)
-,,hbw_md_reliability_benefit, -0.5 * HBW_OP * (daily_build_hbw_auto_trips + daily_base_hbw_auto_trips) * ((build_md_reliability - base_md_reliability) * VOT_HBW/60.0)
-*,hbw auto reliability benefit,hbw_reliability_benefit,(hbw_am_reliability_benefit + hbw_md_reliability_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,hbw travel time benefit,hbw_travel_time_benefit,hbw_da_travel_time_benefit + hbw_dp_travel_time_benefit + hbw_p_travel_time_benefit + hbw_wtransit_travel_time_benefit
 # drive transit just transit leg and in OD format since P to A zone through best N parking lot zone skims are not saved by the model,,,
 ,,base_dtransit_od_trips_pkad,"assign_mfs_base[""mf62""]"
 ,,base_dtransit_od_trips_opad,"assign_mfs_base[""mf63""]"
@@ -59,30 +49,8 @@ Silos,Description,Target,Expression
 ,,build_dtransit_od_trips_opad,"assign_mfs_build[""mf63""]"
 ,,dtransit_am_travel_time_benefit, -0.5 * (base_dtransit_od_trips_pkad + build_dtransit_od_trips_pkad) * ((build_wtransit_am_travel_time - base_wtransit_am_travel_time) * VOT_HBC/60.0)
 ,,dtransit_md_travel_time_benefit, -0.5 * (base_dtransit_od_trips_opad + build_dtransit_od_trips_opad) * ((build_wtransit_md_travel_time - base_wtransit_md_travel_time) * VOT_HBC/60.0)
-*,dtransit travel time benefit,dtransit_travel_time_benefit,(dtransit_am_travel_time_benefit + dtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-#physical activity / active transportation / ITHIM benefit ; CURRENTLY ONLY HBW UNTIL WE GET ALL THE REQUIRED DATA,,,
-,trip distance,base_trip_distance,"skims_mfs_base[""mf3""] "
-,,build_trip_distance,"skims_mfs_build[""mf3""] "
-,,base_walk_trips,"mode_choice_pa1_base[""mf.hwwalk.lowinc""] + mode_choice_pa1_base[""mf.hwwalk.medinc""] + mode_choice_pa1_base[""mf.hwwalk.highinc""]"
-,,base_bike_trips,"mode_choice_pa1_base[""mf.hwbike.lowinc""] + mode_choice_pa1_base[""mf.hwbike.medinc""] + mode_choice_pa1_base[""mf.hwbike.highinc""]"
-,,build_walk_trips,"mode_choice_pa1_build[""mf.hwwalk.lowinc""] + mode_choice_pa1_build[""mf.hwwalk.medinc""] + mode_choice_pa1_build[""mf.hwwalk.highinc""]"
-,,build_bike_trips,"mode_choice_pa1_build[""mf.hwbike.lowinc""] + mode_choice_pa1_build[""mf.hwbike.medinc""] + mode_choice_pa1_build[""mf.hwbike.highinc""]"
-,,base_walk_time,base_trip_distance * (60 / WALK_SPEED)
-,,build_walk_time,build_trip_distance * (60 / WALK_SPEED)
-,,base_bike_time,base_trip_distance * (60 / BIKE_SPEED)
-,,build_bike_time,build_trip_distance * (60 / BIKE_SPEED)
-,,base_amount_of_time_walking,base_walk_trips * base_walk_time
-,,build_amount_of_time_walking,build_walk_trips * build_walk_time
-,,base_amount_of_time_biking,base_bike_trips * base_bike_time
-,,build_amount_of_time_biking,build_bike_trips * build_bike_time
-,,base_avg_walk_time,base_amount_of_time_walking.sum()
-,,build_avg_walk_time,build_amount_of_time_walking.sum()
-,,base_avg_bike_time,base_amount_of_time_biking.sum()
-,,build_avg_bike_time,build_amount_of_time_biking.sum()
-,,avg_walk_time_growth_ratio,base_avg_walk_time / build_avg_walk_time
-,,avg_bike_time_growth_ratio,base_avg_bike_time / build_avg_bike_time
-,,dalys_in_dollars,DOLLARS_PER_DALY * POPULATION * ( AVG_WALK_TIME_GROWTH_RATIO * avg_walk_time_growth_ratio + AVG_BIKE_TIME_GROWTH_RATIO * avg_bike_time_growth_ratio )
-*,physical activity benefit,physical_activity_benefit,dalys_in_dollars / dalys_in_dollars.count()
+,dtransit travel time benefit,dtransit_travel_time_benefit,(dtransit_am_travel_time_benefit + dtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,person travel time benefit,person_travel_time_benefit,hbw_travel_time_benefit + dtransit_travel_time_benefit
 #truck travel time,,,
 ,truck trips,base_hvytrk_am_trips,"assign_mfs_base[""mf42""]"
 ,,base_medtrk_am_trips,"assign_mfs_base[""mf43""]"
@@ -96,10 +64,51 @@ Silos,Description,Target,Expression
 ,,medtrk_am_time_benefit, -0.5 * (base_medtrk_am_trips + build_medtrk_am_trips) * (build_sov_am_travel_time - base_sov_am_travel_time) * VOT_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,hvytrk_md_time_benefit, -0.5 * (base_hvytrk_md_trips + build_hvytrk_md_trips) * (build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HVYTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,medtrk_md_time_benefit, -0.5 * (base_medtrk_md_trips + build_medtrk_md_trips) * (build_sov_md_travel_time - base_sov_md_travel_time) * VOT_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,truck travel time benefit,trk_time_benefit,hvytrk_am_time_benefit + medtrk_am_time_benefit + hvytrk_md_time_benefit + medtrk_md_time_benefit
+,truck travel time benefit,trk_travel_time_benefit,hvytrk_am_time_benefit + medtrk_am_time_benefit + hvytrk_md_time_benefit + medtrk_md_time_benefit
+*,travel time benefit,travel_time_benefit,person_travel_time_benefit + trk_travel_time_benefit
+#travel time reliability; CURRENTLY ONLY HBW UNTIL WE GET ALL THE REQUIRED DATA,,,
+,,base_am_reliability,"np.sqrt( skims_mfs_base[""mf5""] )"
+,,build_am_reliability,"np.sqrt( skims_mfs_build[""mf5""] )"
+,,base_md_reliability,"np.sqrt( skims_mfs_base[""mf5""] )"
+,,build_md_reliability,"np.sqrt( skims_mfs_build[""mf5""] )"
+,,daily_build_hbw_auto_trips,build_da_pa_trips_hbw + build_dp_pa_trips_hbw + build_p_pa_trips_hbw
+,,daily_base_hbw_auto_trips,base_da_pa_trips_hbw + base_dp_pa_trips_hbw + base_p_pa_trips_hbw
+,,hbw_am_reliability_benefit, -0.5 * HBW_PK * (daily_build_hbw_auto_trips + daily_base_hbw_auto_trips) * ((build_am_reliability - base_am_reliability) * VOT_HBW/60.0)
+,,hbw_md_reliability_benefit, -0.5 * HBW_OP * (daily_build_hbw_auto_trips + daily_base_hbw_auto_trips) * ((build_md_reliability - base_md_reliability) * VOT_HBW/60.0)
+,hbw travel time reliability benefit,hbw_travel_time_reliability_benefit,(hbw_am_reliability_benefit + hbw_md_reliability_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,person travel time reliability benefit,person_travel_time_reliability_benefit,hbw_travel_time_reliability_benefit
 #truck travel time reliability,,,
 ,,hvytrk_am_reliability_benefit, -0.5 * (base_hvytrk_am_trips + build_hvytrk_am_trips) * (build_am_reliability - base_am_reliability) * VOT_HVYTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,medtrk_am_reliability_benefit, -0.5 * (base_medtrk_am_trips + build_medtrk_am_trips) * (build_am_reliability - base_am_reliability) * VOT_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,hvytrk_md_reliability_benefit, -0.5 * (base_hvytrk_md_trips + build_hvytrk_md_trips) * (build_md_reliability - base_md_reliability) * VOT_HVYTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,medtrk_md_reliability_benefit, -0.5 * (base_medtrk_md_trips + build_medtrk_md_trips) * (build_md_reliability - base_md_reliability) * VOT_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,truck reliability benefit,trk_reliability_benefit,hvytrk_am_reliability_benefit + medtrk_am_reliability_benefit + hvytrk_md_reliability_benefit + medtrk_md_reliability_benefit
+,truck reliability benefit,trk_travel_time_reliability_benefit,hvytrk_am_reliability_benefit + medtrk_am_reliability_benefit + hvytrk_md_reliability_benefit + medtrk_md_reliability_benefit
+*,travel time reliability benefit,travel_time_reliability_benefit,person_travel_time_reliability_benefit + trk_travel_time_reliability_benefit
+#physical activity / active transportation / ITHIM benefit ; CURRENTLY ONLY HBW UNTIL WE GET ALL THE REQUIRED DATA,,,
+,trip distance,base_trip_distance,"skims_mfs_base[""mf3""] "
+,,build_trip_distance,"skims_mfs_build[""mf3""] "
+,,hbw_base_walk_trips,"mode_choice_pa1_base[""mf.hwwalk.lowinc""] + mode_choice_pa1_base[""mf.hwwalk.medinc""] + mode_choice_pa1_base[""mf.hwwalk.highinc""]"
+,,hbw_base_bike_trips,"mode_choice_pa1_base[""mf.hwbike.lowinc""] + mode_choice_pa1_base[""mf.hwbike.medinc""] + mode_choice_pa1_base[""mf.hwbike.highinc""]"
+,,hbw_build_walk_trips,"mode_choice_pa1_build[""mf.hwwalk.lowinc""] + mode_choice_pa1_build[""mf.hwwalk.medinc""] + mode_choice_pa1_build[""mf.hwwalk.highinc""]"
+,,hbw_build_bike_trips,"mode_choice_pa1_build[""mf.hwbike.lowinc""] + mode_choice_pa1_build[""mf.hwbike.medinc""] + mode_choice_pa1_build[""mf.hwbike.highinc""]"
+,,base_walk_trips,hbw_base_walk_trips
+,,base_bike_trips,hbw_base_bike_trips
+,,build_walk_trips,hbw_build_walk_trips
+,,build_bike_trips,hbw_build_bike_trips
+,,base_walk_time,base_trip_distance * (60 / WALK_SPEED)
+,,build_walk_time,build_trip_distance * (60 / WALK_SPEED)
+,,base_bike_time,base_trip_distance * (60 / BIKE_SPEED)
+,,build_bike_time,build_trip_distance * (60 / BIKE_SPEED)
+,,base_amount_of_time_walking,base_walk_trips * base_walk_time
+,,build_amount_of_time_walking,build_walk_trips * build_walk_time
+,,base_amount_of_time_biking,base_bike_trips * base_bike_time
+,,build_amount_of_time_biking,build_bike_trips * build_bike_time
+,,base_avg_walk_time,base_amount_of_time_walking.sum() / POPULATION
+,,build_avg_walk_time,build_amount_of_time_walking.sum() / POPULATION
+,,base_avg_bike_time,base_amount_of_time_biking.sum() / POPULATION
+,,build_avg_bike_time,build_amount_of_time_biking.sum() / POPULATION
+,,avg_walk_time_growth_ratio,(build_avg_walk_time - base_avg_walk_time) / base_avg_walk_time
+,,avg_bike_time_growth_ratio,(build_avg_bike_time - base_avg_bike_time) / base_avg_bike_time
+,,dalys_in_dollars,DOLLARS_PER_DALY * POPULATION * ( AVG_WALK_TIME_GROWTH_RATIO * avg_walk_time_growth_ratio + AVG_BIKE_TIME_GROWTH_RATIO * avg_bike_time_growth_ratio )
+,,number_of_od_pairs,dalys_in_dollars.size
+*,physical activity benefit,physical_activity_benefit,(dalys_in_dollars / number_of_od_pairs) * -1
