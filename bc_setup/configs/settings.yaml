@@ -4,8 +4,7 @@
 provenance: example_4step.configs
 
 dump: True
-
-trace_od: [6, 11]
+trace_od: [727, 967]
 
 # values available to all processors
 globals:
@@ -118,6 +117,20 @@ locals_aggregate_od:
   #time-of-day factors
   HBW_PK: 0.50
   HBW_OP: 0.50
+  NHBW_PK: 0.50
+  NHBW_OP: 0.50
+  NHBNW_PK: 0.50
+  NHBNW_OP: 0.50
+  HBO_PK: 0.50
+  HBO_OP: 0.50
+  HBR_PK: 0.50
+  HBR_OP: 0.50
+  HBS_PK: 0.50
+  HBS_OP: 0.50
+  HBC_PK: 0.50
+  HBC_OP: 0.50
+  SCH_PK: 0.50
+  SCH_OP: 0.50
   #value-of-time ($/hour; currently all equal, USDOT)
   VOT_HBC: 14.66
   VOT_HBO: 14.66
