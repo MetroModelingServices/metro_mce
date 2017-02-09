@@ -18,11 +18,10 @@ The scripts in this folder are used to export the required data from the R trave
   - bca_EMME_Export.bat exports the required matrices (mfs) and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
   - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file.  The required link fields are listed below.
 
+## Installation
+The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To install bca4abm, follow the instructions [here](https://github.com/RSGInc/bca4abm/wiki/Installation).
+
 ## Benefits Calculator File and Folder Setup
-The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  
-
-To install bca4abm, follow the instructions [here](https://github.com/RSGInc/bca4abm/wiki/Installation).
-
 *root folder*
   - run_bca.py - run benefit calculator
   - configs folder - configuration settings
