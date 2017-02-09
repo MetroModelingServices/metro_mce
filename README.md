@@ -20,7 +20,7 @@ The scripts in this folder are used to export the required data from the R trave
 
 ## Benefits Calculator File and Folder Setup
 The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To 
-install bca4abm, download the repository and then run ```python setup.py install```.  
+install bca4abm, download the repository and then run ```python setup.py install```.  Make sure to also install the [required libraries](https://github.com/RSGInc/bca4abm/wiki/Installation) for bca4abm.
 
 *root folder*
   - run_bca.py - run benefit calculator
