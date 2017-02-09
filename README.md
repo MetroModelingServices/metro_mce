@@ -19,8 +19,7 @@ The scripts in this folder are used to export the required data from the R trave
   - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file.  The required link fields are listed below.
 
 ## Benefits Calculator File and Folder Setup
-The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To 
-install bca4abm, download the repository and then run ```python setup.py install```.  Make sure to also install the [required libraries](https://github.com/RSGInc/bca4abm/wiki/Installation) for bca4abm.
+The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To install bca4abm, following the instructions [here](https://github.com/RSGInc/bca4abm/wiki/Installation).
 
 *root folder*
   - run_bca.py - run benefit calculator
@@ -139,7 +138,14 @@ install bca4abm, download the repository and then run ```python setup.py install
   - moves_2010_summer_running_rates.csv - MOVES emissions rate table
 
 ## Running the benefits calculator
-The benefits calculator is currently run on the command line as follows: ```python run_bca.py```
+To run the benefits calculator, first activate the Anaconda environment you created for this project.  It may be named ```bca4abmtest``` based on the install instructions, but it can be named something else as well.
+  ```
+  activate mce
+  ```
+Next, run the benefits calculator in the bc_setup folder with the following command:
+  ```
+  python run_bca.py
+  ```
 
 The benefit calculator run steps are:
   - reads the settings and input data 
