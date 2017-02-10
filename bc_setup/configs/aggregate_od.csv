@@ -50,6 +50,10 @@ Silos,Description,Target,Expression
 ,,build_da_pa_trips_hbr_lowinc,"mode_choice_pa2_build[""mf.hrda.lowinc""]"
 ,,build_da_pa_trips_hbr_medinc,"mode_choice_pa2_build[""mf.hrda.medinc""]"
 ,,build_da_pa_trips_hbr_highinc,"mode_choice_pa2_build[""mf.hrda.highinc""]"
+,,base_da_pa_trips_hbc,"mode_choice_pa3_base[""mf.hbcda""]"
+,,build_da_pa_trips_hbc,"mode_choice_pa3_build[""mf.hbcda""]"
+,,base_da_pa_trips_sch,"mode_choice_pa3_base[""mf.schveh""]"
+,,build_da_pa_trips_sch,"mode_choice_pa3_build[""mf.schveh""]"
 ,,hbw_lowinc_da_am_travel_time_benefit, -0.5 * HBW_PK * (base_da_pa_trips_hbw_lowinc + build_da_pa_trips_hbw_lowinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
 ,,hbw_medinc_da_am_travel_time_benefit, -0.5 * HBW_PK * (base_da_pa_trips_hbw_medinc + build_da_pa_trips_hbw_medinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
 ,,hbw_highinc_da_am_travel_time_benefit, -0.5 * HBW_PK * (base_da_pa_trips_hbw_highinc + build_da_pa_trips_hbw_highinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
@@ -86,6 +90,10 @@ Silos,Description,Target,Expression
 ,,hbr_lowinc_da_md_travel_time_benefit, -0.5 * HBR_OP * (base_da_pa_trips_hbr_lowinc + build_da_pa_trips_hbr_lowinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
 ,,hbr_medinc_da_md_travel_time_benefit, -0.5 * HBR_OP * (base_da_pa_trips_hbr_medinc + build_da_pa_trips_hbr_medinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
 ,,hbr_highinc_da_md_travel_time_benefit, -0.5 * HBR_OP * (base_da_pa_trips_hbr_highinc + build_da_pa_trips_hbr_highinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
+,,hbc_da_am_travel_time_benefit, -0.5 * HBC_PK * (base_da_pa_trips_hbc + build_da_pa_trips_hbc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBC/60.0) + park_cost_diff_pa)
+,,hbc_da_md_travel_time_benefit, -0.5 * HBC_OP * (base_da_pa_trips_hbc + build_da_pa_trips_hbc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBC/60.0) + park_cost_diff_pa)
+,,sch_da_am_travel_time_benefit, -0.5 * SCH_PK * (base_da_pa_trips_sch + build_da_pa_trips_sch) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_SCH/60.0) + park_cost_diff_pa)
+,,sch_da_md_travel_time_benefit, -0.5 * SCH_OP * (base_da_pa_trips_sch + build_da_pa_trips_sch) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_SCH/60.0) + park_cost_diff_pa)
 ,hbw lowinc da benefit,hbw_lowinc_da_travel_time_benefit,(hbw_lowinc_da_am_travel_time_benefit + hbw_lowinc_da_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw medinc da benefit,hbw_medinc_da_travel_time_benefit,(hbw_medinc_da_am_travel_time_benefit + hbw_medinc_da_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw highinc da benefit,hbw_highinc_da_travel_time_benefit,(hbw_highinc_da_am_travel_time_benefit + hbw_highinc_da_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -104,6 +112,8 @@ Silos,Description,Target,Expression
 ,hbr lowinc da benefit,hbr_lowinc_da_travel_time_benefit,(hbr_lowinc_da_am_travel_time_benefit + hbr_lowinc_da_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbr medinc da benefit,hbr_medinc_da_travel_time_benefit,(hbr_medinc_da_am_travel_time_benefit + hbr_medinc_da_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbr highinc da benefit,hbr_highinc_da_travel_time_benefit,(hbr_highinc_da_am_travel_time_benefit + hbr_highinc_da_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,hbc da benefit,hbc_da_travel_time_benefit,(hbc_da_am_travel_time_benefit + hbc_da_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,sch da benefit,sch_da_travel_time_benefit,(sch_da_am_travel_time_benefit + sch_da_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 # drive with passenger,,,
 ,,base_dp_pa_trips_hbw_lowinc,"mode_choice_pa1_base[""mf.hwdp.lowinc""]"
 ,,base_dp_pa_trips_hbw_medinc,"mode_choice_pa1_base[""mf.hwdp.medinc""]"
@@ -141,6 +151,8 @@ Silos,Description,Target,Expression
 ,,build_dp_pa_trips_hbr_lowinc,"mode_choice_pa2_build[""mf.hrdp.lowinc""]"
 ,,build_dp_pa_trips_hbr_medinc,"mode_choice_pa2_build[""mf.hrdp.medinc""]"
 ,,build_dp_pa_trips_hbr_highinc,"mode_choice_pa2_build[""mf.hrdp.highinc""]"
+,,base_dp_pa_trips_hbc,"mode_choice_pa3_base[""mf.hbcdp""]"
+,,build_dp_pa_trips_hbc,"mode_choice_pa3_build[""mf.hbcdp""]"
 ,,hbw_lowinc_dp_am_travel_time_benefit, -0.5 * HBW_PK * (base_dp_pa_trips_hbw_lowinc + build_dp_pa_trips_hbw_lowinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
 ,,hbw_medinc_dp_am_travel_time_benefit, -0.5 * HBW_PK * (base_dp_pa_trips_hbw_medinc + build_dp_pa_trips_hbw_medinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
 ,,hbw_highinc_dp_am_travel_time_benefit, -0.5 * HBW_PK * (base_dp_pa_trips_hbw_highinc + build_dp_pa_trips_hbw_highinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
@@ -177,6 +189,8 @@ Silos,Description,Target,Expression
 ,,hbr_lowinc_dp_md_travel_time_benefit, -0.5 * HBR_OP * (base_dp_pa_trips_hbr_lowinc + build_dp_pa_trips_hbr_lowinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
 ,,hbr_medinc_dp_md_travel_time_benefit, -0.5 * HBR_OP * (base_dp_pa_trips_hbr_medinc + build_dp_pa_trips_hbr_medinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
 ,,hbr_highinc_dp_md_travel_time_benefit, -0.5 * HBR_OP * (base_dp_pa_trips_hbr_highinc + build_dp_pa_trips_hbr_highinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
+,,hbc_dp_am_travel_time_benefit, -0.5 * HBC_PK * (base_dp_pa_trips_hbc + build_dp_pa_trips_hbc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBC/60.0) + park_cost_diff_pa)
+,,hbc_dp_md_travel_time_benefit, -0.5 * HBC_OP * (base_dp_pa_trips_hbc + build_dp_pa_trips_hbc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBC/60.0) + park_cost_diff_pa)
 ,hbw lowinc dp benefit,hbw_lowinc_dp_travel_time_benefit,(hbw_lowinc_dp_am_travel_time_benefit + hbw_lowinc_dp_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw medinc dp benefit,hbw_medinc_dp_travel_time_benefit,(hbw_medinc_dp_am_travel_time_benefit + hbw_medinc_dp_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw highinc dp benefit,hbw_highinc_dp_travel_time_benefit,(hbw_highinc_dp_am_travel_time_benefit + hbw_highinc_dp_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -195,6 +209,7 @@ Silos,Description,Target,Expression
 ,hbr lowinc dp benefit,hbr_lowinc_dp_travel_time_benefit,(hbr_lowinc_dp_am_travel_time_benefit + hbr_lowinc_dp_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbr medinc dp benefit,hbr_medinc_dp_travel_time_benefit,(hbr_medinc_dp_am_travel_time_benefit + hbr_medinc_dp_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbr highinc dp benefit,hbr_highinc_dp_travel_time_benefit,(hbr_highinc_dp_am_travel_time_benefit + hbr_highinc_dp_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,hbc dp benefit,hbc_dp_travel_time_benefit,(hbc_dp_am_travel_time_benefit + hbc_dp_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 # passenger,,,
 ,,base_p_pa_trips_hbw_lowinc,"mode_choice_pa1_base[""mf.hwpa.lowinc""]"
 ,,base_p_pa_trips_hbw_medinc,"mode_choice_pa1_base[""mf.hwpa.medinc""]"
@@ -232,6 +247,10 @@ Silos,Description,Target,Expression
 ,,build_p_pa_trips_hbr_lowinc,"mode_choice_pa2_build[""mf.hrpa.lowinc""]"
 ,,build_p_pa_trips_hbr_medinc,"mode_choice_pa2_build[""mf.hrpa.medinc""]"
 ,,build_p_pa_trips_hbr_highinc,"mode_choice_pa2_build[""mf.hrpa.highinc""]"
+,,base_p_pa_trips_hbc,"mode_choice_pa3_base[""mf.hbcpa""]"
+,,build_p_pa_trips_hbc,"mode_choice_pa3_build[""mf.hbcpa""]"
+,,base_p_pa_trips_sch,"mode_choice_pa3_base[""mf.schpas""]"
+,,build_p_pa_trips_sch,"mode_choice_pa3_build[""mf.schpas""]"
 ,,hbw_lowinc_p_am_travel_time_benefit, -0.5 * HBW_PK * (base_p_pa_trips_hbw_lowinc + build_p_pa_trips_hbw_lowinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
 ,,hbw_medinc_p_am_travel_time_benefit, -0.5 * HBW_PK * (base_p_pa_trips_hbw_medinc + build_p_pa_trips_hbw_medinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
 ,,hbw_highinc_p_am_travel_time_benefit, -0.5 * HBW_PK * (base_p_pa_trips_hbw_highinc + build_p_pa_trips_hbw_highinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
@@ -268,6 +287,10 @@ Silos,Description,Target,Expression
 ,,hbr_lowinc_p_md_travel_time_benefit, -0.5 * HBR_OP * (base_p_pa_trips_hbr_lowinc + build_p_pa_trips_hbr_lowinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
 ,,hbr_medinc_p_md_travel_time_benefit, -0.5 * HBR_OP * (base_p_pa_trips_hbr_medinc + build_p_pa_trips_hbr_medinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
 ,,hbr_highinc_p_md_travel_time_benefit, -0.5 * HBR_OP * (base_p_pa_trips_hbr_highinc + build_p_pa_trips_hbr_highinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
+,,hbc_p_am_travel_time_benefit, -0.5 * HBC_PK * (base_p_pa_trips_hbc + build_p_pa_trips_hbc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBC/60.0) + park_cost_diff_pa)
+,,hbc_p_md_travel_time_benefit, -0.5 * HBC_OP * (base_p_pa_trips_hbc + build_p_pa_trips_hbc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBC/60.0) + park_cost_diff_pa)
+,,sch_p_am_travel_time_benefit, -0.5 * SCH_PK * (base_p_pa_trips_sch + build_p_pa_trips_sch) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_SCH/60.0) + park_cost_diff_pa)
+,,sch_p_md_travel_time_benefit, -0.5 * SCH_OP * (base_p_pa_trips_sch + build_p_pa_trips_sch) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_SCH/60.0) + park_cost_diff_pa)
 ,hbw lowinc  p benefit,hbw_lowinc_p_travel_time_benefit,(hbw_lowinc_p_am_travel_time_benefit + hbw_lowinc_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw medinc  p benefit,hbw_medinc_p_travel_time_benefit,(hbw_medinc_p_am_travel_time_benefit + hbw_medinc_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw highinc  p benefit,hbw_highinc_p_travel_time_benefit,(hbw_highinc_p_am_travel_time_benefit + hbw_highinc_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -286,6 +309,8 @@ Silos,Description,Target,Expression
 ,hbr lowinc p benefit,hbr_lowinc_p_travel_time_benefit,(hbr_lowinc_p_am_travel_time_benefit + hbr_lowinc_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbr medinc p benefit,hbr_medinc_p_travel_time_benefit,(hbr_medinc_p_am_travel_time_benefit + hbr_medinc_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbr highinc p benefit,hbr_highinc_p_travel_time_benefit,(hbr_highinc_p_am_travel_time_benefit + hbr_highinc_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,hbc p benefit,hbc_p_travel_time_benefit,(hbc_p_am_travel_time_benefit + hbc_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,sch p benefit,sch_p_travel_time_benefit,(sch_p_am_travel_time_benefit + sch_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 # walk transit,,,
 ,,base_wtransit_am_travel_time,"1.0 * skims_mfs_base[""mf36""] + 2.0 * skims_mfs_base[""mf20""] + 2.0 * skims_mfs_base[""mf21""] +  2.0 * skims_mfs_base[""mf22""] + 8.0 * skims_mfs_base[""mf24""] + skims_mfs_base[""mf2""] * VOT_HBW"
 ,,build_wtransit_am_travel_time,"1.0 * skims_mfs_build[""mf36""] + 2.0 * skims_mfs_build[""mf20""] + 2.0 * skims_mfs_build[""mf21""] +  2.0 * skims_mfs_build[""mf22""] + 8.0 * skims_mfs_build[""mf24""] + skims_mfs_build[""mf2""] * VOT_HBW"
@@ -327,6 +352,10 @@ Silos,Description,Target,Expression
 ,,build_wtransit_pa_trips_hbr_lowinc,"mode_choice_pa2_build[""mf.hrtr.lowinc""]"
 ,,build_wtransit_pa_trips_hbr_medinc,"mode_choice_pa2_build[""mf.hrtr.medinc""]"
 ,,build_wtransit_pa_trips_hbr_highinc,"mode_choice_pa2_build[""mf.hrtr.highinc""]"
+,,base_wtransit_pa_trips_hbc,"mode_choice_pa3_base[""mf.hbctr""]"
+,,build_wtransit_pa_trips_hbc,"mode_choice_pa3_build[""mf.hbctr""]"
+,,base_wtransit_pa_trips_sch,"mode_choice_pa3_base[""mf.schbus""]+mode_choice_pa3_base[""mf.schtr""]"
+,,build_wtransit_pa_trips_sch,"mode_choice_pa3_build[""mf.schbus""]+mode_choice_pa3_build[""mf.schtr""]"
 ,,hbw_lowinc_wtransit_am_travel_time_benefit, -0.5 * HBW_PK * (base_wtransit_pa_trips_hbw_lowinc + build_wtransit_pa_trips_hbw_lowinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
 ,,hbw_medinc_wtransit_am_travel_time_benefit, -0.5 * HBW_PK * (base_wtransit_pa_trips_hbw_medinc + build_wtransit_pa_trips_hbw_medinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
 ,,hbw_highinc_wtransit_am_travel_time_benefit, -0.5 * HBW_PK * (base_wtransit_pa_trips_hbw_highinc + build_wtransit_pa_trips_hbw_highinc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBW/60.0) + park_cost_diff_pa)
@@ -363,6 +392,10 @@ Silos,Description,Target,Expression
 ,,hbr_lowinc_wtransit_md_travel_time_benefit, -0.5 * HBR_OP * (base_wtransit_pa_trips_hbr_lowinc + build_wtransit_pa_trips_hbr_lowinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
 ,,hbr_medinc_wtransit_md_travel_time_benefit, -0.5 * HBR_OP * (base_wtransit_pa_trips_hbr_medinc + build_wtransit_pa_trips_hbr_medinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
 ,,hbr_highinc_wtransit_md_travel_time_benefit, -0.5 * HBR_OP * (base_wtransit_pa_trips_hbr_highinc + build_wtransit_pa_trips_hbr_highinc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBR/60.0) + park_cost_diff_pa)
+,,hbc_wtransit_am_travel_time_benefit, -0.5 * HBC_PK * (base_wtransit_pa_trips_hbc + build_wtransit_pa_trips_hbc) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_HBC/60.0) + park_cost_diff_pa)
+,,hbc_wtransit_md_travel_time_benefit, -0.5 * HBC_OP * (base_wtransit_pa_trips_hbc + build_wtransit_pa_trips_hbc) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_HBC/60.0) + park_cost_diff_pa)
+,,sch_wtransit_am_travel_time_benefit, -0.5 * SCH_PK * (base_wtransit_pa_trips_sch + build_wtransit_pa_trips_sch) * (((build_sov_am_travel_time - base_sov_am_travel_time) * VOT_SCH/60.0) + park_cost_diff_pa)
+,,sch_wtransit_md_travel_time_benefit, -0.5 * SCH_OP * (base_wtransit_pa_trips_sch + build_wtransit_pa_trips_sch) * (((build_sov_md_travel_time - base_sov_md_travel_time) * VOT_SCH/60.0) + park_cost_diff_pa)
 ,hbw lowinc wtransit benefit,hbw_lowinc_wtransit_travel_time_benefit,(hbw_lowinc_wtransit_am_travel_time_benefit + hbw_lowinc_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw medinc wtransit benefit,hbw_medinc_wtransit_travel_time_benefit,(hbw_medinc_wtransit_am_travel_time_benefit + hbw_medinc_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw highinc wtransit benefit,hbw_highinc_wtransit_travel_time_benefit,(hbw_highinc_wtransit_am_travel_time_benefit + hbw_highinc_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -381,6 +414,8 @@ Silos,Description,Target,Expression
 ,hbr lowinc wtransit benefit,hbr_lowinc_wtransit_travel_time_benefit,(hbr_lowinc_wtransit_am_travel_time_benefit + hbr_lowinc_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbr medinc wtransit benefit,hbr_medinc_wtransit_travel_time_benefit,(hbr_medinc_wtransit_am_travel_time_benefit + hbr_medinc_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbr highinc wtransit benefit,hbr_highinc_wtransit_travel_time_benefit,(hbr_highinc_wtransit_am_travel_time_benefit + hbr_highinc_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,hbc wtransit benefit,hbc_wtransit_travel_time_benefit,(hbc_wtransit_am_travel_time_benefit + hbc_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,sch wtransit benefit,sch_wtransit_travel_time_benefit,(sch_wtransit_am_travel_time_benefit + sch_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw lowinc  travel time benefit,hbw_lowinc_travel_time_benefit,hbw_lowinc_da_travel_time_benefit + hbw_lowinc_dp_travel_time_benefit + hbw_lowinc_p_travel_time_benefit + hbw_lowinc_wtransit_travel_time_benefit
 ,hbw medinc  travel time benefit,hbw_medinc_travel_time_benefit,hbw_medinc_da_travel_time_benefit + hbw_medinc_dp_travel_time_benefit + hbw_medinc_p_travel_time_benefit + hbw_medinc_wtransit_travel_time_benefit
 ,hbw highinc  travel time benefit,hbw_highinc_travel_time_benefit,hbw_highinc_da_travel_time_benefit + hbw_highinc_dp_travel_time_benefit + hbw_highinc_p_travel_time_benefit + hbw_highinc_wtransit_travel_time_benefit
@@ -405,6 +440,8 @@ Silos,Description,Target,Expression
 ,hbr medinc  travel time benefit,hbr_medinc_travel_time_benefit,hbr_medinc_da_travel_time_benefit + hbr_medinc_dp_travel_time_benefit + hbr_medinc_p_travel_time_benefit + hbr_medinc_wtransit_travel_time_benefit
 ,hbr highinc  travel time benefit,hbr_highinc_travel_time_benefit,hbr_highinc_da_travel_time_benefit + hbr_highinc_dp_travel_time_benefit + hbr_highinc_p_travel_time_benefit + hbr_highinc_wtransit_travel_time_benefit
 ,hbr travel time benefit,hbr_travel_time_benefit,hbr_lowinc_travel_time_benefit + hbr_medinc_travel_time_benefit + hbr_highinc_travel_time_benefit
+,hbc travel time benefit,hbc_travel_time_benefit,hbc_da_travel_time_benefit + hbc_dp_travel_time_benefit + hbc_p_travel_time_benefit + hbc_wtransit_travel_time_benefit
+,sch travel time benefit,sch_travel_time_benefit,sch_da_travel_time_benefit + sch_p_travel_time_benefit + sch_wtransit_travel_time_benefit
 # drive transit just transit leg and in OD format since P to A zone through best N parking lot zone skims are not saved by the model,,,
 ,,base_dtransit_od_trips_pkad,"assign_mfs_base[""mf62""]"
 ,,base_dtransit_od_trips_opad,"assign_mfs_base[""mf63""]"
@@ -413,7 +450,7 @@ Silos,Description,Target,Expression
 ,,dtransit_am_travel_time_benefit, -0.5 * (base_dtransit_od_trips_pkad + build_dtransit_od_trips_pkad) * ((build_wtransit_am_travel_time - base_wtransit_am_travel_time) * VOT_HBC/60.0)
 ,,dtransit_md_travel_time_benefit, -0.5 * (base_dtransit_od_trips_opad + build_dtransit_od_trips_opad) * ((build_wtransit_md_travel_time - base_wtransit_md_travel_time) * VOT_HBC/60.0)
 ,dtransit travel time benefit,dtransit_travel_time_benefit,(dtransit_am_travel_time_benefit + dtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,person travel time benefit,person_travel_time_benefit,hbw_travel_time_benefit + nhbw_travel_time_benefit + nhbnw_travel_time_benefit + hbo_travel_time_benefit + hbs_travel_time_benefit + hbr_travel_time_benefit + dtransit_travel_time_benefit
+,person travel time benefit,person_travel_time_benefit,hbw_travel_time_benefit + nhbw_travel_time_benefit + nhbnw_travel_time_benefit + hbo_travel_time_benefit + hbs_travel_time_benefit + hbr_travel_time_benefit + hbc_travel_time_benefit + sch_travel_time_benefit + dtransit_travel_time_benefit
 #truck travel time,,,
 ,truck trips,base_hvytrk_am_trips,"assign_mfs_base[""mf42""]"
 ,,base_medtrk_am_trips,"assign_mfs_base[""mf43""]"
@@ -470,6 +507,10 @@ Silos,Description,Target,Expression
 ,,daily_base_hbr_auto_trips_lowinc,base_da_pa_trips_hbr_lowinc + base_dp_pa_trips_hbr_lowinc + base_p_pa_trips_hbr_lowinc
 ,,daily_base_hbr_auto_trips_medinc,base_da_pa_trips_hbr_medinc + base_dp_pa_trips_hbr_medinc + base_p_pa_trips_hbr_medinc
 ,,daily_base_hbr_auto_trips_highinc,base_da_pa_trips_hbr_highinc + base_dp_pa_trips_hbr_highinc + base_p_pa_trips_hbr_highinc
+,,daily_build_hbc_auto_trips,build_da_pa_trips_hbc + build_dp_pa_trips_hbc + build_p_pa_trips_hbc
+,,daily_base_hbc_auto_trips,base_da_pa_trips_hbc + base_dp_pa_trips_hbc + base_p_pa_trips_hbc
+,,daily_build_sch_auto_trips,build_da_pa_trips_sch + build_p_pa_trips_sch
+,,daily_base_sch_auto_trips,base_da_pa_trips_sch + base_p_pa_trips_sch
 ,,hbw_am_reliability_benefit_lowinc, -0.5 * HBW_PK * (daily_build_hbw_auto_trips_lowinc + daily_base_hbw_auto_trips_lowinc) * ((build_am_reliability - base_am_reliability) * VOT_HBW/60.0)
 ,,hbw_am_reliability_benefit_medinc, -0.5 * HBW_PK * (daily_build_hbw_auto_trips_medinc + daily_base_hbw_auto_trips_medinc) * ((build_am_reliability - base_am_reliability) * VOT_HBW/60.0)
 ,,hbw_am_reliability_benefit_highinc, -0.5 * HBW_PK * (daily_build_hbw_auto_trips_highinc + daily_base_hbw_auto_trips_highinc) * ((build_am_reliability - base_am_reliability) * VOT_HBW/60.0)
@@ -506,6 +547,10 @@ Silos,Description,Target,Expression
 ,,hbr_md_reliability_benefit_lowinc, -0.5 * HBR_OP * (daily_build_hbr_auto_trips_lowinc + daily_base_hbr_auto_trips_lowinc) * ((build_md_reliability - base_md_reliability) * VOT_HBR/60.0)
 ,,hbr_md_reliability_benefit_medinc, -0.5 * HBR_OP * (daily_build_hbr_auto_trips_medinc + daily_base_hbr_auto_trips_medinc) * ((build_md_reliability - base_md_reliability) * VOT_HBR/60.0)
 ,,hbr_md_reliability_benefit_highinc, -0.5 * HBR_OP * (daily_build_hbr_auto_trips_highinc + daily_base_hbr_auto_trips_highinc) * ((build_md_reliability - base_md_reliability) * VOT_HBR/60.0)
+,,hbc_am_reliability_benefit, -0.5 * HBC_PK * (daily_build_hbc_auto_trips + daily_base_hbc_auto_trips) * ((build_am_reliability - base_am_reliability) * VOT_HBC/60.0)
+,,hbc_md_reliability_benefit, -0.5 * HBC_OP * (daily_build_hbc_auto_trips + daily_base_hbc_auto_trips) * ((build_md_reliability - base_md_reliability) * VOT_HBC/60.0)
+,,sch_am_reliability_benefit, -0.5 * SCH_PK * (daily_build_sch_auto_trips + daily_base_sch_auto_trips) * ((build_am_reliability - base_am_reliability) * VOT_SCH/60.0)
+,,sch_md_reliability_benefit, -0.5 * SCH_OP * (daily_build_sch_auto_trips + daily_base_sch_auto_trips) * ((build_md_reliability - base_md_reliability) * VOT_SCH/60.0)
 ,hbw lowinc travel time reliability benefit,hbw_travel_time_reliability_benefit_lowinc,(hbw_am_reliability_benefit_lowinc + hbw_md_reliability_benefit_lowinc) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw medinc travel time reliability benefit,hbw_travel_time_reliability_benefit_medinc,(hbw_am_reliability_benefit_medinc + hbw_md_reliability_benefit_medinc) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw highinc travel time reliability benefit,hbw_travel_time_reliability_benefit_highinc,(hbw_am_reliability_benefit_highinc + hbw_md_reliability_benefit_highinc) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -530,7 +575,9 @@ Silos,Description,Target,Expression
 ,hbr medinc travel time reliability benefit,hbr_travel_time_reliability_benefit_medinc,(hbr_am_reliability_benefit_medinc + hbr_md_reliability_benefit_medinc) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbr highinc travel time reliability benefit,hbr_travel_time_reliability_benefit_highinc,(hbr_am_reliability_benefit_highinc + hbr_md_reliability_benefit_highinc) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,hbr_travel_time_reliability_benefit,hbr_travel_time_reliability_benefit_lowinc + hbr_travel_time_reliability_benefit_medinc + hbr_travel_time_reliability_benefit_highinc
-,person travel time reliability benefit,person_travel_time_reliability_benefit,hbw_travel_time_reliability_benefit+nhbw_travel_time_reliability_benefit+nhbnw_travel_time_reliability_benefit+hbo_travel_time_reliability_benefit+hbs_travel_time_reliability_benefit+hbr_travel_time_reliability_benefit
+,hbc travel time reliability benefit,hbc_travel_time_reliability_benefit,(hbc_am_reliability_benefit + hbc_md_reliability_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,sch travel time reliability benefit,sch_travel_time_reliability_benefit,(sch_am_reliability_benefit + sch_md_reliability_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,person travel time reliability benefit,person_travel_time_reliability_benefit,hbw_travel_time_reliability_benefit+nhbw_travel_time_reliability_benefit+nhbnw_travel_time_reliability_benefit+hbo_travel_time_reliability_benefit+hbs_travel_time_reliability_benefit+hbr_travel_time_reliability_benefit+hbc_travel_time_reliability_benefit+sch_travel_time_reliability_benefit
 #truck travel time reliability,,,
 ,,hvytrk_am_reliability_benefit, -0.5 * (base_hvytrk_am_trips + build_hvytrk_am_trips) * (build_am_reliability - base_am_reliability) * VOT_HVYTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,medtrk_am_reliability_benefit, -0.5 * (base_medtrk_am_trips + build_medtrk_am_trips) * (build_am_reliability - base_am_reliability) * VOT_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -565,10 +612,14 @@ Silos,Description,Target,Expression
 ,,hbr_base_bike_trips,"mode_choice_pa2_base[""mf.hrbike.lowinc""] + mode_choice_pa2_base[""mf.hrbike.medinc""] + mode_choice_pa2_base[""mf.hrbike.highinc""]"
 ,,hbr_build_walk_trips,"mode_choice_pa1_build[""mf.hrwalk.lowinc""] + mode_choice_pa1_build[""mf.hrwalk.medinc""] + mode_choice_pa1_build[""mf.hrwalk.highinc""]"
 ,,hbr_build_bike_trips,"mode_choice_pa1_build[""mf.hrbike.lowinc""] + mode_choice_pa1_build[""mf.hrbike.medinc""] + mode_choice_pa1_build[""mf.hrbike.highinc""]"
-,,base_walk_trips,hbw_base_walk_trips+nhbw_base_walk_trips+nhbnw_base_walk_trips+hbo_base_walk_trips+hbs_base_walk_trips+hbr_base_walk_trips
-,,base_bike_trips,hbw_base_bike_trips+nhbw_base_bike_trips+nhbnw_base_bike_trips+hbo_base_bike_trips+hbs_base_bike_trips+hbr_base_bike_trips
-,,build_walk_trips,hbw_build_walk_trips+nhbw_build_walk_trips+nhbnw_build_walk_trips+hbo_build_walk_trips+hbs_build_walk_trips+hbr_build_walk_trips
-,,build_bike_trips,hbw_build_bike_trips+nhbw_build_bike_trips+nhbnw_build_bike_trips+hbo_build_bike_trips+hbs_build_bike_trips+hbr_build_bike_trips
+,,hbc_base_walk_trips,"mode_choice_pa3_base[""mf.hbcwalk""]"
+,,hbc_base_bike_trips,"mode_choice_pa3_base[""mf.hbcbike""]"
+,,hbc_build_walk_trips,"mode_choice_pa3_build[""mf.hbcwalk""]"
+,,hbc_build_bike_trips,"mode_choice_pa3_build[""mf.hbcbike""]"
+,,base_walk_trips,hbw_base_walk_trips+nhbw_base_walk_trips+nhbnw_base_walk_trips+hbo_base_walk_trips+hbs_base_walk_trips+hbr_base_walk_trips+hbc_base_walk_trips
+,,base_bike_trips,hbw_base_bike_trips+nhbw_base_bike_trips+nhbnw_base_bike_trips+hbo_base_bike_trips+hbs_base_bike_trips+hbr_base_bike_trips+hbc_base_bike_trips
+,,build_walk_trips,hbw_build_walk_trips+nhbw_build_walk_trips+nhbnw_build_walk_trips+hbo_build_walk_trips+hbs_build_walk_trips+hbr_build_walk_trips+hbc_build_walk_trips
+,,build_bike_trips,hbw_build_bike_trips+nhbw_build_bike_trips+nhbnw_build_bike_trips+hbo_build_bike_trips+hbs_build_bike_trips+hbr_build_bike_trips+hbc_build_bike_trips
 ,,base_walk_time,base_trip_distance * (60 / WALK_SPEED)
 ,,build_walk_time,build_trip_distance * (60 / WALK_SPEED)
 ,,base_bike_time,base_trip_distance * (60 / BIKE_SPEED)

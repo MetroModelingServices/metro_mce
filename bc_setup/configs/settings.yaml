@@ -111,6 +111,7 @@ aggregate_od_matrices:
   skims_mfs: skims_mfs.omx
   mode_choice_pa1: mode_choice_pa_part1.omx
   mode_choice_pa2: mode_choice_pa_part2.omx
+  mode_choice_pa3: mode_choice_pa_school_college.omx
   park_cost: parking_cost.omx
   
 locals_aggregate_od:
