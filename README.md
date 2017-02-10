@@ -97,6 +97,7 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
         - skims_mfs.omx - skims bank matrices
         - mode_choice_pa_part1.omx - half of the mode choice production-attraction matrices
         - mode_choice_pa_part2.omx - half of the mode choice production-attraction matrices
+        - mode_choice_pa_school_college.omx - mode choice production-attraction matrices for school and college trips
         - parking_cost.omx - parking costs at the destination
       - Zone 
         - mf.cval.csv - see above
