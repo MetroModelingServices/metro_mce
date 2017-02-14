@@ -17,7 +17,7 @@ if __name__ == "__main__":
     #start EMME desktop 
     empFile = sys.argv[1]
     scenarioNum = sys.argv[2]
-    desktop = d.start_dedicated(False, "bts", empFile)
+    desktop = d.start_dedicated(True, "bts", empFile)
     
     #open a database if needed and attach a modeller session
     if desktop.data_explorer().active_database() is None:
