@@ -469,8 +469,8 @@ Silos,Description,Target,Expression
 #travel time reliability,,,
 ,,base_am_reliability,"np.sqrt( skims_mfs_base[""mf5""] )"
 ,,build_am_reliability,"np.sqrt( skims_mfs_build[""mf5""] )"
-,,base_md_reliability,"np.sqrt( skims_mfs_base[""mf5""] )"
-,,build_md_reliability,"np.sqrt( skims_mfs_build[""mf5""] )"
+,,base_md_reliability,"np.sqrt( skims_mfs_base[""mf8""] )"
+,,build_md_reliability,"np.sqrt( skims_mfs_build[""mf8""] )"
 ,,daily_build_hbw_auto_trips_lowinc,build_da_pa_trips_hbw_lowinc + build_dp_pa_trips_hbw_lowinc + build_p_pa_trips_hbw_lowinc
 ,,daily_build_hbw_auto_trips_medinc,build_da_pa_trips_hbw_medinc + build_dp_pa_trips_hbw_medinc + build_p_pa_trips_hbw_medinc
 ,,daily_build_hbw_auto_trips_highinc,build_da_pa_trips_hbw_highinc + build_dp_pa_trips_hbw_highinc + build_p_pa_trips_hbw_highinc

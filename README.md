@@ -25,14 +25,14 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
 *root folder*
   - run_bca.py - run benefit calculator
   - configs folder - configuration settings
-      - settings.yaml - overall settings
+      - settings.yaml - overall settings such as constants for each processor, annualization factor, input file names, etc.
       - aggregate_demographics.csv - expressions for coding zonal-based communities of concerns 
       - aggregate_zone.csv - expressions for aggregate zonal calculations - auto ownership and destination choice logsums
       - aggregate_od.csv - expressions for aggregate OD-pair calculations - travel time, travel time reliability, physical activity
       - link_daily.csv - expressions for link calculations - safety, vehicle operating costs, emissions, water, noise 
   - base scenario folder
       - link
-        - linksMD1.csv - link MD1 assignment results with the following fields:
+        - linksMD1.csv - link MD1 period assignment results with the following required fields.  Make sure to remove the list of vertices from the vertices field since the commas inside the [] causes problems
           - i - i node
           - j - j node
           - @zone - zone
@@ -220,4 +220,8 @@ The steps to run the complete toolkit from start to finish are:
     1. Setup a visuals workbook.  Make sure to review and update the settings as needed, including setting the correct year for visualization/analysis.  
     2. Copy the aggregate_results.csv data to the Benefits tab and set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
     3. Copy the Present Value Sum table data to the Costs tab and set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
-    4. Configure the visuals as needed and enjoy
+    4. Refresh all the pivot tables due to the data source changes
+    5. If needed, refresh the average SCENPOLICYRANK fields:
+      - on the BCRatio tab, in the third table, add `SCENPOLICYRANK` as the summation field and use `AVERAGE` as the summation operator.
+      - on the BCRatioByPolicyRank tab, in the first table, add `SCENPOLICYRANK` as the summation field and use `AVERAGE` as the summation operator.
+    6. Configure the visuals as needed and enjoy
