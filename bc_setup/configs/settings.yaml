@@ -84,7 +84,6 @@ aggregate_zone_file_names:
 locals_aggregate_zone:
   #auto ownership variables
   ANNUAL_COST_PER_VEHICLE: 6611
-  AVERAGE_AUTOS_IN_3PLUS: 3.5
   #utilities per minute (IVT coefficients from Metro model)
   UPM_HBC: 0.0532
   UPM_HBO: 0.0215
