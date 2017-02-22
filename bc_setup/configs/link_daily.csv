@@ -40,10 +40,10 @@ Silos,Description,Target,Expression
 ,,_speed,"pd.concat([_speed_MD,_speed_PM],axis=1).max(axis=1)"
 ,,_urbrur_MD,links.urbrur
 ,,_urbrur_PM,links.urbrur_PM2
-,,_urbrur,_urbrur_MD | _urbrur_PM
+,,_urbrur,(_urbrur_MD) | (_urbrur_PM)
 ,,_barrier_MD,links.barrier
 ,,_barrier_PM,links.barrier_PM2
-,,_barrier,_barrier_MD | _barrier_PM
+,,_barrier,(_barrier_MD) | (_barrier_PM)
 ,,_num_lanes_MD,links.num_lanes
 ,,_num_lanes_PM,links.num_lanes_PM2
 ,,_num_lanes,"pd.concat([_num_lanes_MD,_num_lanes_PM],axis=1).max(axis=1)"
