@@ -3,7 +3,7 @@
 #Ben Stabler, ben.stabler@rsginc.com, 07/19/16
 #Arguments: emme_project scenario link_file_name
 #SET EMMEPY="C:\Program Files\INRO\Emme\Emme 4\Emme-4.2.5\Python27\python.exe"
-#Example export: %EMMEPY% ExportLinkResultsToCSV.py myproj.emp 4782 linksPM2.csv
+#Example export: %EMMEPY% ExportLinkResultsToCSV.py myproj.emp 4782 c:/projects/linksPM2.csv
 ######################################################################
 
 #load libraries
@@ -25,6 +25,9 @@ if __name__ == "__main__":
     network = m.emmebank.scenario(scenarioNum).get_network()
     links = network.links()
     linkAttributes = network.attributes("LINK")
+    
+    #remove link shaping points attribute
+    linkAttributes.remove("vertices")
     
     outFile = file(fileName, "w")
     outFile.write("i,j," + ",".join(linkAttributes) + "\n")
