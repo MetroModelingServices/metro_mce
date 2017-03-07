@@ -218,10 +218,5 @@ The steps to run the complete toolkit from start to finish are:
     2. The results are in the Present Value Sum table on the PV_Summary tab
   - Visuals Workbook
     1. Setup a visuals workbook.  Make sure to review and update the settings as needed, including setting the correct year for visualization/analysis.  
-    2. Copy the aggregate_results.csv data to the Benefits tab and set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
-    3. Copy the Present Value Sum table data to the Costs tab and set the year of the scenario.  The DOLLARS field will be automatically calculated by the worksheet.
-    4. Refresh all the pivot tables due to the data source changes
-    5. If needed, refresh the average SCENPOLICYRANK fields:
-      - on the BCRatio tab, in the third table, add `SCENPOLICYRANK` as the summation field and use `AVERAGE` as the summation operator.
-      - on the BCRatioByPolicyRank tab, in the first table, add `SCENPOLICYRANK` as the summation field and use `AVERAGE` as the summation operator.
-    6. Configure the visuals as needed and enjoy
+    2. Copy the aggregate_results.csv data to the Benefits tab and set the year of the scenario.  The DOLLARS and KEY fields are automatically calculated by the worksheet.
+    3. Copy the Present Value Sum table data to the Costs tab and set the year of the scenario.  The DOLLARS and KEY fields  are automatically calculated by the worksheet.
