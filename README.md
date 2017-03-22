@@ -32,7 +32,7 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
       - link_daily.csv - expressions for link calculations - safety, vehicle operating costs, emissions, water, noise 
   - base scenario folder
       - link
-        - linksMD1.csv - link MD1 period assignment results with the following required fields.  Make sure to remove the list of vertices from the vertices field since the commas inside the [] causes problems
+        - linksMD1.csv - link MD1 period assignment results with the following required fields.
           - i - i node
           - j - j node
           - @zone - zone
@@ -89,7 +89,6 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
           - length - link length
           - num_lanes - number of lanes
           - type - link type 
-          - vertices - ?
           - volume_delay_func - vdf code
         - linksPM2.csv - link PM2 assignment results with the same fields
       - OD  
