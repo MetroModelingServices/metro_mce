@@ -467,10 +467,10 @@ Silos,Description,Target,Expression
 ,truck travel time benefit,trk_travel_time_benefit,hvytrk_am_time_benefit + medtrk_am_time_benefit + hvytrk_md_time_benefit + medtrk_md_time_benefit
 *,travel time benefit,travel_time_benefit,person_travel_time_benefit + trk_travel_time_benefit
 #travel time reliability,,,
-,,base_am_reliability,"np.sqrt( skims_mfs_base[""mf5""] )"
-,,build_am_reliability,"np.sqrt( skims_mfs_build[""mf5""] )"
-,,base_md_reliability,"np.sqrt( skims_mfs_base[""mf8""] )"
-,,build_md_reliability,"np.sqrt( skims_mfs_build[""mf8""] )"
+,,base_am_reliability,"np.sqrt( skims_mfs_base[""mf38""] )"
+,,build_am_reliability,"np.sqrt( skims_mfs_build[""mf38""] )"
+,,base_md_reliability,"np.sqrt( skims_mfs_base[""mf39""] )"
+,,build_md_reliability,"np.sqrt( skims_mfs_build[""mf39""] )"
 ,,daily_build_hbw_auto_trips_lowinc,build_da_pa_trips_hbw_lowinc + build_dp_pa_trips_hbw_lowinc + build_p_pa_trips_hbw_lowinc
 ,,daily_build_hbw_auto_trips_medinc,build_da_pa_trips_hbw_medinc + build_dp_pa_trips_hbw_medinc + build_p_pa_trips_hbw_medinc
 ,,daily_build_hbw_auto_trips_highinc,build_da_pa_trips_hbw_highinc + build_dp_pa_trips_hbw_highinc + build_p_pa_trips_hbw_highinc
