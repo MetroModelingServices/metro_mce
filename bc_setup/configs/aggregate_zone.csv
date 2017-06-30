@@ -59,7 +59,7 @@ Silos,Description,Target,Expression
 ,nhbw productions in build scenario,build_prod_nhbw,zones.build_nhwpr
 ,sch productions in build scenario,build_prod_sch,zones.build_schpr
 #get logsums by purpose,,,
-,hbc logsum in base scenario,base_ls_hbc,( zones.base_hbcldcls * zones.base_hbcprl + zones.base_hbcmdcls * zones.base_hbcprm + zones.base_hbchdcls * * zones.base_hbcprh ) / base_prod_hbc
+,hbc logsum in base scenario,base_ls_hbc,( zones.base_hbcldcls * zones.base_hbcprl + zones.base_hbcmdcls * zones.base_hbcprm + zones.base_hbchdcls * zones.base_hbcprh ) / base_prod_hbc
 ,weighted hbo logsum in base scenario,base_ls_hbo,( zones.base_hboldcls * zones.base_hboprl + zones.base_hbomdcls * zones.base_hboprm + zones.base_hbohdcls * zones.base_hboprh ) / base_prod_hbo
 ,weighted hbr logsum in base scenario,base_ls_hbr,( zones.base_hbrldcls * zones.base_hbrprl + zones.base_hbrmdcls * zones.base_hbrprm + zones.base_hbrhdcls * zones.base_hbrprh ) / base_prod_hbr
 ,weighted hbs logsum in base scenario,base_ls_hbs,( zones.base_hbsldcls * zones.base_hbsprl + zones.base_hbsmdcls * zones.base_hbsprm + zones.base_hbshdcls * zones.base_hbsprh ) / base_prod_hbs
@@ -67,7 +67,7 @@ Silos,Description,Target,Expression
 ,nhbnw logsum in base scenario,base_ls_nhbnw,zones.base_nhnwdcls
 ,nhbw logsum in base scenario,base_ls_nhbw,zones.base_nhbwdcls
 ,sch logsum in base scenario,base_ls_sch,zones.base_schdcls
-,hbc logsum in build scenario,build_ls_hbc,( zones.build_hbcldcls * zones.build_hbcprl + zones.build_hbcmdcls * zones.build_hbcprm + zones.build_hbchdcls * * zones.build_hbcprh ) / build_prod_hbc
+,hbc logsum in build scenario,build_ls_hbc,( zones.build_hbcldcls * zones.build_hbcprl + zones.build_hbcmdcls * zones.build_hbcprm + zones.build_hbchdcls * zones.build_hbcprh ) / build_prod_hbc
 ,weighted hbo logsum in build scenario,build_ls_hbo,( zones.build_hboldcls * zones.build_hboprl + zones.build_hbomdcls * zones.build_hboprm + zones.build_hbohdcls * zones.build_hboprh ) / build_prod_hbo
 ,weighted hbr logsum in build scenario,build_ls_hbr,( zones.build_hbrldcls * zones.build_hbrprl + zones.build_hbrmdcls * zones.build_hbrprm + zones.build_hbrhdcls * zones.build_hbrprh ) / build_prod_hbr
 ,weighted hbs logsum in build scenario,build_ls_hbs,( zones.build_hbsldcls * zones.build_hbsprl + zones.build_hbsmdcls * zones.build_hbsprm + zones.build_hbshdcls * zones.build_hbsprh ) / build_prod_hbs
