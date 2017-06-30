@@ -50,7 +50,7 @@ Silos,Description,Target,Expression
 ,nhbnw productions in base scenario,base_prod_nhbnw,zones.base_nhnwpr
 ,nhbw productions in base scenario,base_prod_nhbw,zones.base_nhwpr
 ,sch productions in base scenario,base_prod_sch,zones.base_schpr
-,hbc productions in build scenario,build_prod_hbc,zones.build_hbcpr
+,hbc productions in build scenario,build_prod_hbc,zones.build_hbcprl + zones.build_hbcprm + zones.build_hbcprh
 ,hbo productions in build scenario,build_prod_hbo,zones.build_hboprl + zones.build_hboprm + zones.build_hboprh
 ,hbr productions in build scenario,build_prod_hbr,zones.build_hbrprl + zones.build_hbrprm + zones.build_hbrprh
 ,hbs productions in build scenario,build_prod_hbs,zones.build_hbsprl + zones.build_hbsprm + zones.build_hbsprh
