@@ -102,7 +102,9 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
         - mf.cval.csv - see above
         - cocs.csv - externally defined COC share of households by zone
         - Productions
-          - ma.collpr.csv - hbc 
+          - ma.collprh.csv - hbc high inc 
+          - ma.collprl.csv - hbc low inc  
+          - ma.collprm.csv - hbc mid inc 
           - ma.hboprh.csv - hbo high inc 
           - ma.hboprl.csv - hbo low inc 
           - ma.hboprm.csv - hbo mid inc 
@@ -119,7 +121,9 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
           - ma.nhwpr.csv - nhbw 
           - ma.schdcls.csv - sch 
         - Destination choice logsums
-          - ma.hbcdcls.csv - hbc 
+          - ma.hbchdcls.csv - hbc high inc 
+          - ma.hbcldcls.csv - hbc low inc 
+          - ma.hbcmdcls.csv - hbc mid inc 
           - ma.hbohdcls.csv - hbo high inc 
           - ma.hboldcls.csv - hbo low inc 
           - ma.hbomdcls.csv - hbo mid inc 
@@ -132,7 +136,7 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
           - ma.hbwhdcls.csv - hbw high inc 
           - ma.hbwldcls.csv - hbw low inc 
           - ma.hbwmdcls.csv - hbw mid inc 
-          - ma.nhbnwdcls.csv - nhbnw 
+          - ma.nhnwls.csv - nhbnw 
           - ma.nhbwdcls.csv - nhbw 
           - ma.schdcls.csv - sch 
   - build scenario folder - same files as the base scenario folder

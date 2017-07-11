@@ -1,119 +1,124 @@
-#j.hbwdist.R
-# HBW Destination Choice
-# LOGSUMS WITH ONLY TRAVEL TIMES coeff from orig ms. NO constants.& NO BDFLAG..........
+#k.hbwdist.R
 
-#Needs the following input files from Emme2
-# 1.  mf.waor
-# 2.  mf.orwa  
-# 3.  mf.ew
-# 4.  mf.we 
-
-#Needs the following matrices from generation
-# 6.  ma.hbwprl
-# 7.  ma.hbwprm
-# 8.  ma.hbwprh
-
-#Needs the following matrices from log sum
-# 9.  mf.hwlsl
-#10.  mf.hwlsm
-#11.  mf.hwlsh 
+east2westhill<-as.matrix(array(0,c(numzones,numzones)))
+east2westhill[ensemble.gw==2,ensemble.gw==1]<-1
 
 westhill2east<-as.matrix(array(0,c(numzones,numzones)))
 westhill2east[ensemble.gw==1,ensemble.gw==2]<-1
-westhill2east[ensemble.gw==1,ensemble.gw==2]<-1
-westhill2east[ensemble.gw==1,ensemble.gw==2]<-1
-westhill2east[ensemble.gw==1,ensemble.gw==2]<-1
 
+east2westriv<-as.matrix(array(0,c(numzones,numzones)))
+east2westriv[ensemble.gr==2,ensemble.gr==1]<-1
 
-# Calculate Shopping Center Employment
-ma.shemp <- ma.shsqft / 1000 * 3
-
-# Boost Retail Employment to Shopping Center Employment (if necessary)
-ma.retail <- (ma.ret * (ma.ret >= ma.shemp) + ma.shemp * (ma.ret < ma.shemp))
+westriv2east<-as.matrix(array(0,c(numzones,numzones)))
+westriv2east[ensemble.gr==1,ensemble.gr==2]<-1
 
 #############################################################
 #  Low Income Raw Distribution                              #
 #############################################################
 
-# Total Employment for Low Income Utility 
-ma.totemp <- (ma.afm + ma.con + ma.fi + ma.gov + ma.mfg + ma.retail+ ma.ser
-             + ma.tpu + ma.wt)
-
-# HBW Low Income Distribution Utility # Original Logsum Coeff(linear, sq, cu) = 2.203, -0.3701, 0.01899
-mf.util <- exp (sweep (2.235*mf.hwlsl - 0.4198*(mf.hwlsl^2) + 0.02220*(mf.hwlsl^3)
-                - 1.502*mf.waor - 1.378*mf.orwa - 0.4949*mf.we -(0.4949*0.625)*westhill2east, 2,
-                + log(ma.totemp), "+"))
+# HBW Low Income Distribution Utility
+mf.util <- exp(sweep(HBW.low.lsCoeff * mf.hwlsl
+                   + HBW.low.logdistXorwaCoeff * mf.orwa * log (mf.tdist + 1)
+                   + HBW.low.logdistXwaorCoeff * mf.waor * log (mf.tdist + 1)
+                   + HBW.low.logdistXnoXingCoeff * ((mf.orwa + mf.waor)==0) * log (mf.tdist + 1)
+                   + HBW.low.logdistXewWestHillsCoeff * east2westhill * log (mf.tdist + 1)
+                   + HBW.low.logdistXweWestHillsCoeff * westhill2east * log (mf.tdist + 1)
+                   + HBW.low.logdistXewWillRiverCoeff * east2westriv * log (mf.tdist + 1)
+                   + HBW.low.logdistXweWillRiverCoeff * westriv2east * log (mf.tdist + 1)
+                   , 2, log (HBW.low.aerCoeff * ma.aer
+                   + HBW.low.amfCoeff * ma.amf + HBW.low.conCoeff * ma.con
+                   + HBW.low.eduCoeff * ma.edu + HBW.low.fsdCoeff * ma.fsd
+                   + HBW.low.govCoeff * ma.gov + HBW.low.hssCoeff * ma.hss
+                   + HBW.low.mfgCoeff * ma.mfg + HBW.low.mhtCoeff * ma.mht
+                   + HBW.low.osvCoeff * ma.osv + HBW.low.pbsCoeff * ma.pbs
+                   + HBW.low.rcsCoeff * ma.rcs + HBW.low.twuCoeff * ma.twu
+                   + HBW.low.wtCoeff * ma.wt + 1), "+"))
 
 # Distribution Utility Summary
-ma.utsum <- apply (mf.util, 1, sum)
-
-ma.hbwldcls <- log(ma.utsum)
-save (ma.hbwldcls, file="ma.hbwldcls.dat")
-write.table(ma.hbwldcls, sep=",", row.names=F, file="ma.hbwldcls.csv", col.names=c("hbwldcls"))
-write.table(ma.hbwprl, sep=",", row.names=F, file="ma.hbwprl.csv", col.names=c("hbwprl"))
-
-mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
+ma.utsum <- apply(mf.util,1,sum)
+mf.utsum <- matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
 # HBW Low Income Raw Distribution Matrix
-mf.hwdtl<-matrix(0,numzones,numzones)
-mf.hwdtl[mf.utsum!=0]<-mf.util[mf.utsum!=0]/mf.utsum[mf.utsum!=0]
-mf.hwdtl<-sweep(mf.hwdtl,1,ma.hbwprl,"*")
+mf.hwdtl <- matrix(0,numzones,numzones)
+mf.hwdtl[mf.utsum!=0] <- mf.util[mf.utsum!=0]/mf.utsum[mf.utsum!=0]
+mf.hwdtl <- sweep(mf.hwdtl,1,ma.hbwprl,"*")
+ma.hbwldcls <- log(ma.utsum)
+save (ma.hbwldcls, file="ma.hbwldcls.dat")
+if (file.access("../_mceInputs", mode=0) < 0) { dir.create("../_mceInputs") }
+write.table(ma.hbwldcls, sep=",", row.names=F, file="../_mceInputs/ma.hbwldcls.csv", col.names=c("hbwldcls"))
+write.table(ma.hbwprl, sep=",", row.names=F, file="../_mceInputs/ma.hbwprl.csv", col.names=c("hbwprl"))
 
 
 #############################################################
 #  Middle Income Raw Distribution                           #
 #############################################################
 
-# Rest Employment for Middle Income Utility
-ma.rest <- ma.afm + ma.con + ma.fi + ma.gov + ma.mfg + ma.ser + ma.tpu + ma.wt
-
-# HBW Middle Income Distribution Utility # Original Logsum Coeff(linear, sq, cu) = 1.891, -0.3614, 0.02154
-mf.util <-exp (sweep (2.097*mf.hwlsm - 0.3995*(mf.hwlsm^2) + 0.02524*(mf.hwlsm^3)
-                - 0.8209*mf.waor - 1.635*mf.orwa - 0.3138*mf.we + 0.000*mf.ew -(0.3138*0.625)*westhill2east, 2,
-                + log(ma.retail+ 1.6005*ma.rest), "+"))
+# HBW Middle Income Distribution Utility
+mf.util <- exp(sweep(HBW.mid.lsCoeff * mf.hwlsm
+                   + HBW.mid.logdistXorwaCoeff * mf.orwa * log (mf.tdist + 1)
+                   + HBW.mid.logdistXwaorCoeff * mf.waor * log (mf.tdist + 1)
+                   + HBW.mid.logdistXnoXingCoeff * ((mf.orwa + mf.waor)==0) * log (mf.tdist + 1)
+                   + HBW.mid.logdistXewWestHillsCoeff * east2westhill * log (mf.tdist + 1)
+                   + HBW.mid.logdistXweWestHillsCoeff * westhill2east * log (mf.tdist + 1)
+                   + HBW.mid.logdistXewWillRiverCoeff * east2westriv * log (mf.tdist + 1)
+                   + HBW.mid.logdistXweWillRiverCoeff * westriv2east * log (mf.tdist + 1)
+                   , 2, log (HBW.mid.aerCoeff * ma.aer
+                   + HBW.mid.amfCoeff * ma.amf + HBW.mid.conCoeff * ma.con
+                   + HBW.mid.eduCoeff * ma.edu + HBW.mid.fsdCoeff * ma.fsd
+                   + HBW.mid.govCoeff * ma.gov + HBW.mid.hssCoeff * ma.hss
+                   + HBW.mid.mfgCoeff * ma.mfg + HBW.mid.mhtCoeff * ma.mht
+                   + HBW.mid.osvCoeff * ma.osv + HBW.mid.pbsCoeff * ma.pbs
+                   + HBW.mid.rcsCoeff * ma.rcs + HBW.mid.twuCoeff * ma.twu
+                   + HBW.mid.wtCoeff * ma.wt + 1), "+"))
 
 # Distribution Utility Summary
 ma.utsum <- apply (mf.util, 1, sum)
+mf.utsum <- matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
+# HBW Middle Income Raw Distribution Matrix
+mf.hwdtm <- matrix(0,numzones,numzones)
+mf.hwdtm[mf.utsum!=0] <- mf.util[mf.utsum!=0]/mf.utsum[mf.utsum!=0]
+mf.hwdtm <- sweep(mf.hwdtm,1,ma.hbwprm,"*")
 ma.hbwmdcls <- log(ma.utsum)
 save (ma.hbwmdcls, file="ma.hbwmdcls.dat")
 write.table(ma.hbwmdcls, sep=",", row.names=F, file="ma.hbwmdcls.csv", col.names=c("hbwmdcls"))
 write.table(ma.hbwprm, sep=",", row.names=F, file="ma.hbwprm.csv", col.names=c("hbwprm"))
-
-mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
-
-# HBW Middle Income Raw Distribution Matrix
-mf.hwdtm<-matrix(0,numzones,numzones)
-mf.hwdtm[mf.utsum!=0]<-mf.util[mf.utsum!=0]/mf.utsum[mf.utsum!=0]
-mf.hwdtm<-sweep(mf.hwdtm,1,ma.hbwprm,"*")
 
 
 #############################################################
 #  High Income Raw Distribution                             #
 #############################################################
 
-# Rest Employment for High Income Utility
-ma.rest <- ma.afm + ma.con + ma.gov + ma.mfg + ma.tpu + ma.wt
-
-# HBW High Income Distribution Utility # Original Logsum Coeff(linear, sq, cu) = 1.562, -0.3164, 0.02195
-mf.util <-exp (sweep (1.777*mf.hwlsh  - 0.3908*(mf.hwlsh^2) + 0.02555*(mf.hwlsh^3)
-               - 1.139*mf.waor - 1.429*mf.orwa - 0.4325*mf.we -(0.4325*0.625)*westhill2east, 2,
-               + log(ma.retail+ 2.8605*ma.ser + 5.6013*ma.fi + 2.4312*ma.rest), "+"))
+# HBW High Income Distribution Utility
+mf.util <- exp(sweep(HBW.high.lsCoeff * mf.hwlsh
+                   + HBW.high.logdistXorwaCoeff * mf.orwa * log (mf.tdist + 1)
+                   + HBW.high.logdistXwaorCoeff * mf.waor * log (mf.tdist + 1)
+                   + HBW.high.logdistXnoXingCoeff * ((mf.orwa + mf.waor)==0) * log (mf.tdist + 1)
+                   + HBW.high.logdistXewWestHillsCoeff * east2westhill * log (mf.tdist + 1)
+                   + HBW.high.logdistXweWestHillsCoeff * westhill2east * log (mf.tdist + 1)
+                   + HBW.high.logdistXewWillRiverCoeff * east2westriv * log (mf.tdist + 1)
+                   + HBW.high.logdistXweWillRiverCoeff * westriv2east * log (mf.tdist + 1)
+                   , 2, log (HBW.high.aerCoeff * ma.aer
+                   + HBW.high.amfCoeff * ma.amf + HBW.high.conCoeff * ma.con
+                   + HBW.high.eduCoeff * ma.edu + HBW.high.fsdCoeff * ma.fsd
+                   + HBW.high.govCoeff * ma.gov + HBW.high.hssCoeff * ma.hss
+                   + HBW.high.mfgCoeff * ma.mfg + HBW.high.mhtCoeff * ma.mht
+                   + HBW.high.osvCoeff * ma.osv + HBW.high.pbsCoeff * ma.pbs
+                   + HBW.high.rcsCoeff * ma.rcs + HBW.high.twuCoeff * ma.twu
+                   + HBW.high.wtCoeff * ma.wt + 1), "+"))
 
 # Distribution Utility Summary
 ma.utsum <- apply (mf.util, 1, sum)
+mf.utsum <- matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
 
+# HBW High Income Raw Distribution Matrix
+mf.hwdth <- matrix(0,numzones,numzones)
+mf.hwdth[mf.utsum!=0] <- mf.util[mf.utsum!=0]/mf.utsum[mf.utsum!=0]
+mf.hwdth <- sweep(mf.hwdth,1,ma.hbwprh,"*")
 ma.hbwhdcls <- log(ma.utsum)
 save (ma.hbwhdcls, file="ma.hbwhdcls.dat")
 write.table(ma.hbwhdcls, sep=",", row.names=F, file="ma.hbwhdcls.csv", col.names=c("hbwhdcls"))
 write.table(ma.hbwprh, sep=",", row.names=F, file="ma.hbwprh.csv", col.names=c("hbwprh"))
-
-mf.utsum<-matrix(ma.utsum,length(ma.utsum),length(ma.utsum))
-
-# HBW High Income Raw Distribution Matrix
-mf.hwdth<-matrix(0,numzones,numzones)
-mf.hwdth[mf.utsum!=0]<-mf.util[mf.utsum!=0]/mf.utsum[mf.utsum!=0]
-mf.hwdth<-sweep(mf.hwdth,1,ma.hbwprh,"*")
 
 
 #############################################################
@@ -215,7 +220,7 @@ mf.hbwdt <- mf.hwdtl + mf.hwdtm + mf.hwdth
 #  Balance HBW Distributions with new Attraction mds        #
 #############################################################
 #  Source in HBW Balancing Function - edited by WRS 11/22/06
-source(paste(R.path, "j.balance.R", sep='/'))
+source(paste(R.path, "k.balance.R", sep='/'))
 mf.hbwdtl <- balance (mf.hwdtl,ma.hbwprl,ma.hbwatl,100)
 mf.hbwdtm <- balance (mf.hwdtm,ma.hbwprm,ma.hbwatm,100)
 mf.hbwdth <- balance (mf.hwdth,ma.hbwprh,ma.hbwath,100)
@@ -227,7 +232,7 @@ mf.hbwdt <- mf.hbwdtl + mf.hbwdtm + mf.hbwdth
 
 #############################################################
 # Remove temporary matrices 
-rm (ma.rest,mf.util,ma.utsum,ma.atl,ma.atm,ma.ath,ma.newat,
+rm (mf.util,ma.utsum,ma.atl,ma.atm,ma.ath,ma.newat,
   ma.hbwatl,ma.hbwatm,ma.hbwath,mf.utsum,ma.totemp)
 
 #rm(ms.aveHbwTripRate,ms.hbwat,ms.hbwEmpGoal,ms.hbwFactor,
@@ -238,12 +243,8 @@ rm (ma.rest,mf.util,ma.utsum,ma.atl,ma.atm,ma.ath,ma.newat,
 
 if (file.access("hbwdist.rpt", mode=0) == 0) {system ("rm hbwdist.rpt")}
 
-distsum ("mf.hbwdt", "HBW Distribution - Total", "ga", 3, 
-  "hbwdist", project, initials)
-distsum ("mf.hbwdtl", "HBW Distribution - LowInc", "ga", 3, 
-  "hbwdist", project, initials)
-distsum ("mf.hbwdtm", "HBW Distribution - MidInc", "ga", 3, 
-  "hbwdist", project, initials)
-distsum ("mf.hbwdth", "HBW Distribution - HighInc", "ga", 3, 
-  "hbwdist", project, initials)
+distsum ("mf.hbwdt", "HBW Distribution - Total", "ga", 3, "hbwdist", project, initials)
+distsum ("mf.hbwdtl", "HBW Distribution - LowInc", "ga", 3, "hbwdist", project, initials)
+distsum ("mf.hbwdtm", "HBW Distribution - MidInc", "ga", 3, "hbwdist", project, initials)
+distsum ("mf.hbwdth", "HBW Distribution - HighInc", "ga", 3, "hbwdist", project, initials)
 
