@@ -27,7 +27,8 @@ if __name__ == "__main__":
     linkAttributes = network.attributes("LINK")
     
     #remove link shaping points attribute
-    linkAttributes.remove("vertices")
+    if "vertices" in linkAttributes:
+      linkAttributes.remove("vertices")
     
     outFile = file(fileName, "w")
     outFile.write("i,j," + ",".join(linkAttributes) + "\n")
