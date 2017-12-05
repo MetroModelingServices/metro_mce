@@ -46,9 +46,7 @@ locals_aggregate_demographics:
 # data will be combined into a single table with columns names prefixed with 'base_' or 'build_'
 # (e.g.) if ma.hbcdcls.csv has a column 'hbcdcls' you will have 'base_hbcdcls' and 'build_hbcdcls'
 aggregate_zone_file_names:
-  - ma.hbchdcls.csv
-  - ma.hbcldcls.csv
-  - ma.hbcmdcls.csv
+  - ma.hbcdcls.csv
   - ma.hbohdcls.csv
   - ma.hbomdcls.csv
   - ma.hboldcls.csv
@@ -61,13 +59,11 @@ aggregate_zone_file_names:
   - ma.hbwhdcls.csv
   - ma.hbwldcls.csv
   - ma.hbwmdcls.csv
-  - ma.nhnwdcls.csv
+  - ma.nhbnwdcls.csv
   - ma.nhbwdcls.csv
   - ma.schdcls.csv
   - mf.cval.csv
-  - ma.collprl.csv
-  - ma.collprm.csv
-  - ma.collprh.csv
+  - ma.collpr.csv
   - ma.hboprh.csv
   - ma.hboprl.csv
   - ma.hboprm.csv
@@ -251,34 +247,35 @@ locals_link_daily:
   CfwyI: 1.0
   CfwyP: 1.0
   #Rural Multi Lane
-  CrxlF: 1.0
-  CrxlI: 1.0
-  CrxlP: 1.0
+  CrxlU: 0.37
+  CrxlD: 0.77
   #Rural Multi Lane Intersections
-  CrxlF_X: 1.0
-  CrxlI_X: 1.0
-  CrxlP_X: 1.0
+  Crxl3ST_X: 0.15
+  Crxl4ST_X: 0.39
+  Crxl4SG_X: 0.15
   #Rural 2 Lane
-  Cr2lF: 1.0
-  Cr2lI: 1.0
-  Cr2lP: 1.0
+  Cr2l: 0.74
   #Rural 2 Lane Intersections
-  Cr2lF_X: 1.0
-  Cr2lI_X: 1.0
-  Cr2lP_X: 1.0
+  Cr2l3ST_X: 0.31
+  Cr2l4ST_X: 0.31
+  Cr2l4SG_X: 0.45
   #Urban Arterials
-  CurbF: 1.0
-  CurbI: 1.0
-  CurbP: 1.0
+  CU2U: 0.62
+  CU3T: 0.81
+  CU4D: 1.411
+  CU4U: 0.63
+  CU5T: 0.64
   #Urban Arterials Intersections
-  CurbF_X: 1.0
-  CurbI_X: 1.0
-  CurbP_X: 1.0
-  # Proportion of fatal in F/I crashes from TN
-  PERCENT_FATAL: 0.0188
+  CU3ST_X: 0.35
+  CU4ST_X: 0.45
+  CU3SG_X: 0.73
+  CU4SG_X: 1.05
+  # Proportion of fatal in F/I crashes from ODOT 2004-06 (http://www.oregon.gov/ODOT/Data/Pages/Crash.aspx)
+  PERCENT_FATAL: 0.0212
   #Distribution of crashes on rural 2 lane highways
-  R2L_PDO: 0.679
-  R2L_F: 0.013
+  R2L_PDO: 0.46
+  R2L_I: 0.509
+  R2L_F: 0.031
   #Number of driveways within roadway segment of driveway type
   #Major Commercial
   DMJC: 0.01
