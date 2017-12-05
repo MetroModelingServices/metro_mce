@@ -1,0 +1,169 @@
+Silos,Description,Target,Expression
+# identify worker cval columns,,,
+# income 1,,,
+,,_BASE_0W3I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w1' in x and  'i1' in x).tolist()
+,,_BASE_1W2I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w2' in x and  'i1' in x).tolist()
+,,_BASE_1W3I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w2' in x and  'i1' in x).tolist()
+,,_BASE_2W1I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c1' in x and  'w3' in x and  'i1' in x).tolist()
+,,_BASE_2W2I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w3' in x and  'i1' in x).tolist()
+,,_BASE_2W3I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w3' in x and  'i1' in x).tolist()
+,,_BASE_3W1I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c1' in x and  'w4' in x and  'i1' in x).tolist()
+,,_BASE_3W2I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w4' in x and  'i1' in x).tolist()
+,,_BASE_3W3I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w4' in x and  'i1' in x).tolist()
+,,_BUILD_0W3I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w1' in x and  'i1' in x).tolist()
+,,_BUILD_1W2I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w2' in x and  'i1' in x).tolist()
+,,_BUILD_1W3I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w2' in x and  'i1' in x).tolist()
+,,_BUILD_2W1I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c1' in x and  'w3' in x and  'i1' in x).tolist()
+,,_BUILD_2W2I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w3' in x and  'i1' in x).tolist()
+,,_BUILD_2W3I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w3' in x and  'i1' in x).tolist()
+,,_BUILD_3W1I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c1' in x and  'w4' in x and  'i1' in x).tolist()
+,,_BUILD_3W2I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w4' in x and  'i1' in x).tolist()
+,,_BUILD_3W3I1CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w4' in x and  'i1' in x).tolist()
+# income 2,,,
+,,_BASE_0W3I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w1' in x and  'i2' in x).tolist()
+,,_BASE_1W2I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w2' in x and  'i2' in x).tolist()
+,,_BASE_1W3I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w2' in x and  'i2' in x).tolist()
+,,_BASE_2W1I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c1' in x and  'w3' in x and  'i2' in x).tolist()
+,,_BASE_2W2I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w3' in x and  'i2' in x).tolist()
+,,_BASE_2W3I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w3' in x and  'i2' in x).tolist()
+,,_BASE_3W1I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c1' in x and  'w4' in x and  'i2' in x).tolist()
+,,_BASE_3W2I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w4' in x and  'i2' in x).tolist()
+,,_BASE_3W3I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w4' in x and  'i2' in x).tolist()
+,,_BUILD_0W3I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w1' in x and  'i2' in x).tolist()
+,,_BUILD_1W2I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w2' in x and  'i2' in x).tolist()
+,,_BUILD_1W3I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w2' in x and  'i2' in x).tolist()
+,,_BUILD_2W1I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c1' in x and  'w3' in x and  'i2' in x).tolist()
+,,_BUILD_2W2I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w3' in x and  'i2' in x).tolist()
+,,_BUILD_2W3I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w3' in x and  'i2' in x).tolist()
+,,_BUILD_3W1I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c1' in x and  'w4' in x and  'i2' in x).tolist()
+,,_BUILD_3W2I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w4' in x and  'i2' in x).tolist()
+,,_BUILD_3W3I2CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w4' in x and  'i2' in x).tolist()
+# income 3,,,
+,,_BASE_0W3I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w1' in x and  'i3' in x).tolist()
+,,_BASE_1W2I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w2' in x and  'i3' in x).tolist()
+,,_BASE_1W3I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w2' in x and  'i3' in x).tolist()
+,,_BASE_2W1I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c1' in x and  'w3' in x and  'i3' in x).tolist()
+,,_BASE_2W2I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w3' in x and  'i3' in x).tolist()
+,,_BASE_2W3I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w3' in x and  'i3' in x).tolist()
+,,_BASE_3W1I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c1' in x and  'w4' in x and  'i3' in x).tolist()
+,,_BASE_3W2I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w4' in x and  'i3' in x).tolist()
+,,_BASE_3W3I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w4' in x and  'i3' in x).tolist()
+,,_BUILD_0W3I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w1' in x and  'i3' in x).tolist()
+,,_BUILD_1W2I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w2' in x and  'i3' in x).tolist()
+,,_BUILD_1W3I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w2' in x and  'i3' in x).tolist()
+,,_BUILD_2W1I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c1' in x and  'w3' in x and  'i3' in x).tolist()
+,,_BUILD_2W2I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w3' in x and  'i3' in x).tolist()
+,,_BUILD_2W3I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w3' in x and  'i3' in x).tolist()
+,,_BUILD_3W1I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c1' in x and  'w4' in x and  'i3' in x).tolist()
+,,_BUILD_3W2I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w4' in x and  'i3' in x).tolist()
+,,_BUILD_3W3I3CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w4' in x and  'i3' in x).tolist()
+# income 4,,,
+,,_BASE_0W3I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w1' in x and  'i4' in x).tolist()
+,,_BASE_1W2I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w2' in x and  'i4' in x).tolist()
+,,_BASE_1W3I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w2' in x and  'i4' in x).tolist()
+,,_BASE_2W1I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c1' in x and  'w3' in x and  'i4' in x).tolist()
+,,_BASE_2W2I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w3' in x and  'i4' in x).tolist()
+,,_BASE_2W3I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w3' in x and  'i4' in x).tolist()
+,,_BASE_3W1I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c1' in x and  'w4' in x and  'i4' in x).tolist()
+,,_BASE_3W2I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c2' in x and  'w4' in x and  'i4' in x).tolist()
+,,_BASE_3W3I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('base_') and 'c3' in x and  'w4' in x and  'i4' in x).tolist()
+,,_BUILD_0W3I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w1' in x and  'i4' in x).tolist()
+,,_BUILD_1W2I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w2' in x and  'i4' in x).tolist()
+,,_BUILD_1W3I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w2' in x and  'i4' in x).tolist()
+,,_BUILD_2W1I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c1' in x and  'w3' in x and  'i4' in x).tolist()
+,,_BUILD_2W2I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w3' in x and  'i4' in x).tolist()
+,,_BUILD_2W3I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w3' in x and  'i4' in x).tolist()
+,,_BUILD_3W1I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c1' in x and  'w4' in x and  'i4' in x).tolist()
+,,_BUILD_3W2I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c2' in x and  'w4' in x and  'i4' in x).tolist()
+,,_BUILD_3W3I4CVAL_COLNAMES,zones.columns.map(lambda x: x.startswith('build_') and 'c3' in x and  'w4' in x and  'i4' in x).tolist()
+# calculate auto ownership - assume car ownership rates for worker cval groups,,,
+# income 1,,,
+,,_BASE_AUTO_1_I1_COLNAMES,np.array(_BASE_0W3I1CVAL_COLNAMES) + np.array(_BASE_1W2I1CVAL_COLNAMES) + np.array(_BASE_2W1I1CVAL_COLNAMES)
+,,_BASE_AUTO_2_I1_COLNAMES,np.array(_BASE_1W3I1CVAL_COLNAMES) + np.array(_BASE_2W2I1CVAL_COLNAMES) + np.array(_BASE_3W2I1CVAL_COLNAMES)
+,,_BASE_AUTO_3_I1_COLNAMES,np.array(_BASE_2W3I1CVAL_COLNAMES) + np.array(_BASE_3W2I1CVAL_COLNAMES)
+,,_BASE_AUTO_4_I1_COLNAMES,np.array(_BASE_3W3I1CVAL_COLNAMES)
+,Autos in HHs with 1 auto in base year,base_1_I1_auto,"zones.loc[:, _BASE_AUTO_1_I1_COLNAMES].sum(axis=1)"
+,Autos in HHs with 2 auto in base year,base_2_I1_auto,"zones.loc[:, _BASE_AUTO_2_I1_COLNAMES].sum(axis=1) * 2"
+,Autos in HHs with 3 auto in base year,base_3_I1_auto,"zones.loc[:, _BASE_AUTO_3_I1_COLNAMES].sum(axis=1) * 3"
+,Autos in HHs with 4 auto in base year,base_4_I1_auto,"zones.loc[:, _BASE_AUTO_4_I1_COLNAMES].sum(axis=1) * 4"
+,,_BUILD_AUTO_1_I1_COLNAMES,np.array(_BUILD_0W3I1CVAL_COLNAMES) + np.array(_BUILD_1W2I1CVAL_COLNAMES) + np.array(_BUILD_2W1I1CVAL_COLNAMES)
+,,_BUILD_AUTO_2_I1_COLNAMES,np.array(_BUILD_1W3I1CVAL_COLNAMES) + np.array(_BUILD_2W2I1CVAL_COLNAMES) + np.array(_BUILD_3W2I1CVAL_COLNAMES)
+,,_BUILD_AUTO_3_I1_COLNAMES,np.array(_BUILD_2W3I1CVAL_COLNAMES) + np.array(_BUILD_3W2I1CVAL_COLNAMES)
+,,_BUILD_AUTO_4_I1_COLNAMES,np.array(_BUILD_3W3I1_CVAL_COLNAMES)
+,Autos in HHs with 1 auto in build year,build_1_I1_auto,"zones.loc[:, _BUILD_AUTO_1_I1_COLNAMES].sum(axis=1)"
+,Autos in HHs with 2 auto in build year,build_2_I1_auto,"zones.loc[:, _BUILD_AUTO_2_I1_COLNAMES].sum(axis=1) * 2"
+,Autos in HHs with 3 auto in build year,build_3_I1_auto,"zones.loc[:, _BUILD_AUTO_3_I1_COLNAMES].sum(axis=1) * 3"
+,Autos in HHs with 4 auto in build year,build_4_I1_auto,"zones.loc[:, _BUILD_AUTO_4_I1_COLNAMES].sum(axis=1) * 4"
+,base scenario auto ownership,base_auto_ownership_I1,base_1_I1_auto + base_2_I1_auto + base_3_I1_auto + base_4_I1_auto
+,build scenario auto ownership,build_auto_ownership_I1,build_1_I1_auto + build_2_I1_auto + build_3_I1_auto + build_4_I1_auto
+# income 2,,,
+,,_BASE_AUTO_1_I2_COLNAMES,np.array(_BASE_0W3I2CVAL_COLNAMES) + np.array(_BASE_1W2I2CVAL_COLNAMES) + np.array(_BASE_2W1I2CVAL_COLNAMES)
+,,_BASE_AUTO_2_I2_COLNAMES,np.array(_BASE_1W3I2CVAL_COLNAMES) + np.array(_BASE_2W2I2CVAL_COLNAMES) + np.array(_BASE_3W2I2CVAL_COLNAMES)
+,,_BASE_AUTO_3_I2_COLNAMES,np.array(_BASE_2W3I2CVAL_COLNAMES) + np.array(_BASE_3W2I2CVAL_COLNAMES)
+,,_BASE_AUTO_4_I2_COLNAMES,np.array(_BASE_3W3I2CVAL_COLNAMES)
+,Autos in HHs with 1 auto in base year,base_1_I2_auto,"zones.loc[:, _BASE_AUTO_1_I2_COLNAMES].sum(axis=1)"
+,Autos in HHs with 2 auto in base year,base_2_I2_auto,"zones.loc[:, _BASE_AUTO_2_I2_COLNAMES].sum(axis=1) * 2"
+,Autos in HHs with 3 auto in base year,base_3_I2_auto,"zones.loc[:, _BASE_AUTO_3_I2_COLNAMES].sum(axis=1) * 3"
+,Autos in HHs with 4 auto in base year,base_4_I2_auto,"zones.loc[:, _BASE_AUTO_4_I2_COLNAMES].sum(axis=1) * 4"
+,,_BUILD_AUTO_1_I2_COLNAMES,np.array(_BUILD_0W3I2CVAL_COLNAMES) + np.array(_BUILD_1W2I2CVAL_COLNAMES) + np.array(_BUILD_2W1I2CVAL_COLNAMES)
+,,_BUILD_AUTO_2_I2_COLNAMES,np.array(_BUILD_1W3I2CVAL_COLNAMES) + np.array(_BUILD_2W2I2CVAL_COLNAMES) + np.array(_BUILD_3W2I2CVAL_COLNAMES)
+,,_BUILD_AUTO_3_I2_COLNAMES,np.array(_BUILD_2W3I2CVAL_COLNAMES) + np.array(_BUILD_3W2I2CVAL_COLNAMES)
+,,_BUILD_AUTO_4_I2_COLNAMES,np.array(_BUILD_3W3I2_CVAL_COLNAMES)
+,Autos in HHs with 1 auto in build year,build_1_I2_auto,"zones.loc[:, _BUILD_AUTO_1_I2_COLNAMES].sum(axis=1)"
+,Autos in HHs with 2 auto in build year,build_2_I2_auto,"zones.loc[:, _BUILD_AUTO_2_I2_COLNAMES].sum(axis=1) * 2"
+,Autos in HHs with 3 auto in build year,build_3_I2_auto,"zones.loc[:, _BUILD_AUTO_3_I2_COLNAMES].sum(axis=1) * 3"
+,Autos in HHs with 4 auto in build year,build_4_I2_auto,"zones.loc[:, _BUILD_AUTO_4_I2_COLNAMES].sum(axis=1) * 4"
+,base scenario auto ownership,base_auto_ownership_I2,base_1_I2_auto + base_2_I2_auto + base_3_I2_auto + base_4_I2_auto
+,build scenario auto ownership,build_auto_ownership_I2,build_1_I2_auto + build_2_I2_auto + build_3_I2_auto + build_4_I2_auto
+# income 3,,,
+,,_BASE_AUTO_1_I3_COLNAMES,np.array(_BASE_0W3I3CVAL_COLNAMES) + np.array(_BASE_1W2I3CVAL_COLNAMES) + np.array(_BASE_2W1I3CVAL_COLNAMES)
+,,_BASE_AUTO_2_I3_COLNAMES,np.array(_BASE_1W3I3CVAL_COLNAMES) + np.array(_BASE_2W2I3CVAL_COLNAMES) + np.array(_BASE_3W2I3CVAL_COLNAMES)
+,,_BASE_AUTO_3_I3_COLNAMES,np.array(_BASE_2W3I3CVAL_COLNAMES) + np.array(_BASE_3W2I3CVAL_COLNAMES)
+,,_BASE_AUTO_4_I3_COLNAMES,np.array(_BASE_3W3I3CVAL_COLNAMES)
+,Autos in HHs with 1 auto in base year,base_1_I3_auto,"zones.loc[:, _BASE_AUTO_1_I3_COLNAMES].sum(axis=1)"
+,Autos in HHs with 2 auto in base year,base_2_I3_auto,"zones.loc[:, _BASE_AUTO_2_I3_COLNAMES].sum(axis=1) * 2"
+,Autos in HHs with 3 auto in base year,base_3_I3_auto,"zones.loc[:, _BASE_AUTO_3_I3_COLNAMES].sum(axis=1) * 3"
+,Autos in HHs with 4 auto in base year,base_4_I3_auto,"zones.loc[:, _BASE_AUTO_4_I3_COLNAMES].sum(axis=1) * 4"
+,,_BUILD_AUTO_1_I3_COLNAMES,np.array(_BUILD_0W3I3CVAL_COLNAMES) + np.array(_BUILD_1W2I3CVAL_COLNAMES) + np.array(_BUILD_2W1I3CVAL_COLNAMES)
+,,_BUILD_AUTO_2_I3_COLNAMES,np.array(_BUILD_1W3I3CVAL_COLNAMES) + np.array(_BUILD_2W2I3CVAL_COLNAMES) + np.array(_BUILD_3W2I3CVAL_COLNAMES)
+,,_BUILD_AUTO_3_I3_COLNAMES,np.array(_BUILD_2W3I3CVAL_COLNAMES) + np.array(_BUILD_3W2I3CVAL_COLNAMES)
+,,_BUILD_AUTO_4_I3_COLNAMES,np.array(_BUILD_3W3I3_CVAL_COLNAMES)
+,Autos in HHs with 1 auto in build year,build_1_I3_auto,"zones.loc[:, _BUILD_AUTO_1_I3_COLNAMES].sum(axis=1)"
+,Autos in HHs with 2 auto in build year,build_2_I3_auto,"zones.loc[:, _BUILD_AUTO_2_I3_COLNAMES].sum(axis=1) * 2"
+,Autos in HHs with 3 auto in build year,build_3_I3_auto,"zones.loc[:, _BUILD_AUTO_3_I3_COLNAMES].sum(axis=1) * 3"
+,Autos in HHs with 4 auto in build year,build_4_I3_auto,"zones.loc[:, _BUILD_AUTO_4_I3_COLNAMES].sum(axis=1) * 4"
+,base scenario auto ownership,base_auto_ownership_I3,base_1_I3_auto + base_2_I3_auto + base_3_I3_auto + base_4_I3_auto
+,build scenario auto ownership,build_auto_ownership_I3,build_1_I3_auto + build_2_I3_auto + build_3_I3_auto + build_4_I3_auto
+# income 4,,,
+,,_BASE_AUTO_1_I4_COLNAMES,np.array(_BASE_0W3I4CVAL_COLNAMES) + np.array(_BASE_1W2I4CVAL_COLNAMES) + np.array(_BASE_2W1I4CVAL_COLNAMES)
+,,_BASE_AUTO_2_I4_COLNAMES,np.array(_BASE_1W3I4CVAL_COLNAMES) + np.array(_BASE_2W2I4CVAL_COLNAMES) + np.array(_BASE_3W2I4CVAL_COLNAMES)
+,,_BASE_AUTO_3_I4_COLNAMES,np.array(_BASE_2W3I4CVAL_COLNAMES) + np.array(_BASE_3W2I4CVAL_COLNAMES)
+,,_BASE_AUTO_4_I4_COLNAMES,np.array(_BASE_3W3I4CVAL_COLNAMES)
+,Autos in HHs with 1 auto in base year,base_1_I4_auto,"zones.loc[:, _BASE_AUTO_1_I4_COLNAMES].sum(axis=1)"
+,Autos in HHs with 2 auto in base year,base_2_I4_auto,"zones.loc[:, _BASE_AUTO_2_I4_COLNAMES].sum(axis=1) * 2"
+,Autos in HHs with 3 auto in base year,base_3_I4_auto,"zones.loc[:, _BASE_AUTO_3_I4_COLNAMES].sum(axis=1) * 3"
+,Autos in HHs with 4 auto in base year,base_4_I4_auto,"zones.loc[:, _BASE_AUTO_4_I4_COLNAMES].sum(axis=1) * 4"
+,,_BUILD_AUTO_1_I4_COLNAMES,np.array(_BUILD_0W3I4CVAL_COLNAMES) + np.array(_BUILD_1W2I4CVAL_COLNAMES) + np.array(_BUILD_2W1I4CVAL_COLNAMES)
+,,_BUILD_AUTO_2_I4_COLNAMES,np.array(_BUILD_1W3I4CVAL_COLNAMES) + np.array(_BUILD_2W2I4CVAL_COLNAMES) + np.array(_BUILD_3W2I4CVAL_COLNAMES)
+,,_BUILD_AUTO_3_I4_COLNAMES,np.array(_BUILD_2W3I4CVAL_COLNAMES) + np.array(_BUILD_3W2I4CVAL_COLNAMES)
+,,_BUILD_AUTO_4_I4_COLNAMES,np.array(_BUILD_3W3I4_CVAL_COLNAMES)
+,Autos in HHs with 1 auto in build year,build_1_I4_auto,"zones.loc[:, _BUILD_AUTO_1_I4_COLNAMES].sum(axis=1)"
+,Autos in HHs with 2 auto in build year,build_2_I4_auto,"zones.loc[:, _BUILD_AUTO_2_I4_COLNAMES].sum(axis=1) * 2"
+,Autos in HHs with 3 auto in build year,build_3_I4_auto,"zones.loc[:, _BUILD_AUTO_3_I4_COLNAMES].sum(axis=1) * 3"
+,Autos in HHs with 4 auto in build year,build_4_I4_auto,"zones.loc[:, _BUILD_AUTO_4_I4_COLNAMES].sum(axis=1) * 4"
+,base scenario auto ownership,base_auto_ownership_I4,base_1_I4_auto + base_2_I4_auto + base_3_I4_auto + base_4_I4_auto
+,build scenario auto ownership,build_auto_ownership_I4,build_1_I4_auto + build_2_I4_auto + build_3_I4_auto + build_4_I4_auto
+# calculate auto ownership benefit,,,
+,base scenario auto ownership cost,base_auto_ownership_cost_I1,base_auto_ownership_I1 * ANNUAL_COST_PER_VEHICLE
+,build scenario auto ownership cost,build_auto_ownership_cost_I1,build_auto_ownership_I1 * ANNUAL_COST_PER_VEHICLE
+coc_lowinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I1,(build_auto_ownership_cost_I1 - base_auto_ownership_cost_I1) * -1
+,base scenario auto ownership cost,base_auto_ownership_cost_I2,base_auto_ownership_I2 * ANNUAL_COST_PER_VEHICLE
+,build scenario auto ownership cost,build_auto_ownership_cost_I2,build_auto_ownership_I2 * ANNUAL_COST_PER_VEHICLE
+coc_medinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I2,(build_auto_ownership_cost_I2 - base_auto_ownership_cost_I2) * -1
+,base scenario auto ownership cost,base_auto_ownership_cost_I3,base_auto_ownership_I3 * ANNUAL_COST_PER_VEHICLE
+,build scenario auto ownership cost,build_auto_ownership_cost_I3,build_auto_ownership_I3 * ANNUAL_COST_PER_VEHICLE
+coc_highinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I3,(build_auto_ownership_cost_I3 - base_auto_ownership_cost_I3) * -1
+,base scenario auto ownership cost,base_auto_ownership_cost_I4,base_auto_ownership_I4 * ANNUAL_COST_PER_VEHICLE
+,build scenario auto ownership cost,build_auto_ownership_cost_I4,build_auto_ownership_I4 * ANNUAL_COST_PER_VEHICLE
+coc_veryhighinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I4,(build_auto_ownership_cost_I4 - base_auto_ownership_cost_I4) * -1
+*,vehicle ownership cost benefit,veh_ownership_cost_benefit,veh_ownership_cost_benefit_I1 + veh_ownership_cost_benefit_I2 + veh_ownership_cost_benefit_I3 + veh_ownership_cost_benefit_I4
