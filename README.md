@@ -17,7 +17,7 @@ The scripts in this folder are used to export the required data from the R trave
   - mce_reliability_prep.py codes freeway interchange nodes, upstream and downstream distances, and calculates the link reliability measure for skimming.  Run it after assignment and then skim the link @relvar attr.
   - bca_EMME_Export.bat exports the required matrices (mfs) and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
   - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file.  The required link fields are listed below.
-  - mce_ithim.R, mce_ithim_coc.R - process model outputs and run the [R ITHIM](https://github.com/ITHIM/ITHIM) package for everyone or by COC
+  - mce_ithim.R, mce_ithim_coc.R - process model outputs and run the [R ITHIM](https://github.com/ITHIM/ITHIM) package for everyone or by COC.  See the [ITHIM](#ithim-r) section for more info.
 ## Installation
 The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To install bca4abm, follow the instructions [here](https://github.com/RSGInc/bca4abm/wiki/Installation).  Next, clone this repo (metro_mce) to your machine.
 
@@ -206,6 +206,7 @@ To run the ITHIM R active transportation benefit calculator, configure the follo
   - BIKE_SPEED = 10
   - AVG_HH_SIZE = 2.4
   - DOLLARS_PER_DALY = 80000
+
 The script will write out the dalys.csv output file with three columns - coc, dalys, and dollars.
 
 # Project Costing Workbook
