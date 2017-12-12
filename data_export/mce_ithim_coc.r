@@ -11,11 +11,10 @@ projectDirectory_base = "M:/plan/trms/projects/LCP/Phase2/metro_mce/bc_setup/dat
 projectDirectory_build = "M:/plan/trms/projects/LCP/Phase2/metro_mce/bc_setup/data/build-data"
 projectDirectory_run = "M:/plan/trms/projects/LCP/Phase2/metro_mce/bc_setup/data/run/ithimR"
 GBDFileForITHIM = "ORgbd_tidyJuly19.csv"
-atFile_base = "activeTransportTime.csv" #mean walk and cycle times
-atFile_build = "activeTransportTime_scenario.csv"
 WALK_SPEED = 3
 BIKE_SPEED = 10
 AVG_HH_SIZE = 2.4
+DOLLARS_PER_DALY = 80000
 
 #read skims and cocs
 setwd(projectDirectory_run)
@@ -24,8 +23,8 @@ source("omx.r") #Requires rhdf5 package from bioconductor
 setwd(projectDirectory_base)
 base_tdist = readMatrixOMX("skims_mfs.omx","mf3")
 base_wdist = readMatrixOMX("skims_mfs.omx","mf4")
-cocs = read.csv("cocs.csv") #minority, lowengpro, age18or65, lowinc
 cvals = read.csv("mf.cval.csv") #hhs by cval by zone
+cocs = read.csv("cocs.csv") #minority, lowengpro, age18or65, lowinc
 
 setwd(projectDirectory_build)
 build_tdist = readMatrixOMX("skims_mfs.omx","mf3")
@@ -581,11 +580,13 @@ for(coc in colnames(cocs)) {
   
   activeTransportTime$value = base_avg_walk_time
   activeTransportTime$value[activeTransportTime$mode=="cycle"] = base_avg_bike_time
+  atFile_base = "activeTransportTime.csv" #mean walk and cycle times
   atFile_base_coc = gsub(".csv", "", atFile_base)
   write.csv(activeTransportTime, atFile_base_coc, row.names=F)
   
   activeTransportTime$value = build_avg_walk_time
   activeTransportTime$value[activeTransportTime$mode=="cycle"] = build_avg_bike_time
+  atFile_build = "activeTransportTime_scenario.csv"
   atFile_build_coc = gsub(".csv", "", atFile_build)
   write.csv(activeTransportTime, atFile_build_coc, row.names=F)
   
@@ -599,4 +600,5 @@ for(coc in colnames(cocs)) {
 #write output file
 dalys = t(data.frame(dalys))
 colnames(dalys) = c("coc","dalys")
+dalys$dollars = as.numeric(as.character(dalys$dalys)) * DOLLARS_PER_DALY
 write.csv(dalys, "dalys.csv", row.names=F)

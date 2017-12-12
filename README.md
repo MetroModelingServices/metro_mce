@@ -11,13 +11,13 @@ Note that you need [Git LFS](https://git-lfs.github.com/) to download this repo 
 
 ## Travel Model Data Export
 The scripts in this folder are used to export the required data from the R travel demand model and the EMME travel supply model for import into the benefits calculator.
-  - Various R scripts - these demand model scripts were revised to output trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format. See the j.hbw_Generation.R script for the mf.cval column order.
-  - convert_modechoice_pa_omx_part1.R and convert_modechoice_pa_omx_part2.R write the demand model mode choice PA trip matrices to OMX matrices.  These scripts required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
+  - Various R scripts - these demand model scripts were revised to output trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format. See the k.hbw_Generation.R script for the mf.cval column order.
+  - base|build_convert_modechoice_pa_omx_purpose.R write the demand model mode choice PA trip matrices to OMX matrices.  These scripts required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   - parking_costs_to_omx.R converts the short term and long term parking cost by zone to an OMX matrix.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   - mce_reliability_prep.py codes freeway interchange nodes, upstream and downstream distances, and calculates the link reliability measure for skimming.  Run it after assignment and then skim the link @relvar attr.
   - bca_EMME_Export.bat exports the required matrices (mfs) and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
   - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file.  The required link fields are listed below.
-
+  - mce_ithim.R, mce_ithim_coc.R - process model outputs and run the [R ITHIM](https://github.com/ITHIM/ITHIM) package for everyone or by COC
 ## Installation
 The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To install bca4abm, follow the instructions [here](https://github.com/RSGInc/bca4abm/wiki/Installation).  Next, clone this repo (metro_mce) to your machine.
 
@@ -38,6 +38,7 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
           - @zone - zone
           - @amrmp - ?
           - @cap - capacity
+          - "@centerturn" - centerturn
           - @divhwy - divided highway
           - @dwdist - ?
           - @fwcap - ?
@@ -83,6 +84,7 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
           - additional_volume - ? 
           - auto_time - ?
           - auto_volume - total auto volume
+          - aux_transit_volume - aux_transit_volume
           - data1 - ? 
           - data2 - ?
           - data3 - ?
@@ -94,9 +96,8 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
       - OD  
         - assign_mfs.omx - assignment bank matrices
         - skims_mfs.omx - skims bank matrices
-        - mode_choice_pa_part1.omx - half of the mode choice production-attraction matrices
-        - mode_choice_pa_part2.omx - half of the mode choice production-attraction matrices
-        - mode_choice_pa_school_college.omx - mode choice production-attraction matrices for school and college trips
+        - skims_mfs_rel.omx - reliability skims bank matrices
+        - mode_choice_pa_purpose.omx - mode choice production-attraction matrices for each trip purpose
         - parking_cost.omx - parking costs at the destination
       - Zone 
         - mf.cval.csv - see above
@@ -119,7 +120,7 @@ The benefits calculator is an implementation of the [FHWA bca4abm](https://githu
           - ma.hbwprm.csv - hbw mid inc 
           - ma.nhnwpr.csv - nhbnw 
           - ma.nhwpr.csv - nhbw 
-          - ma.schdcls.csv - sch 
+          - ma.schpr.csv - sch 
         - Destination choice logsums
           - ma.hbchdcls.csv - hbc high inc 
           - ma.hbcldcls.csv - hbc low inc 
@@ -195,6 +196,18 @@ The benefits calculator outputs the following files to the ```outputs``` folder:
 
 Additional useful documentation on how to setup and run the bca4abm tool is [here](https://github.com/RSGInc/bca4abm/wiki).
 
+# ITHIM R
+To run the ITHIM R active transportation benefit calculator, configure the following settings at the top of the script:
+  - projectDirectory_base = "data/base-data"
+  - projectDirectory_build = "data/build-data"
+  - projectDirectory_run = "data/run/ithimR"
+  - GBDFileForITHIM = "ORgbd_tidyJuly19.csv"
+  - WALK_SPEED = 3
+  - BIKE_SPEED = 10
+  - AVG_HH_SIZE = 2.4
+  - DOLLARS_PER_DALY = 80000
+The script will write out the dalys.csv output file with three columns - coc, dalys, and dollars.
+
 # Project Costing Workbook
 The project cost workbook calculates total project costs by type and Net Present Value.  Instructions are on the first worksheet.
 
@@ -209,13 +222,15 @@ The steps to run the complete toolkit from start to finish are:
     2. Run the updated demand models with the revised R scripts in the data export folder
     3. Run the assignments
     4. Run the data export scripts for both the base and build scenarios.  The scripts need to be run in the following order:
-        1. convert_modechoice_pa_omx_part1.R and convert_modechoice_pa_omx_part2.R
+        1. base|build_convert_modechoice_pa_omx_purpose.R
         2. parking_costs_to_omx.R
         3. mce_reliability_prep.py
         4. bca_EMME_Export.bat
+        5. mce_ithim.R or mce_ithim_coc.R
   - Benefits Calculator
     1. Setup and run the benefits calculator.  Make sure to review and update the settings as needed.
     2. The results are in the aggregate_results.csv output file.
+    3. Make sure to add the ITHIM R results to the benefits calculator output file as well.
   - Project Costs
     1. Setup a project costing workbook for the base and build separately and code projects into the RTP+TIP tab.  Make sure to review and update the settings as needed, including setting the correct present value year for the net present value calculation.  
     2. The results are in the Present Value Sum table on the PV_Summary tab

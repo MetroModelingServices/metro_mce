@@ -9,8 +9,8 @@ trace_od: [727, 967]
 # values available to all processors
 globals:
   DISCOUNT_RATE: 1.0
-  ANNUALIZATION_FACTOR: 365
-
+  ANNUALIZATION_FACTOR: 326 #Orange Line NS assumption
+  
 #### Demographics / COCs Processor
 
 #specify cocs
@@ -46,7 +46,9 @@ locals_aggregate_demographics:
 # data will be combined into a single table with columns names prefixed with 'base_' or 'build_'
 # (e.g.) if ma.hbcdcls.csv has a column 'hbcdcls' you will have 'base_hbcdcls' and 'build_hbcdcls'
 aggregate_zone_file_names:
-  - ma.hbcdcls.csv
+  - ma.hbchdcls.csv
+  - ma.hbcldcls.csv
+  - ma.hbcmdcls.csv
   - ma.hbohdcls.csv
   - ma.hbomdcls.csv
   - ma.hboldcls.csv
@@ -59,11 +61,13 @@ aggregate_zone_file_names:
   - ma.hbwhdcls.csv
   - ma.hbwldcls.csv
   - ma.hbwmdcls.csv
-  - ma.nhbnwdcls.csv
+  - ma.nhnwls.csv
   - ma.nhbwdcls.csv
   - ma.schdcls.csv
   - mf.cval.csv
-  - ma.collpr.csv
+  - ma.collprh.csv
+  - ma.collprl.csv
+  - ma.collprm.csv
   - ma.hboprh.csv
   - ma.hboprl.csv
   - ma.hboprm.csv
@@ -108,9 +112,14 @@ locals_aggregate_zone:
 aggregate_od_matrices:
   assign_mfs: assign_mfs.omx
   skims_mfs: skims_mfs.omx
-  mode_choice_pa1: mode_choice_pa_part1.omx
-  mode_choice_pa2: mode_choice_pa_part2.omx
-  mode_choice_pa3: mode_choice_pa_school_college.omx
+  skims_mfs_rel: skims_mfs_rel.omx
+  mode_choice_pa_hbo: mode_choice_pa_hbo.omx
+  mode_choice_pa_hbr: mode_choice_pa_hbr.omx
+  mode_choice_pa_hbs: mode_choice_pa_hbs.omx
+  mode_choice_pa_hbw: mode_choice_pa_hbw.omx
+  mode_choice_pa_nhw: mode_choice_pa_nhw.omx
+  mode_choice_pa_nhnw: mode_choice_pa_nhnw.omx
+  mode_choice_pa_sc: mode_choice_pa_sc.omx
   park_cost: parking_cost.omx
   
 locals_aggregate_od:
@@ -143,13 +152,6 @@ locals_aggregate_od:
   VOT_MEDTRK: 25.00
   VOT_HVYTRK: 38.00
   VOT_DRIVE_TRANSIT: 14.66
-  #Simple ITHIM
-  POPULATION: 3000000
-  WALK_SPEED: 3
-  BIKE_SPEED: 10
-  AVG_WALK_TIME_GROWTH_RATIO: -0.00051
-  AVG_BIKE_TIME_GROWTH_RATIO: -0.00041
-  DOLLARS_PER_DALY: 80000
 
 #### Link Daily Processor
 
@@ -167,6 +169,7 @@ link_daily_table_column_map:
   "@zone" : zone
   "@amrmp" : amrmp
   "@cap" : cap
+  "@centerturn" : centerturn
   "@divhwy" : divhwy
   "@dwdist" : dwdist
   "@fwcap" : fwcap
@@ -212,6 +215,7 @@ link_daily_table_column_map:
   additional_volume : additional_volume
   auto_time : auto_time
   auto_volume : auto_volume
+  aux_transit_volume : aux_transit_volume
   data1 : data1
   data2 : data2
   data3 : data3

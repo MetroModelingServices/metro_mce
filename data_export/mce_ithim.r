@@ -11,18 +11,20 @@ projectDirectory_base = "M:/plan/trms/projects/LCP/Phase2/metro_mce/bc_setup/dat
 projectDirectory_build = "M:/plan/trms/projects/LCP/Phase2/metro_mce/bc_setup/data/build-data"
 projectDirectory_run = "M:/plan/trms/projects/LCP/Phase2/metro_mce/bc_setup/data/run/ithimR"
 GBDFileForITHIM = "ORgbd_tidyJuly19.csv"
-atFile_base = "activeTransportTime.csv" #mean walk and cycle times
-atFile_build = "activeTransportTime_scenario.csv"
 WALK_SPEED = 3
 BIKE_SPEED = 10
-POPULATION = 3000000
-
+AVG_HH_SIZE = 2.4
+DOLLARS_PER_DALY = 80000
+  
 #read skims
 setwd(projectDirectory_run)
 source("omx.r") #Requires rhdf5 package from bioconductor
+
 setwd(projectDirectory_base)
 base_tdist = readMatrixOMX("skims_mfs.omx","mf3")
 base_wdist = readMatrixOMX("skims_mfs.omx","mf4")
+cvals = read.csv("mf.cval.csv") #hhs by cval by zone
+
 setwd(projectDirectory_build)
 build_tdist = readMatrixOMX("skims_mfs.omx","mf3")
 build_wdist = readMatrixOMX("skims_mfs.omx","mf4")
@@ -283,6 +285,7 @@ base_bike_trips = base_bike_trips + readMatrixOMX("mode_choice_pa_sc.omx","mf.hb
 base_bike_trips = base_bike_trips + readMatrixOMX("mode_choice_pa_sc.omx","mf.hbcbike.cv23.m.op")
 base_bike_trips = base_bike_trips + readMatrixOMX("mode_choice_pa_sc.omx","mf.hbcbike.cv23.h.pk")
 base_bike_trips = base_bike_trips + readMatrixOMX("mode_choice_pa_sc.omx","mf.hbcbike.cv23.h.op")
+
 setwd(projectDirectory_build)
 build_walk_trips = readMatrixOMX("mode_choice_pa_hbo.omx","mf.howalk.cv0.l.pk")
 build_walk_trips = build_walk_trips + readMatrixOMX("mode_choice_pa_hbo.omx","mf.howalk.cv0.l.op")
@@ -549,10 +552,12 @@ build_amount_of_time_walking = build_walk_trips * build_walk_time
 base_amount_of_time_biking = base_bike_trips * base_bike_time
 build_amount_of_time_biking = build_bike_trips * build_bike_time
 
-base_avg_walk_time = sum(base_amount_of_time_walking) / POPULATION
-build_avg_walk_time = sum(build_amount_of_time_walking) / POPULATION
-base_avg_bike_time = sum(base_amount_of_time_biking) / POPULATION
-build_avg_bike_time = sum(build_amount_of_time_biking) / POPULATION
+population = sum(cvals) * AVG_HH_SIZE
+
+base_avg_walk_time = sum(base_amount_of_time_walking) / population
+build_avg_walk_time = sum(build_amount_of_time_walking) / population
+base_avg_bike_time = sum(base_amount_of_time_biking) / population
+build_avg_bike_time = sum(build_amount_of_time_biking) / population
 
 #create active transportation time files
 setwd(projectDirectory_run)
@@ -564,16 +569,21 @@ colnames(activeTransportTime) = c("ageClass","sex","mode","value")
 
 activeTransportTime$value = base_avg_walk_time
 activeTransportTime$value[activeTransportTime$mode=="cycle"] = base_avg_bike_time
+atFile_base = "activeTransportTime.csv" #mean walk and cycle times
 write.csv(activeTransportTime, atFile_base, row.names=F)
 
 activeTransportTime$value = build_avg_walk_time
 activeTransportTime$value[activeTransportTime$mode=="cycle"] = build_avg_bike_time
+atFile_build = "activeTransportTime_scenario.csv"
 write.csv(activeTransportTime, atFile_build, row.names=F)
 
 #run ithim
 ITHIM.baseline = createITHIM(atFile_base, GBDFileForITHIM)
 ITHIM.scenario = createITHIM(atFile_build, GBDFileForITHIM)
 dalys = deltaBurden(ITHIM.baseline, ITHIM.scenario, dis = "all", bur = "daly")
-
 print(paste0("Dalys ", dalys))
+
+#write output file
+dalys = t(c("everyone", dalys, DOLLARS_PER_DALY * dalys))
+colnames(dalys) = c("coc","dalys", "dollars")
 write.csv(dalys,"dalys.csv", row.names=F)
