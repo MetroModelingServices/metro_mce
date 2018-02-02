@@ -248,4 +248,4 @@ The steps to run the complete toolkit from start to finish are:
     3. Copy the Present Value Sum table data to the Costs tab and set the year of the scenario.  The DOLLARS and KEY fields  are automatically calculated by the worksheet.
   - Visualization Dashboard
     1. Run the `create_mce_visual_inputs.py` script to convert the data to the format expected by the visualizer.
-    2. The visualizer is currently here: https://github.com/rsginc/abmviz
+    2. The visualizer source is currently at https://github.com/rsginc/abmviz and it is running at http://rsginc.github.io/ABMVIZ
