@@ -219,6 +219,10 @@ The project cost workbook calculates total project costs by type and Net Present
 The visuals workbook takes as input the outputs of the benefits calculator and the project costing workbook, 
 calculates BC ratios, and summaries the results in various forms.  Instructions are on the first worksheet.
 
+# Visualization Dashboard inputs creation script
+The `create_mce_visual_inputs.py` script in the data_export folder creates the MCE visualization dashboard input 
+tables based on the benefits calculator outputs.  Instructions for running the script are in the script header.
+
 # Running the Complete MCE Toolkit
 The steps to run the complete toolkit from start to finish are:
   - Travel Model
@@ -242,3 +246,5 @@ The steps to run the complete toolkit from start to finish are:
     1. Setup a visuals workbook.  Make sure to review and update the settings as needed, including setting the correct year for visualization/analysis.  
     2. Copy the aggregate_results.csv data to the Benefits tab and set the year of the scenario.  The DOLLARS and KEY fields are automatically calculated by the worksheet.
     3. Copy the Present Value Sum table data to the Costs tab and set the year of the scenario.  The DOLLARS and KEY fields  are automatically calculated by the worksheet.
+  - Visualization Dashboard
+    1. Run the `create_mce_visual_inputs.py` script
