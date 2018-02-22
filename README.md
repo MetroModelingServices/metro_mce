@@ -18,6 +18,7 @@ The scripts in this folder are used to export the required data from the R trave
   - bca_EMME_Export.bat exports the required matrices (mfs) and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
   - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file.  The required link fields are listed below.
   - mce_ithim.R, mce_ithim_coc.R - process model outputs and run the [R ITHIM](https://github.com/ITHIM/ITHIM) package for everyone or by COC.  See the [ITHIM](#ithim-r) section for more info.
+  - burden.portland.csv, F.portland.csv - ITHIM global burden of disease file and population count file from  Oregon Health Authority
   - trfare_to_omx.r converts the R trfare matrix to an OMX matrix.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
   
 ## Installation

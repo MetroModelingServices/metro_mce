@@ -10,7 +10,10 @@ library("ITHIM")
 projectDirectory_base = "M:/plan/trms/projects/LCP/Phase2/metro_mce/bc_setup/data/base-data"
 projectDirectory_build = "M:/plan/trms/projects/LCP/Phase2/metro_mce/bc_setup/data/build-data"
 projectDirectory_run = "M:/plan/trms/projects/LCP/Phase2/metro_mce/bc_setup/data/run/ithimR"
-GBDFileForITHIM = "ORgbd_tidyJuly19.csv"
+
+GBDFileForITHIM = "burden.portland.csv"
+PopulationFileForITHIM = "F.portland.csv"
+
 WALK_SPEED = 3
 BIKE_SPEED = 10
 AVG_HH_SIZE = 2.4
@@ -578,8 +581,8 @@ atFile_build = "activeTransportTime_scenario.csv"
 write.csv(activeTransportTime, atFile_build, row.names=F)
 
 #run ithim
-ITHIM.baseline = createITHIM(atFile_base, GBDFileForITHIM)
-ITHIM.scenario = createITHIM(atFile_build, GBDFileForITHIM)
+ITHIM.baseline = createITHIM(atFile_base, GBDFileForITHIM, PopulationFileForITHIM)
+ITHIM.scenario = createITHIM(atFile_build, GBDFileForITHIM, PopulationFileForITHIM)
 dalys = deltaBurden(ITHIM.baseline, ITHIM.scenario, dis = "all", bur = "daly")
 print(paste0("Dalys ", dalys))
 
