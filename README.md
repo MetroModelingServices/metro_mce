@@ -205,7 +205,8 @@ To run the ITHIM R active transportation benefit calculator, configure the follo
   - projectDirectory_base = "data/base-data"
   - projectDirectory_build = "data/build-data"
   - projectDirectory_run = "data/run/ithimR"
-  - GBDFileForITHIM = "ORgbd_tidyJuly19.csv"
+  - GBDFileForITHIM = "burden.portland.csv"
+  - PopulationFileForITHIM = "F.portland.csv"
   - WALK_SPEED = 3
   - BIKE_SPEED = 10
   - AVG_HH_SIZE = 2.4
