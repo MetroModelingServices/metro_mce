@@ -12,11 +12,11 @@ Silos,Description,Target,Expression
 ,,coc_highinc_count,"cvals.loc[:, _HIGH_INCOME_COLNAMES].sum(axis=1)"
 ,,coc_veryhighinc_count,"cvals.loc[:, _VERYHIGH_INCOME_COLNAMES].sum(axis=1)"
 #calculate percent of hhs by zone in each group; note everybody is hardwired as 1 (100%),,,
-,,households ,"np.maximum(households, 1)"
-,,coc_lowinc,coc_lowinc_count/households
-,,coc_medinc,coc_medinc_count/households
-,,coc_highinc,coc_highinc_count/households
-,,coc_veryhighinc,coc_veryhighinc_count/households
+,,households_div,"np.maximum(households, 0.000001)"
+,,coc_lowinc,coc_lowinc_count/households_div
+,,coc_medinc,coc_medinc_count/households_div
+,,coc_highinc,coc_highinc_count/households_div
+,,coc_veryhighinc,coc_veryhighinc_count/households_div
 #get externally defined COCs as well,,,
 ,,coc_ext_minority,cvals.base_minority
 ,,coc_ext_lowengpro,cvals.base_lowengpro
