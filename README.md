@@ -5,8 +5,6 @@ The MCE toolkit consists of three core tools:
   - Project costing workbook - calculates total project costs by type and Net Present Value
   - Visuals workbook - takes as input the benefits and costs, calculates B/C ratios, and summarizes and visualizes the results
 
-Note that you need [Git LFS](https://git-lfs.github.com/) to download this repo due to the large OMX files.
-
 # Benefits Calculator
 
 ## Travel Model Data Export
@@ -250,4 +248,4 @@ The steps to run the complete toolkit from start to finish are:
     3. Copy the Present Value Sum table data to the Costs tab and set the year of the scenario.  The DOLLARS and KEY fields  are automatically calculated by the worksheet.
   - Visualization Dashboard
     1. Run the `create_mce_visual_inputs.py` script to convert the data to the format expected by the visualizer.
-    2. The visualizer source is currently at https://github.com/rsginc/abmviz and it is running at http://rsginc.github.io/ABMVIZ
+    2. The visualizer source is currently at https://github.com/metromodelingservices/mceviz and it is running at http://metromodelingservices.github.io/MCEVIZ
