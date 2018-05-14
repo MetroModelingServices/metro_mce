@@ -1,18 +1,22 @@
-
 # Create MCE Visualization Dashboard Input Tables
 # Mike Dailey, Ben Stabler, RSG, 02/02/18
-# python create_mce_visual_inputs.py benefits_file zone_benefits_file counties_and_cocs_file
-# python create_mce_visual_inputs.py aggregate_results.csv kate_aggregate_zone_benefits.csv cocs.csv
+# python create_mce_visual_inputs.py benefits_file zone_benefits_file counties_and_cocs_file ABMViz_Region.json_File_Local_Location New_Scenario_Name
+# python create_mce_visual_inputs.py aggregate_results.csv kate_aggregate_zone_benefits.csv cocs.csv C:\SVN\ABMVIZ\data\portland\region.json I205test
 # Outputs 3DAnimatedMapData.csv, BarChartAndMapData.csv, and BarChartData.csv
 
-import os, sys, shutil
+import os, sys
+import shutil
+from shutil import copyfile
+from collections import OrderedDict
 import pandas as pd
 import csv
 import numpy as np
+import json
 sys.path.append(os.getcwd())
 sys.path.append(os.path.join(os.getcwd(),"inputs"))
 
-def buildBarChartFile(fileName):
+def buildBarChartFile(fileName,regionfileloc,datasetname):
+    directory = regionfileloc.replace('region.json', '')
     BENEFIT_GROUPS = {'travel_options_benefit': 'Social Goods','physical_activity_benefit': 'Social Goods','safety_cost_benefit': 'Social Goods', 'hhs_for_the_coc': 'Social Goods',
                         'veh_ownership_cost_benefit': 'Economic Vitality', 'travel_time_reliability_benefit': 'Economic Vitality', 'travel_time_benefit': 'Economic Vitality',
                         'trk_travel_time_benefit': 'Economic Vitality', 'dtransit_travel_time_benefit': 'Economic Vitality', 'sch_travel_time_benefit': 'Economic Vitality',
@@ -42,9 +46,10 @@ def buildBarChartFile(fileName):
         df = df[cols]
         df = df.fillna(0)
         df.columns.values[0] = 'BENEFIT'
-        df.to_csv("BarChartData.csv", encoding='utf-8', index=False)
+        df.to_csv(directory+datasetname+"\BarChartData.csv", encoding='utf-8', index=False)
 
-def animatedMapData(fileName):
+def animatedMapData(fileName,regionfileloc,datasetname):
+    directory = regionfileloc.replace('region.json', '')
     BENEFIT_COLUMNS = {'travel_options_benefit': 'ALL PURPOSES','access_benefit_hbc': 'HBC','access_benefit_hbo': 'HBO','access_benefit_hbr': 'HBR','access_benefit_hbs': 'HBS',
                        'access_benefit_hbw': 'HBW', 'access_benefit_hbwl': 'HBWL',	'access_benefit_hbwm': 'HBWM','access_benefit_hbwh': 'HBWH','access_benefit_nhbnw': 'NHBNW',
                        'access_benefit_nhbw': 'NHBW', 'access_benefit_sch': 'SCH'
@@ -63,9 +68,10 @@ def animatedMapData(fileName):
             tempdf['TRAVEL OPTIONS BENEFIT'] = animated.loc[:,[key]]
             masterFrame = masterFrame.append(tempdf,ignore_index=True)
         masterFrame = masterFrame.fillna(0)
-        masterFrame.to_csv("3DAnimatedMapData.csv", encoding='utf-8', index=False)
+        masterFrame.to_csv(directory+datasetname+"\\3DAnimatedMapData.csv", encoding='utf-8', index=False)
 
-def barchartMap(fileName, countyFile):
+def barchartMap(fileName, countyFile,regionfileloc,datasetname):
+    directory = regionfileloc.replace('region.json', '')
     BENEFIT_COLUMNS = {'access_benefit_hbc':'HBC','access_benefit_hbo':'HBO','access_benefit_hbr':'HBR','access_benefit_hbs':'HBS',
                        'access_benefit_hbw':'HBW','access_benefit_hbwl':'HBWL',	'access_benefit_hbwm':'HBWM','access_benefit_hbwh':'HBWH','access_benefit_nhbnw':'NHBNW',
                        'access_benefit_nhbw':'NHBW','access_benefit_sch':'SCH'
@@ -75,6 +81,11 @@ def barchartMap(fileName, countyFile):
         getcntys = pd.read_csv(cntyFile, usecols=['County'])
         countys = getcntys.dropna()
 
+    totaldf = pd.DataFrame(['Total'],[countys.shape[0]],columns=['County'])
+
+
+    countys = countys.append(totaldf)
+
     with open(fileName, 'r') as sourcefile:
         animated = pd.read_csv(sourcefile, usecols=list(BENEFIT_COLUMNS))
         tempdf = pd.DataFrame(columns=['ZONE','QUANTITY','TRAVEL OPTIONS BENEFIT','COUNTY'])
@@ -83,25 +94,46 @@ def barchartMap(fileName, countyFile):
             tempdf['ZONE'] = range(1,len(animated))
             tempdf['TRAVEL OPTIONS BENEFIT'] = value
             tempdf['QUANTITY'] = animated.loc[:,[key]]
-            tempdf['COUNTY'] = countys;
+            tempdf['COUNTY'] = countys
+
+            tempdf.loc[tempdf.index[tempdf['COUNTY']=='Total'].tolist(),'QUANTITY'] = tempdf['QUANTITY'].sum()
             masterFrame = masterFrame.append(tempdf,ignore_index=True)
         ##newdf = animated[]
         condition = np.isnan(masterFrame['QUANTITY'])
         masterFrame.loc[masterFrame['QUANTITY'].isnull(),'QUANTITY'] = 0.0
 
         masterFrame = masterFrame.dropna()
-        masterFrame.to_csv("BarChartAndMapData.csv", encoding='utf-8', index=False,columns=['ZONE','COUNTY','TRAVEL OPTIONS BENEFIT','QUANTITY'])
+        masterFrame.to_csv(directory+datasetname+"\BarChartAndMapData.csv", encoding='utf-8', index=False,columns=['ZONE','COUNTY','TRAVEL OPTIONS BENEFIT','QUANTITY'])
 
 
 
-def runConvertData(benefitsFile, zoneBenefitsFile,county_file):
-    buildBarChartFile(benefits_file)
-    animatedMapData(zoneBenefitsFile)
-    barchartMap(zoneBenefitsFile,county_file)
+def runConvertData(benefitsFile, zoneBenefitsFile,county_file,regionfileloc,datasetname):
+    buildBarChartFile(benefits_file,regionfileloc,datasetname)
+    animatedMapData(zoneBenefitsFile,regionfileloc,datasetname)
+    barchartMap(zoneBenefitsFile,county_file,regionfileloc,datasetname)
+
+def editRegionFile(regionfileloc, datasetname,county_file):
+    jsonfile = open(regionfileloc,"r")
+    data = json.load(jsonfile,object_pairs_hook=OrderedDict)
+    tmp = data["scenarios"]
+   ##tmp.append(new_dict)
+    tmp[datasetname] = "- " + datasetname
+    jsonfile = open(regionfileloc,"w+")
+    jsonfile.write(json.dumps(data, indent=4))
+    jsonfile.close()
+    directory = regionfileloc.replace('region.json', '')
+
+    if not os.path.exists(directory+datasetname):
+        os.makedirs(directory+datasetname)
+    copyfile(county_file,directory+datasetname+"\\"+county_file)
+
 
 if __name__ == "__main__":
     # set argument inputs
     benefits_file = sys.argv[1]
     zone_benefits_file = sys.argv[2]
     county_file = sys.argv[3]
-    runConvertData(benefits_file,zone_benefits_file,county_file)
+    regionfileloc = sys.argv[4]
+    datasetname = sys.argv[5]
+    editRegionFile(regionfileloc,datasetname,county_file)
+    runConvertData(benefits_file,zone_benefits_file,county_file,regionfileloc,datasetname)
