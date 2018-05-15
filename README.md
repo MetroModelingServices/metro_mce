@@ -252,5 +252,15 @@ The steps to run the complete toolkit from start to finish are:
     2. Copy the aggregate_results.csv data to the Benefits tab and set the year of the scenario.  The DOLLARS and KEY fields are automatically calculated by the worksheet.
     3. Copy the Present Value Sum table data to the Costs tab and set the year of the scenario.  The DOLLARS and KEY fields  are automatically calculated by the worksheet.
   - Visualization Dashboard
-    1. Run the `create_mce_visual_inputs.py` script to convert the data to the format expected by the visualizer.
-    2. The visualizer source is currently at https://github.com/metromodelingservices/mceviz and it is running at http://metromodelingservices.github.io/MCEVIZ
+    1. In createNewDataScenario.bat, set the following parameters:
+      - BENEFITS_FILE - such as `aggregate_results.csv`
+      - ZONE_BENEFITS_FILE - such as `kate_aggregate_zone_benefits.csv`
+      - COUNTIES_COC_FILE - such as `cocs.csv`
+      - REGION_FILE_LOC - such as `C:\MCEVIZ\data\portland\region.json`
+      - NEW_DATA_NAME - such as `I205Test`
+      - GITHUB_ABMVIZ_LOC - such as `C:\MCEVIZ`
+    2. Run createNewDataScenario.bat to:
+      - Run the `create_mce_visual_inputs.py` script to convert the data to the format expected by the visualizer
+      - Add the visualizer inputs to your local mceviz git repo and pushes it to GitHub
+    3. Go to https://github.com/metromodelingservices/mceviz and do a pull request from the master branch into the gh-pages branch to publish the new data
+    4. The visualizer is running at http://metromodelingservices.github.io/MCEVIZ
