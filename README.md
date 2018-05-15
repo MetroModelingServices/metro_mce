@@ -221,7 +221,12 @@ calculates BC ratios, and summaries the results in various forms.  Instructions 
 
 # Visualization Dashboard inputs creation script
 The `create_mce_visual_inputs.py` script in the data_export folder creates the MCE visualization dashboard input 
-tables based on the benefits calculator outputs.  Instructions for running the script are in the script header.
+tables based on the benefits calculator outputs. File will now add the new data set to the MCE visualization dashboard config file.
+ Instructions for running the script are in the script header.
+
+# Visualization Dashboard inputs creation batch file
+The `createnewdatascenarion.bat` batch file in the data_export folder will run the  `create_mce_visual_inputs.py` script  
+and using Git add, commit and push changes  up to the Github Repository. Batch file requires locations for files to be coded in before running. 
 
 # Running the Complete MCE Toolkit
 The steps to run the complete toolkit from start to finish are:
