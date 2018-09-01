@@ -3,7 +3,7 @@ The [Oregon Metro](http://www.oregonmetro.gov/) Multi-Criteria Evaluation (MCE) 
 The MCE toolkit consists of three core tools:
   - [Benefits Calculator](#benefits-calculator) - Calculates monetized benefits of transportation projects 
   - [Project Costing Workbook](#project-costing-workbook) - calculates total project costs by type and Net Present Value
-  - [Visualizer](#visualization-dashboard) - visualizes the results
+  - [Visualizer](#visualization-dashboard) - web-based visualization of the results
 
 # Benefits Calculator
 
@@ -69,8 +69,7 @@ The script will write out the dalys.csv output file with three columns - coc, da
 The project cost workbook calculates total project costs by type and Net Present Value.  Instructions are on the first worksheet.
 
 # Visualization Dashboard 
-The visualization dashboard is at https://github.com/MetroModelingServices/MCEVIZ.  The `create_mce_visual_inputs.py` script in the data_export folder creates the MCE visualization dashboard input tables based on the benefits calculator outputs. File will now add the new data set to the MCE visualization dashboard config file. Instructions for running the script are in the script header.  The `createnewdatascenarion.bat` batch file in the data_export folder will run the  `create_mce_visual_inputs.py` script  
-and using Git add, commit and push changes  up to the Github Repository. Batch file requires locations for files to be coded in before running. 
+The visualization dashboard is at https://github.com/MetroModelingServices/MCEVIZ.  The `create_mce_visual_inputs.py` script in the data_export folder creates the MCE visualization dashboard input tables based on the benefits calculator outputs. File will now add the new data set to the MCE visualization dashboard config file. Instructions for running the script are in the script header.  The `createnewdatascenarion.bat` batch file in the data_export folder will run the  `create_mce_visual_inputs.py` script and using Git add, commit and push changes  up to the Github Repository. Batch file requires locations for files to be coded in before running. 
 
 # Running the Complete MCE Toolkit
 The steps to run the complete toolkit from start to finish are:
