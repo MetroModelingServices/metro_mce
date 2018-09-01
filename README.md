@@ -1,6 +1,4 @@
-The [Oregon Metro](http://www.oregonmetro.gov/) Multi-Criteria Evaluation (MCE) toolkit supports transportation planning alternatives analysis by estimating the quantitative “Social Return on Investment” of alternative transportation investment scenarios.
-
-The MCE toolkit consists of three core tools:
+The [Oregon Metro](http://www.oregonmetro.gov/) Multi-Criteria Evaluation (MCE) toolkit supports transportation planning alternatives analysis by estimating the quantitative “Social Return on Investment” of alternative transportation investment scenarios.  The MCE toolkit consists of three core tools:
   - [Benefits Calculator](#benefits-calculator) - Calculates monetized benefits of transportation projects 
   - [Project Costing Workbook](#project-costing-workbook) - calculates total project costs by type and Net Present Value
   - [Visualizer](#visualization-dashboard) - web-based visualization of the results
