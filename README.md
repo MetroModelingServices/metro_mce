@@ -3,180 +3,37 @@ The [Oregon Metro](http://www.oregonmetro.gov/) Multi-Criteria Evaluation (MCE) 
 The MCE toolkit consists of three core tools:
   - Benefits calculator - calculates monetized benefits of transportation projects 
   - Project costing workbook - calculates total project costs by type and Net Present Value
-  - Visuals workbook - takes as input the benefits and costs, calculates B/C ratios, and summarizes and visualizes the results
+  - Visualizer - visualizes the results
 
 # Benefits Calculator
 
-## Travel Model Data Export
-The scripts in this folder are used to export the required data from the R travel demand model and the EMME travel supply model for import into the benefits calculator.
-  - Various R scripts - these demand model scripts were revised to output trip productions, destination choice logsums, and the HH CVAL array - HIAs by workers and car ownership for each TAZ - to CSV format. See the k.hbw_Generation.R script for the mf.cval column order.
-  - base|build_convert_modechoice_pa_omx_purpose.R write the demand model mode choice PA trip matrices to OMX matrices.  These scripts required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
-  - parking_costs_to_omx.R converts the short term and long term parking cost by zone to an OMX matrix.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
-  - mce_reliability_prep.py codes freeway interchange nodes, upstream and downstream distances, and calculates the link reliability measure for skimming.  Run it after assignment and then skim the link @relvar attr.
-  - bca_EMME_Export.bat exports the required matrices (mfs) and also calls ExportLinkResultsToCSV.py.  This script requires [EMXtoOMX.py](https://github.com/bstabler/EMXtoOMX)
-  - ExportLinkResultsToCSV.py writes out EMME link assignment results to a CSV file.  The required link fields are listed below.
-  - mce_ithim.R, mce_ithim_coc.R - process model outputs and run the [R ITHIM](https://github.com/ITHIM/ITHIM) package for everyone or by COC.  See the [ITHIM](#ithim-r) section for more info.
-  - burden.portland.csv, F.portland.csv - ITHIM global burden of disease file and population count file from  Oregon Health Authority
-  - trfare_to_omx.r converts the R trfare matrix to an OMX matrix.  This script required the [R OMX script](https://github.com/osPlanning/omx/tree/dev/api/r) which requires the [rhdf5](http://bioconductor.org/packages/release/bioc/html/rhdf5.html) package
-  
+## Travel Model Inputs
+The travel demand and supply models are configured to output all required MCE inputs.  A set of model outputs is required for a base and build scenario for the benefits calculator.  The benefit calculator input specifications are at: 
+https://github.com/MetroModelingServices/integrated_workflow, specifically:
+  - [MCE Demand Inputs](https://github.com/MetroModelingServices/integrated_workflow/blob/master/mce_demand_inputs.md)
+  - [MCE Supply Inputs](https://github.com/MetroModelingServices/integrated_workflow/blob/master/mce_supply_inputs.md)
+
 ## Installation
-The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To install bca4abm, follow the instructions [here](https://github.com/RSGInc/bca4abm/wiki/Installation).  Next, clone this repo (metro_mce) to your machine.
+The benefits calculator is an implementation of the [FHWA bca4abm](https://github.com/RSGInc/bca4abm) calculator, which also does aggregate (i.e. trip-based) model calculations.  To install bca4abm, follow the instructions [here](http://rsginc.github.io/bca4abm/).
+
+The Metro MCE configuration of the benefits calculator is in the [bc_setup](https://github.com/MetroModelingServices/metro_mce/tree/master/bc_setup) folder.  You can download the complete repository by clicking the 'clone or download' button on the [project home page](https://github.com/MetroModelingServices/metro_mce).
 
 ## Benefits Calculator File and Folder Setup
 *root folder*
   - run_bca.py - run benefit calculator
+  - create_park_cost_matrix.py - create the parking cost matrix input file
   - configs folder - configuration settings
       - settings.yaml - overall settings such as constants for each processor, annualization factor, input file names, etc.
-      - aggregate_demographics.csv - expressions for coding zonal-based communities of concerns 
-      - aggregate_zone.csv - expressions for aggregate zonal calculations - auto ownership and destination choice logsums
-      - aggregate_od.csv - expressions for aggregate OD-pair calculations - travel time, travel time reliability, physical activity
-      - link_daily.csv - expressions for link calculations - safety, vehicle operating costs, emissions, water, noise 
-  - base scenario folder
-      - link
-        - linksMD1.csv - link MD1 period assignment results with the following required fields.
-          - i - i node
-          - j - j node
-          - @zone - zone
-          - @amrmp - ?
-          - @cap - capacity
-          - "@centerturn" - centerturn
-          - @divhwy - divided highway
-          - @dwdist - ?
-          - @fwcap - ?
-          - @htkad - ?
-          - @htvol - heavy truck volume
-          - @hvol - hov volume
-          - @lanes2 - is a 2 lane link
-          - @lanes3 - is a 3 lane link
-          - @lanes4 - is a 4 lane link
-          - @losc - los c
-          - @loscart - los c arterial
-          - @losd - los d
-          - @lose - los e
-          - @losfh - los f high
-          - @losfl - los f low
-          - @losflart - los f low arterial
-          - @mb - ?
-          - @mdrmp - ?
-          - @mpa - ?
-          - @mtkad - ?
-          - @mtvol - med truck volume
-          - @noisef - noise benefit adjustment factor
-          - @pmrmp - ?
-          - @relvar - reliability variance 
-          - @signal - to node is a signal
-          - @spd35 - is 35mph 
-          - @spd40 - is 40mph 
-          - @spd45 - is 45mph 
-          - @spd50 - is 50mph 
-          - @spd50p - is 50mph 
-          - @spd70 - is 70mph 
-          - @speed - speed
-          - @stop - to node is a stop
-          - @svol - sov volume
-          - @tknet - ? 
-          - @tkpth - ?
-          - @trkad - ?
-          - @ul3 - ?
-          - @updist - upstream ramp distance
-          - @urbrur - urban or rural
-          - @waterf - water benefit adjustment factor
-          - @barrier - barrier 
-          - additional_volume - ? 
-          - auto_time - ?
-          - auto_volume - total auto volume
-          - aux_transit_volume - aux_transit_volume
-          - data1 - ? 
-          - data2 - ?
-          - data3 - ?
-          - length - link length
-          - num_lanes - number of lanes
-          - type - link type 
-          - volume_delay_func - vdf code
-        - linksPM2.csv - link PM2 assignment results with the same fields
-      - OD  
-        - assign_mfs.omx - assignment bank matrices
-        - skims_mfs.omx - skims bank matrices
-        - skims_mfs_rel.omx - reliability skims bank matrices
-        - mode_choice_pa_purpose.omx - mode choice production-attraction matrices for each trip purpose
-        - parking_cost.omx - parking costs at the destination
-        - trfare.omx - transit fare matrix
-      - Zone 
-        - mf.cval.csv - see above
-        - cocs.csv - externally defined COC share of households by zone
-        - Productions
-          - ma.collprh.csv - hbc high inc 
-          - ma.collprl.csv - hbc low inc  
-          - ma.collprm.csv - hbc mid inc 
-          - ma.hboprh.csv - hbo high inc 
-          - ma.hboprl.csv - hbo low inc 
-          - ma.hboprm.csv - hbo mid inc 
-          - ma.hbrprh.csv - hbr high inc 
-          - ma.hbrprl.csv - hbr low inc 
-          - ma.hbrprm.csv - hbr mid inc 
-          - ma.hbsprh.csv - hbs high inc 
-          - ma.hbsprl.csv - hbs low inc 
-          - ma.hbsprm.csv - hbs mid inc 
-          - ma.hbwprh.csv - hbw high inc 
-          - ma.hbwprl.csv - hbw low inc 
-          - ma.hbwprm.csv - hbw mid inc 
-          - ma.nhnwpr.csv - nhbnw 
-          - ma.nhwpr.csv - nhbw 
-          - ma.schpr.csv - sch 
-        - Destination choice logsums
-          - ma.hbchdcls.csv - hbc high inc 
-          - ma.hbcldcls.csv - hbc low inc 
-          - ma.hbcmdcls.csv - hbc mid inc 
-          - ma.hbohdcls.csv - hbo high inc 
-          - ma.hboldcls.csv - hbo low inc 
-          - ma.hbomdcls.csv - hbo mid inc 
-          - ma.hbrhdcls.csv - hbr high inc 
-          - ma.hbrldcls.csv - hbr low inc 
-          - ma.hbrmdcls.csv - hbr mid inc 
-          - ma.hbshdcls.csv - hbs high inc 
-          - ma.hbsldcls.csv - hbs low inc 
-          - ma.hbsmdcls.csv - hbs mid inc 
-          - ma.hbwhdcls.csv - hbw high inc 
-          - ma.hbwldcls.csv - hbw low inc 
-          - ma.hbwmdcls.csv - hbw mid inc 
-          - ma.nhnwls.csv - nhbnw 
-          - ma.nhbwdcls.csv - nhbw 
-          - ma.schdcls.csv - sch 
-  - build scenario folder - same files as the base scenario folder
-  - moves_2010_summer_running_rates.csv - MOVES emissions rate table
-
-## Running the benefits calculator
-To run the benefits calculator, first change directory to the bc_setup folder and then activate the Anaconda environment you created for this project.  It may be named ```bca4abmtest``` based on the bca4abm install instructions, but it can be named something more relevant such as ```mce``` if desired.
-  ```
-  activate mce
-  ```
-Next, run the benefits calculator in the bc_setup folder with the following command:
-  ```
-  python run_bca.py
-  ```
-
-The benefit calculator run steps are:
-  - reads the settings and input data 
-  - runs the aggregate_demographics_processor
-    - each row in the processed data table is an origin zone
-    - calculates communities of concern (COC)
-    - ```orca.run(['aggregate_demographics_processor'])```
-  - runs the aggregate zone processor
-    - each row in the processed data table is an origin zone
-    - calculates zonal level benefits
-    - ```orca.run(['aggregate_zone_processor'])```
-  - runs the aggregate_od_processor
-    - each row in the processed data table is an OD pair
-    - calculates trip level benefits
-    - ```orca.run(['aggregate_od_processor'])```
-  - runs the link processor
-    - each row in the processed data table is a link 
-    - daily is linkMD1 * scalingFactorMD1 + linkPM2 * scalingFactorPM2
-    - calculates link level benefits
-    - ```orca.run(['link_daily_processor'])```
-  - writes results
-    - ```orca.run(['write_four_step_results'])```
-    - ```orca.run(['print_results'])```
+      - aggregate_demographics.csv/yaml - expressions and settings for coding zonal-based communities of concerns 
+      - aggregate_zone.csv/yaml - expressions and settingsfor aggregate zonal calculations - auto ownership and destination choice logsums
+      - aggregate_od.csv/yaml - expressions and settingsfor aggregate OD-pair calculations - travel time, travel time reliability, physical activity
+      - link_daily.csv/yaml - expressions and settingsfor link calculations - safety, vehicle operating costs, emissions, water, noise 
+  - data folder
+    - base scenario folder - all the MCE demand and supply inputs noted above for the base scenario
+      - cocs.csv - communities of concerns specification file
+    - build scenario folder - same files as the base scenario folder but for the build scenario
+    - moves_2010_summer_running_rates.csv - MOVES emissions rate table
+    - zone_districts.csv - zone districts for aggregate OD processor reporting
 
 ## Outputs 
 The benefits calculator outputs the following files to the ```outputs``` folder:
@@ -214,10 +71,6 @@ The script will write out the dalys.csv output file with three columns - coc, da
 
 # Project Costing Workbook
 The project cost workbook calculates total project costs by type and Net Present Value.  Instructions are on the first worksheet.
-
-# Visuals Workbook
-The visuals workbook takes as input the outputs of the benefits calculator and the project costing workbook, 
-calculates BC ratios, and summaries the results in various forms.  Instructions are on the first worksheet.
 
 # Visualization Dashboard inputs creation script
 The `create_mce_visual_inputs.py` script in the data_export folder creates the MCE visualization dashboard input 
