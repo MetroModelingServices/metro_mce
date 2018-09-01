@@ -1,0 +1,108 @@
+
+CONSTANTS:
+  LINK_PEAK_TOD_SHARE_AUTO: 3.0
+  LINK_OFFPEAK_TOD_SHARE_AUTO: 8.7
+  LINK_PEAK_TOD_SHARE_TRANSIT: 3.2
+  LINK_OFFPEAK_TOD_SHARE_TRANSIT: 6.1
+  #Average Lane width
+  LW_FWY: 12
+  LW_HWY: 11.5
+  LW_ART: 11.5
+  #Average Inside Shoulder Width
+  ISW_FWY: 8
+  ISW_HWY: 3
+  ISW_ART: 0
+  #Average Outside Shoulder Width
+  OSW_FWY: 11
+  OSW_HWY: 10
+  OSW_ART: 10
+  #Crash Type Calibration Constants
+  #Freeways
+  CfwyF: 1.0
+  CfwyI: 1.0
+  CfwyP: 1.0
+  #Rural Multi Lane
+  CrxlU: 0.37
+  CrxlD: 0.77
+  #Rural Multi Lane Intersections
+  Crxl3ST_X: 0.15
+  Crxl4ST_X: 0.39
+  Crxl4SG_X: 0.15
+  #Rural 2 Lane
+  Cr2l: 0.74
+  #Rural 2 Lane Intersections
+  Cr2l3ST_X: 0.31
+  Cr2l4ST_X: 0.31
+  Cr2l4SG_X: 0.45
+  #Urban Arterials
+  CU2U: 0.62
+  CU3T: 0.81
+  CU4D: 1.411
+  CU4U: 0.63
+  CU5T: 0.64
+  #Urban Arterials Intersections
+  CU3ST_X: 0.35
+  CU4ST_X: 0.45
+  CU3SG_X: 0.73
+  CU4SG_X: 1.05
+  # Proportion of fatal in F/I crashes from ODOT 2004-06 (http://www.oregon.gov/ODOT/Data/Pages/Crash.aspx)
+  PERCENT_FATAL: 0.0212
+  #Distribution of crashes on rural 2 lane highways
+  R2L_PDO: 0.46
+  R2L_I: 0.509
+  R2L_F: 0.031
+  #Number of driveways within roadway segment of driveway type
+  #Major Commercial
+  DMJC: 0.01
+  #Minor Commercial
+  DMNC: 0.01
+  #Major Industrial/Institutional
+  DMJI: 0.01
+  #Minor Industrial/Institutional
+  DMNI: 0.01
+  #Major Residential
+  DMJR: 0.01
+  #Minor Residential
+  DMNR: 0.01
+  # Crash costs in Dollars
+  CRASH_COST_PDO: 1522
+  CRASH_COST_INJURY: 441800
+  CRASH_COST_FATAL: 9400000
+  # Water pollution cost
+  WATER_POLLUTION_COST: 0.01625
+  # Noise pollution cost
+  NOISE_COST_AUTO_FREEWAY: 6.37
+  NOISE_COST_AUTO_ARTERIAL: 1.545
+  NOISE_COST_AUTO_COLLECTOR: 0.12
+  NOISE_COST_MEDTRUCKS_FREEWAY: 19.17
+  NOISE_COST_MEDTRUCKS_ARTERIAL: 10.945
+  NOISE_COST_MEDTRUCKS_COLLECTOR: 1.86
+  NOISE_COST_HEVTRUCKS_FREEWAY: 41.955
+  NOISE_COST_HEVTRUCKS_ARTERIAL: 44.17
+  NOISE_COST_HEVTRUCKS_COLLECTOR: 8.71
+  #Vehicle operating cost
+  GAS_COST: 2.80
+  TRUCK_GAS_COST: 3.08
+  GALLON_TO_BTU: 120524
+  CAR_COST_PER_MILE: 0.0628
+  TRUCK_COST_PER_MILE: 0.5070
+  #emissions
+  GRAMS_TO_METRIC_TONS: 0.000001
+  CO2_COST: 51.81
+  PM25_COST: 459000
+  PM10_COST: 139000
+  NOX_COST: 7300
+  VOCS_COST: 37900
+  CO2_PTYPE: 98
+  PM25_PTYPE: 110
+  PM10_PTYPE: 100
+  NOX_PTYPE: 3
+  VOCS_PTYPE: 87
+  FUEL_CONSUMPTION_PTYPE: 92
+
+TABLES:
+  EMISSIONS: moves_2010_summer_running_rates.csv
+
+# specify column name to enable zone tracing for both the o and the d zone
+# (if not specified, just trace first link)
+od_column: zone

@@ -1,0 +1,33 @@
+
+CONSTANTS:
+  #daily trips to assignment period percents
+  HBW_PK: 0.50
+  HBW_OP: 0.50
+  NHBW_PK: 0.50
+  NHBW_OP: 0.50
+  NHBNW_PK: 0.50
+  NHBNW_OP: 0.50
+  HBO_PK: 0.50
+  HBO_OP: 0.50
+  HBR_PK: 0.50
+  HBR_OP: 0.50
+  HBS_PK: 0.50
+  HBS_OP: 0.50
+  HBC_PK: 0.50
+  HBC_OP: 0.50
+  SCH_PK: 0.50
+  SCH_OP: 0.50
+  #value-of-time ($/hour; currently all equal, USDOT)
+  VOT_HBC: 14.66
+  VOT_HBO: 14.66
+  VOT_HBR: 14.66
+  VOT_HBS: 14.66
+  VOT_HBW: 14.66
+  VOT_NHBNW: 14.66
+  VOT_NHBW: 14.66
+  VOT_SCH: 14.66
+  VOT_MEDTRK: 25.00
+  VOT_HVYTRK: 38.00
+  VOT_DRIVE_TRANSIT: 14.66
+  VOT_WALK_TRANSIT: 14.66
+  MINUTES_PER_TRANSFER: 8.0
