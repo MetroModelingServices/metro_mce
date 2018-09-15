@@ -1627,9 +1627,9 @@ Silos,Description,Target,Expression
 ,sch dtransit benefit,sch_dtransit_travel_time_benefit,(sch_dtransit_am_travel_time_benefit + sch_dtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 # drive transit auto leg,,,
 ,,base_atransit_am_travel_time,"skims_base[""mf.am2stt""]"
-,,build_atransit_am_travel_time,"skims_base[""mf.am2stt""]"
+,,build_atransit_am_travel_time,"skims_build[""mf.am2stt""]"
 ,,base_atransit_md_travel_time,"skims_base[""mf.md1stt""]"
-,,build_atransit_md_travel_time,"skims_base[""mf.md1stt""]"
+,,build_atransit_md_travel_time,"skims_build[""mf.md1stt""]"
 ,,base_atransit_pa_trips_hbw_cv0_l_pk,0
 ,,base_atransit_pa_trips_hbw_cv0_l_op,0
 ,,base_atransit_pa_trips_hbw_cv0_m_pk,0
