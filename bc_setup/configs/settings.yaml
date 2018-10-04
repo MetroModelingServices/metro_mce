@@ -1,10 +1,10 @@
 
 #### Global Settings
-  
-  
+
 models:
   - aggregate_demographics_processor
   - aggregate_zone_processor
+  - aggregate_zone_benefits
   - aggregate_od_processor
   - link_daily_processor
   - write_data_dictionary
@@ -15,8 +15,9 @@ output_tables:
   prefix: final_
   tables:
     - zone_demographics
-    - aggregate_od_benefits
-    - aggregate_zone_benefits
+    - aggregate_od_zone_summary
+    - aggregate_od_district_summary
+    - aggregate_zone_summary
     - aggregate_results
 
 #resume_after: aggregate_zone_processor
@@ -28,127 +29,3 @@ trace_od: [727, 967]
 globals:
   DISCOUNT_RATE: 1.0
   ANNUALIZATION_FACTOR: 326 #Orange Line NS assumption
-
-#### Demographics / COCs Processor
-
-#specify cocs
-#note everybody is hard wired as 1.0 (100%)
-#note * in the expressions means the expression applies to all cocs
-coc_silos:
-  - coc_lowinc
-  - coc_medinc
-  - coc_highinc
-  - coc_veryhighinc
-  - coc_ext_minority
-  - coc_ext_lowengpro
-  - coc_ext_age18or65
-  - coc_lowinc_ext
-  - everybody
-
-# file name for cvals table csv data input file (expect versions in build and base data subdirs)
-cval_file_name: mce_input_cval.csv
-
-# file name for csv file in data dir with list of zone districts (which district each zone is in)
-district_file_name: zone_districts.csv
-
-# file name for external cocs table csv data input file (expect versions in build and base data subdirs)
-ext_cocs_file_name: cocs.csv
-
-#### Zones Processor
-
-# file name for zones table csv data input files (expect versions in build and base data subdirs)
-# data will be combined into a single table with columns names prefixed with 'base_' or 'build_'
-# (e.g.) if ma.hbcdcls.csv has a column 'hbcdcls' you will have 'base_hbcdcls' and 'build_hbcdcls'
-aggregate_zone_file_names:
-  - mce_zone_vectors.csv
-  - mce_input_cval.csv
-
-
-#### OD Processor
-
-aggregate_od_matrices:
-  skims: mce_input_skims.omx
-  mode_choice_pa_hc: mce_input_mode_choice_pa_hc.omx
-  mode_choice_pa_hbo: mce_input_mode_choice_pa_ho.omx
-  mode_choice_pa_hbr: mce_input_mode_choice_pa_hr.omx
-  mode_choice_pa_hbs: mce_input_mode_choice_pa_hs.omx
-  mode_choice_pa_hbw: mce_input_mode_choice_pa_hw.omx
-  mode_choice_pa_nhnw: mce_input_mode_choice_pa_nhnw.omx
-  mode_choice_pa_nhw: mce_input_mode_choice_pa_nhw.omx
-  mode_choice_pa_sc: mce_input_mode_choice_pa_sch.omx
-  park_cost: mce_input_parking_costs.omx
-  transit_fare: mce_input_transit_fares.omx
-
-
-#### Link Daily Processor
-
-link_daily_file_names:
-  "": mce_input_links_MD1.csv
-  PM2: mce_input_links_PM2.csv
-
-link_daily_index_fields:
-  - i
-  - j
-
-link_daily_table_column_map:
-  i: i
-  j: j
-  "@amrmp" : amrmp
-  "@barrier" : barrier
-  "@cap" : cap
-  "@centerturn" : centerturn
-  "@divhwy" : divhwy
-  "@dwdist" : dwdist
-  "@fwcap" : fwcap
-  "@htkad" : htkad
-  "@htvol" : htvol
-  "@hvol" : hvol
-  "@lanes2" : lanes2
-  "@lanes3" : lanes3
-  "@lanes4" : lanes4
-  "@losc" : losc
-  "@loscart" : loscart
-  "@losd" : losd
-  "@lose" : lose
-  "@losfh" : losfh
-  "@losfl" : losfl
-  "@losflart" : losflart
-  "@mb" : mb
-  "@mdrmp" : mdrmp
-  "@mpa" : mpa
-  "@mtkad" : mtkad
-  "@mtvol" : mtvol
-  "@noisef" : noisef
-  "@pmrmp" : pmrmp
-  "@relvar" : relvar
-  "@signal" : signal
-  "@spd35" : spd35
-  "@spd40" : spd40
-  "@spd45" : spd45
-  "@spd50" : spd50
-  "@spd50p" : spd50p
-  "@spd70" : spd70
-  "@speed" : speed
-  "@stop" : stop
-  "@svol" : svol
-  "@thrwy" : thrwy
-  "@tknet" : tknet
-  "@tkpth" : tkpth
-  "@trkad" : trkad
-  "@ttoll" : ttoll
-  "@ul3" : total link capacity
-  "@updist" : updist
-  "@urbrur" : urbrur
-  "@waterf" : waterf
-  "@zone" : zone
-  additional_volume : additional_volume
-  auto_time : auto_time
-  auto_volume : auto_volume
-  aux_transit_volume : aux_transit_volume
-  data1 : data1
-  data2 : data2
-  data3 : data3
-  length : length
-  num_lanes : num_lanes
-  type : type
-  volume_delay_func : volume_delay_func

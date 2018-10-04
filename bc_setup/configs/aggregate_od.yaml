@@ -1,4 +1,27 @@
 
+cache_skims: False
+
+spec_file_name: aggregate_od_revised.csv
+
+aggregate_od_matrices:
+  skims: mce_input_skims.omx
+  mode_choice_pa_hc: mce_input_mode_choice_pa_hc.omx
+  mode_choice_pa_hbo: mce_input_mode_choice_pa_ho.omx
+  mode_choice_pa_hbr: mce_input_mode_choice_pa_hr.omx
+  mode_choice_pa_hbs: mce_input_mode_choice_pa_hs.omx
+  mode_choice_pa_hbw: mce_input_mode_choice_pa_hw.omx
+  mode_choice_pa_nhnw: mce_input_mode_choice_pa_nhnw.omx
+  mode_choice_pa_nhw: mce_input_mode_choice_pa_nhw.omx
+  mode_choice_pa_sc: mce_input_mode_choice_pa_sch.omx
+  transit_fare: mce_input_transit_fares.omx
+
+origin_zone_matrices:
+  - ltpkg
+  - stpkg
+dest_zone_matrices:
+  - ltpkg
+  - stpkg
+
 CONSTANTS:
   #daily trips to assignment period percents
   HBW_PK: 0.50
