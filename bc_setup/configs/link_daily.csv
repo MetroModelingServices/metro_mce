@@ -502,3 +502,4 @@ Silos,Description,Target,Expression
 ,,truck_nonfuel_cost,_truck_volume_daily * _length * TRUCK_COST_PER_MILE
 ,nonfuel auto operating cost,nonfuel_cost,((auto_nonfuel_cost + truck_nonfuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
 *,vehicle operating cost benefit,veh_operating_cost_benefit,fuel_cost + nonfuel_cost
+*,vmt for reporting,vmt_total,_vmt_total
