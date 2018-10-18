@@ -16,9 +16,11 @@ aggregate_od_matrices:
   transit_fare: mce_input_transit_fares.omx
 
 origin_zone_matrices:
+  - zone
   - ltpkg
   - stpkg
 dest_zone_matrices:
+  - zone
   - ltpkg
   - stpkg
 
@@ -54,3 +56,5 @@ CONSTANTS:
   VOT_DRIVE_TRANSIT: 14.66
   VOT_WALK_TRANSIT: 14.66
   MINUTES_PER_TRANSFER: 8.0
+  FIRST_EXTERNAL_ZONE: 2148
+  TRANSIT_NA: 9999

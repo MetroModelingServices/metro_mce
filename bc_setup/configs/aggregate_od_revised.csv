@@ -1,6 +1,7 @@
 silos,description,target,expression
 ,,_,logger.info('begin od benefit calculation')
 ,,park_cost_diff_pa,(dest_zone['ltpkg_build'] - dest_zone['ltpkg_base']) / 2
+,,internal_internal_filter,(origin_zone['zone_base'] < FIRST_EXTERNAL_ZONE) * (dest_zone['zone_base'] < FIRST_EXTERNAL_ZONE)
 ,,_,logger.info('drive alone')
 ,,hbw_lowinc_da_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwda.cv0.l.pk'] + mode_choice_pa_hbw_base['mf.hwda.cv1.l.pk'] + mode_choice_pa_hbw_base['mf.hwda.cv23.l.pk'] + mode_choice_pa_hbw_build['mf.hwda.cv0.l.pk'] + mode_choice_pa_hbw_build['mf.hwda.cv1.l.pk'] + mode_choice_pa_hbw_build['mf.hwda.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBW/60.0) + (park_cost_diff_pa))
 ,,hbw_medinc_da_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwda.cv0.m.pk'] + mode_choice_pa_hbw_base['mf.hwda.cv1.m.pk'] + mode_choice_pa_hbw_base['mf.hwda.cv23.m.pk'] + mode_choice_pa_hbw_build['mf.hwda.cv0.m.pk'] + mode_choice_pa_hbw_build['mf.hwda.cv1.m.pk'] + mode_choice_pa_hbw_build['mf.hwda.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBW/60.0) + (park_cost_diff_pa))
@@ -206,10 +207,15 @@ silos,description,target,expression
 ,hbc highinc p benefit,hbc_highinc_p_travel_time_benefit,(hbc_highinc_p_am_travel_time_benefit + hbc_highinc_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,sch p benefit,sch_p_travel_time_benefit,(sch_p_am_travel_time_benefit + sch_p_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,_,logger.info('walk transit')
-,,base_wtransit_am_travel_time,skims_base['mf.amwt1'] + skims_base['mf.amwt2'] + skims_base['mf.amwalk'] +  skims_base['mf.amivt'] + MINUTES_PER_TRANSFER * skims_base['mf.amxfr'] + (transit_fare_base['mf.trfare'] / VOT_WALK_TRANSIT) * 60
-,,build_wtransit_am_travel_time,skims_build['mf.amwt1'] + skims_build['mf.amwt2'] + skims_build['mf.amwalk'] +  skims_build['mf.amivt'] + MINUTES_PER_TRANSFER * skims_build['mf.amxfr'] + (transit_fare_build['mf.trfare'] / VOT_WALK_TRANSIT) * 60
-,,base_wtransit_md_travel_time,skims_base['mf.mdwt1'] + skims_base['mf.mdwt2'] + skims_base['mf.mdwalk'] +  skims_base['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_base['mf.mdxfr'] + (transit_fare_base['mf.trfare'] / VOT_WALK_TRANSIT) * 60
-,,build_wtransit_md_travel_time,skims_build['mf.mdwt1'] + skims_build['mf.mdwt2'] + skims_build['mf.mdwalk'] +  skims_build['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_build['mf.mdxfr'] + (transit_fare_build['mf.trfare'] / VOT_WALK_TRANSIT) * 60
+,,base_wtransit_am_travel_time_raw,skims_base['mf.amwt1'] + skims_base['mf.amwt2'] + skims_base['mf.amwalk'] +  skims_base['mf.amivt'] + MINUTES_PER_TRANSFER * skims_base['mf.amxfr'] + (transit_fare_base['mf.trfare'] / VOT_WALK_TRANSIT) * 60
+,,build_wtransit_am_travel_time_raw,skims_build['mf.amwt1'] + skims_build['mf.amwt2'] + skims_build['mf.amwalk'] +  skims_build['mf.amivt'] + MINUTES_PER_TRANSFER * skims_build['mf.amxfr'] + (transit_fare_build['mf.trfare'] / VOT_WALK_TRANSIT) * 60
+,,base_wtransit_md_travel_time_raw,skims_base['mf.mdwt1'] + skims_base['mf.mdwt2'] + skims_base['mf.mdwalk'] +  skims_base['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_base['mf.mdxfr'] + (transit_fare_base['mf.trfare'] / VOT_WALK_TRANSIT) * 60
+,,build_wtransit_md_travel_time_raw,skims_build['mf.mdwt1'] + skims_build['mf.mdwt2'] + skims_build['mf.mdwalk'] +  skims_build['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_build['mf.mdxfr'] + (transit_fare_build['mf.trfare'] / VOT_WALK_TRANSIT) * 60
+,,_,logger.info('walk transit skip ODs where no alternative base and build')
+,,base_wtransit_am_travel_time,"base_wtransit_am_travel_time_raw * (np.logical_and(skims_base['mf.amwt1'] != TRANSIT_NA, skims_build['mf.amwt1'] != TRANSIT_NA))"
+,,build_wtransit_am_travel_time,"build_wtransit_am_travel_time_raw * (np.logical_and(skims_base['mf.amwt1'] != TRANSIT_NA, skims_build['mf.amwt1'] != TRANSIT_NA))"
+,,base_wtransit_md_travel_time,"base_wtransit_md_travel_time_raw * (np.logical_and(skims_base['mf.mdwt1'] != TRANSIT_NA, skims_build['mf.mdwt1'] != TRANSIT_NA))"
+,,build_wtransit_md_travel_time,"build_wtransit_md_travel_time_raw * (np.logical_and(skims_base['mf.mdwt1'] != TRANSIT_NA, skims_build['mf.mdwt1'] != TRANSIT_NA))"
 ,,base_wtransit_pa_trips_sc,mode_choice_pa_sc_base['mf.schtr']
 ,,build_wtransit_pa_trips_sc,mode_choice_pa_sc_build['mf.schtr']
 ,,hbw_lowinc_wtransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwtr.cv0.l.pk'] + mode_choice_pa_hbw_base['mf.hwtr.cv1.l.pk'] + mode_choice_pa_hbw_base['mf.hwtr.cv23.l.pk'] + mode_choice_pa_hbw_build['mf.hwtr.cv0.l.pk'] + mode_choice_pa_hbw_build['mf.hwtr.cv1.l.pk'] + mode_choice_pa_hbw_build['mf.hwtr.cv23.l.pk']) * ((build_wtransit_am_travel_time - base_wtransit_am_travel_time) * (VOT_HBW/60.0))
@@ -280,189 +286,55 @@ silos,description,target,expression
 ,sch wtransit benefit,sch_wtransit_travel_time_benefit,(sch_wtransit_am_travel_time_benefit + sch_wtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,_,logger.info('schbus')
 ,,sch_schbus_travel_time_benefit, -0.5 * (mode_choice_pa_sc_base['mf.schbus'] + mode_choice_pa_sc_build['mf.schbus']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_SCH/60.0))
-,,_,logger.info('drive transit')
+,,_,logger.info('drive transit transit leg')
 ,,base_dtransit_am_travel_time,skims_base['mf.amwt1'] + skims_base['mf.amwt2'] + skims_base['mf.amwalk'] +  skims_base['mf.amivt'] + MINUTES_PER_TRANSFER * skims_base['mf.amxfr'] + (transit_fare_base['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
 ,,build_dtransit_am_travel_time,skims_build['mf.amwt1'] + skims_build['mf.amwt2'] + skims_build['mf.amwalk'] +  skims_build['mf.amivt'] + MINUTES_PER_TRANSFER * skims_build['mf.amxfr'] + (transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
 ,,base_dtransit_md_travel_time,skims_base['mf.mdwt1'] + skims_base['mf.mdwt2'] + skims_base['mf.mdwalk'] +  skims_base['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_base['mf.mdxfr'] + (transit_fare_base['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
 ,,build_dtransit_md_travel_time,skims_build['mf.mdwt1'] + skims_build['mf.mdwt2'] + skims_build['mf.mdwalk'] +  skims_build['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_build['mf.mdxfr'] + (transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
-,,_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_L_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_L_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_M_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_M_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_H_PK,0
-,,_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_H_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_L_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_L_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_M_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_M_OP,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_H_PK,0
-,,_BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_H_OP,0
-,,_BASE_DTRANSIT_PA_TRIPS_SC,0
-,,_BUILD_DTRANSIT_PA_TRIPS_SC,0
-,,hbw_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBW_PK * (_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_L_PK + mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.l.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.l.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_L_PK + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.l.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBW/60.0))
-,,hbw_medinc_dtransit_am_travel_time_benefit, -0.5 * HBW_PK * (_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_M_PK + mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.m.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.m.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_M_PK + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.m.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBW/60.0))
-,,hbw_highinc_dtransit_am_travel_time_benefit, -0.5 * HBW_PK * (_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_H_PK + mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.h.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.h.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_H_PK + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.h.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBW/60.0))
-,,hbw_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBW_OP * (_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_L_OP + mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.l.op'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.l.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_L_OP + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.l.op'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBW/60.0))
-,,hbw_medinc_dtransit_md_travel_time_benefit, -0.5 * HBW_OP * (_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_M_OP + mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.m.op'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.m.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_M_OP + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.m.op'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBW/60.0))
-,,hbw_highinc_dtransit_md_travel_time_benefit, -0.5 * HBW_OP * (_BASE_DTRANSIT_PA_TRIPS_HBW_CV0_H_OP + mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.h.op'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.h.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBW_CV0_H_OP + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.h.op'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBW/60.0))
-,,nhbw_lowinc_dtransit_am_travel_time_benefit, -0.5 * NHBW_PK * (_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_L_PK + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_L_PK + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_L_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_L_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_L_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_L_PK) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_NHBW/60.0))
-,,nhbw_medinc_dtransit_am_travel_time_benefit, -0.5 * NHBW_PK * (_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_M_PK + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_M_PK + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_M_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_M_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_M_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_M_PK) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_NHBW/60.0))
-,,nhbw_highinc_dtransit_am_travel_time_benefit, -0.5 * NHBW_PK * (_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_H_PK + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_H_PK + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_H_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_H_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_H_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_H_PK) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_NHBW/60.0))
-,,nhbw_lowinc_dtransit_md_travel_time_benefit, -0.5 * NHBW_OP * (_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_L_OP + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_L_OP + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_L_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_L_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_L_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_L_OP) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_NHBW/60.0))
-,,nhbw_medinc_dtransit_md_travel_time_benefit, -0.5 * NHBW_OP * (_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_M_OP + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_M_OP + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_M_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_M_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_M_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_M_OP) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_NHBW/60.0))
-,,nhbw_highinc_dtransit_md_travel_time_benefit, -0.5 * NHBW_OP * (_BASE_DTRANSIT_PA_TRIPS_NHBW_CV0_H_OP + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV1_H_OP + _BASE_DTRANSIT_PA_TRIPS_NHBW_CV23_H_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV0_H_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV1_H_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBW_CV23_H_OP) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_NHBW/60.0))
-,,nhbnw_lowinc_dtransit_am_travel_time_benefit, -0.5 * NHBNW_PK * (_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_L_PK + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_L_PK + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_L_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_L_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_L_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_L_PK) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_NHBNW/60.0))
-,,nhbnw_medinc_dtransit_am_travel_time_benefit, -0.5 * NHBNW_PK * (_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_M_PK + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_M_PK + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_M_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_M_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_M_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_M_PK) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_NHBNW/60.0))
-,,nhbnw_highinc_dtransit_am_travel_time_benefit, -0.5 * NHBNW_PK * (_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_H_PK + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_H_PK + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_H_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_H_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_H_PK + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_H_PK) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_NHBNW/60.0))
-,,nhbnw_lowinc_dtransit_md_travel_time_benefit, -0.5 * NHBNW_OP * (_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_L_OP + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_L_OP + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_L_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_L_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_L_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_L_OP) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_NHBNW/60.0))
-,,nhbnw_medinc_dtransit_md_travel_time_benefit, -0.5 * NHBNW_OP * (_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_M_OP + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_M_OP + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_M_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_M_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_M_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_M_OP) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_NHBNW/60.0))
-,,nhbnw_highinc_dtransit_md_travel_time_benefit, -0.5 * NHBNW_OP * (_BASE_DTRANSIT_PA_TRIPS_NHBNW_CV0_H_OP + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV1_H_OP + _BASE_DTRANSIT_PA_TRIPS_NHBNW_CV23_H_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV0_H_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV1_H_OP + _BUILD_DTRANSIT_PA_TRIPS_NHBNW_CV23_H_OP) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_NHBNW/60.0))
-,,hbo_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBO_PK * (_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_L_PK + mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.l.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.l.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_L_PK + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.l.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBO/60.0))
-,,hbo_medinc_dtransit_am_travel_time_benefit, -0.5 * HBO_PK * (_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_M_PK + mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.m.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.m.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_M_PK + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.m.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBO/60.0))
-,,hbo_highinc_dtransit_am_travel_time_benefit, -0.5 * HBO_PK * (_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_H_PK + mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.h.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.h.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_H_PK + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.h.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBO/60.0))
-,,hbo_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBO_OP * (_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_L_OP + mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.l.op'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.l.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_L_OP + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.l.op'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBO/60.0))
-,,hbo_medinc_dtransit_md_travel_time_benefit, -0.5 * HBO_OP * (_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_M_OP + mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.m.op'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.m.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_M_OP + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.m.op'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBO/60.0))
-,,hbo_highinc_dtransit_md_travel_time_benefit, -0.5 * HBO_OP * (_BASE_DTRANSIT_PA_TRIPS_HBO_CV0_H_OP + mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.h.op'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.h.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBO_CV0_H_OP + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.h.op'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBO/60.0))
-,,hbs_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBS_PK * (_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_L_PK + mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.l.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.l.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_L_PK + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.l.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBS/60.0))
-,,hbs_medinc_dtransit_am_travel_time_benefit, -0.5 * HBS_PK * (_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_M_PK + mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.m.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.m.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_M_PK + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.m.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBS/60.0))
-,,hbs_highinc_dtransit_am_travel_time_benefit, -0.5 * HBS_PK * (_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_H_PK + mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.h.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.h.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_H_PK + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.h.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBS/60.0))
-,,hbs_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBS_OP * (_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_L_OP + mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.l.op'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.l.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_L_OP + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.l.op'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBS/60.0))
-,,hbs_medinc_dtransit_md_travel_time_benefit, -0.5 * HBS_OP * (_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_M_OP + mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.m.op'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.m.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_M_OP + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.m.op'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBS/60.0))
-,,hbs_highinc_dtransit_md_travel_time_benefit, -0.5 * HBS_OP * (_BASE_DTRANSIT_PA_TRIPS_HBS_CV0_H_OP + mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.h.op'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.h.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBS_CV0_H_OP + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.h.op'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBS/60.0))
-,,hbr_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBR_PK * (_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_L_PK + mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.l.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.l.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_L_PK + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.l.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBR/60.0))
-,,hbr_medinc_dtransit_am_travel_time_benefit, -0.5 * HBR_PK * (_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_M_PK + mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.m.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.m.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_M_PK + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.m.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBR/60.0))
-,,hbr_highinc_dtransit_am_travel_time_benefit, -0.5 * HBR_PK * (_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_H_PK + mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.h.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.h.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_H_PK + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.h.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBR/60.0))
-,,hbr_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBR_OP * (_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_L_OP + mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.l.op'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.l.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_L_OP + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.l.op'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBR/60.0))
-,,hbr_medinc_dtransit_md_travel_time_benefit, -0.5 * HBR_OP * (_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_M_OP + mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.m.op'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.m.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_M_OP + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.m.op'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBR/60.0))
-,,hbr_highinc_dtransit_md_travel_time_benefit, -0.5 * HBR_OP * (_BASE_DTRANSIT_PA_TRIPS_HBR_CV0_H_OP + mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.h.op'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.h.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBR_CV0_H_OP + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.h.op'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBR/60.0))
-,,hbc_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBC_PK * (_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_L_PK + mode_choice_pa_hc_base['mf.hcprtrtd.cv1.l.pk'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.l.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_L_PK + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.l.pk'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBC/60.0))
-,,hbc_medinc_dtransit_am_travel_time_benefit, -0.5 * HBC_PK * (_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_M_PK + mode_choice_pa_hc_base['mf.hcprtrtd.cv1.m.pk'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.m.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_M_PK + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.m.pk'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBC/60.0))
-,,hbc_highinc_dtransit_am_travel_time_benefit, -0.5 * HBC_PK * (_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_H_PK + mode_choice_pa_hc_base['mf.hcprtrtd.cv1.h.pk'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.h.pk'] + _BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_H_PK + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.h.pk'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBC/60.0))
-,,hbc_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBC_OP * (_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_L_OP + mode_choice_pa_hc_base['mf.hcprtrtd.cv1.l.op'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.l.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_L_OP + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.l.op'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBC/60.0))
-,,hbc_medinc_dtransit_md_travel_time_benefit, -0.5 * HBC_OP * (_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_M_OP + mode_choice_pa_hc_base['mf.hcprtrtd.cv1.m.op'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.m.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_M_OP + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.m.op'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBC/60.0))
-,,hbc_highinc_dtransit_md_travel_time_benefit, -0.5 * HBC_OP * (_BASE_DTRANSIT_PA_TRIPS_HBC_CV0_H_OP + mode_choice_pa_hc_base['mf.hcprtrtd.cv1.h.op'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.h.op'] + _BUILD_DTRANSIT_PA_TRIPS_HBC_CV0_H_OP + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.h.op'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBC/60.0))
-,,sch_dtransit_am_travel_time_benefit, -0.5 * SCH_PK * (_BASE_DTRANSIT_PA_TRIPS_SC + _BUILD_DTRANSIT_PA_TRIPS_SC) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_SCH/60.0))
-,,sch_dtransit_md_travel_time_benefit, -0.5 * SCH_OP * (_BASE_DTRANSIT_PA_TRIPS_SC + _BUILD_DTRANSIT_PA_TRIPS_SC) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_SCH/60.0))
+,,hbw_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.l.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.l.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.l.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBW/60.0))
+,,hbw_medinc_dtransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.m.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.m.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.m.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBW/60.0))
+,,hbw_highinc_dtransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.h.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.h.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.h.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBW/60.0))
+,,hbw_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBW_OP * (mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.l.op'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.l.op'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.l.op'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBW/60.0))
+,,hbw_medinc_dtransit_md_travel_time_benefit, -0.5 * HBW_OP * (mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.m.op'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.m.op'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.m.op'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBW/60.0))
+,,hbw_highinc_dtransit_md_travel_time_benefit, -0.5 * HBW_OP * (mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.h.op'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.h.op'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.h.op'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBW/60.0))
+,,nhbw_lowinc_dtransit_am_travel_time_benefit,0
+,,nhbw_medinc_dtransit_am_travel_time_benefit,0
+,,nhbw_highinc_dtransit_am_travel_time_benefit,0
+,,nhbw_lowinc_dtransit_md_travel_time_benefit,0
+,,nhbw_medinc_dtransit_md_travel_time_benefit,0
+,,nhbw_highinc_dtransit_md_travel_time_benefit,0
+,,nhbnw_lowinc_dtransit_am_travel_time_benefit,0
+,,nhbnw_medinc_dtransit_am_travel_time_benefit,0
+,,nhbnw_highinc_dtransit_am_travel_time_benefit,0
+,,nhbnw_lowinc_dtransit_md_travel_time_benefit,0
+,,nhbnw_medinc_dtransit_md_travel_time_benefit,0
+,,nhbnw_highinc_dtransit_md_travel_time_benefit,0
+,,hbo_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBO_PK * (mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.l.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.l.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.l.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBO/60.0))
+,,hbo_medinc_dtransit_am_travel_time_benefit, -0.5 * HBO_PK * (mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.m.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.m.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.m.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBO/60.0))
+,,hbo_highinc_dtransit_am_travel_time_benefit, -0.5 * HBO_PK * (mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.h.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.h.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.h.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBO/60.0))
+,,hbo_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBO_OP * (mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.l.op'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.l.op'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.l.op'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBO/60.0))
+,,hbo_medinc_dtransit_md_travel_time_benefit, -0.5 * HBO_OP * (mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.m.op'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.m.op'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.m.op'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBO/60.0))
+,,hbo_highinc_dtransit_md_travel_time_benefit, -0.5 * HBO_OP * (mode_choice_pa_hbo_base['mf.hoprtrtd.cv1.h.op'] + mode_choice_pa_hbo_base['mf.hoprtrtd.cv23.h.op'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv1.h.op'] + mode_choice_pa_hbo_build['mf.hoprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBO/60.0))
+,,hbs_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBS_PK * (mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.l.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.l.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.l.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBS/60.0))
+,,hbs_medinc_dtransit_am_travel_time_benefit, -0.5 * HBS_PK * (mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.m.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.m.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.m.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBS/60.0))
+,,hbs_highinc_dtransit_am_travel_time_benefit, -0.5 * HBS_PK * (mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.h.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.h.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.h.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBS/60.0))
+,,hbs_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBS_OP * (mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.l.op'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.l.op'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.l.op'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBS/60.0))
+,,hbs_medinc_dtransit_md_travel_time_benefit, -0.5 * HBS_OP * (mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.m.op'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.m.op'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.m.op'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBS/60.0))
+,,hbs_highinc_dtransit_md_travel_time_benefit, -0.5 * HBS_OP * (mode_choice_pa_hbs_base['mf.hsprtrtd.cv1.h.op'] + mode_choice_pa_hbs_base['mf.hsprtrtd.cv23.h.op'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv1.h.op'] + mode_choice_pa_hbs_build['mf.hsprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBS/60.0))
+,,hbr_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBR_PK * (mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.l.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.l.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.l.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBR/60.0))
+,,hbr_medinc_dtransit_am_travel_time_benefit, -0.5 * HBR_PK * (mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.m.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.m.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.m.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBR/60.0))
+,,hbr_highinc_dtransit_am_travel_time_benefit, -0.5 * HBR_PK * (mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.h.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.h.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.h.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBR/60.0))
+,,hbr_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBR_OP * (mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.l.op'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.l.op'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.l.op'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBR/60.0))
+,,hbr_medinc_dtransit_md_travel_time_benefit, -0.5 * HBR_OP * (mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.m.op'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.m.op'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.m.op'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBR/60.0))
+,,hbr_highinc_dtransit_md_travel_time_benefit, -0.5 * HBR_OP * (mode_choice_pa_hbr_base['mf.hrprtrtd.cv1.h.op'] + mode_choice_pa_hbr_base['mf.hrprtrtd.cv23.h.op'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv1.h.op'] + mode_choice_pa_hbr_build['mf.hrprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBR/60.0))
+,,hbc_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBC_PK * (mode_choice_pa_hc_base['mf.hcprtrtd.cv1.l.pk'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.l.pk'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.l.pk'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBC/60.0))
+,,hbc_medinc_dtransit_am_travel_time_benefit, -0.5 * HBC_PK * (mode_choice_pa_hc_base['mf.hcprtrtd.cv1.m.pk'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.m.pk'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.m.pk'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBC/60.0))
+,,hbc_highinc_dtransit_am_travel_time_benefit, -0.5 * HBC_PK * (mode_choice_pa_hc_base['mf.hcprtrtd.cv1.h.pk'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.h.pk'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.h.pk'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBC/60.0))
+,,hbc_lowinc_dtransit_md_travel_time_benefit, -0.5 * HBC_OP * (mode_choice_pa_hc_base['mf.hcprtrtd.cv1.l.op'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.l.op'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.l.op'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.l.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBC/60.0))
+,,hbc_medinc_dtransit_md_travel_time_benefit, -0.5 * HBC_OP * (mode_choice_pa_hc_base['mf.hcprtrtd.cv1.m.op'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.m.op'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.m.op'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.m.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBC/60.0))
+,,hbc_highinc_dtransit_md_travel_time_benefit, -0.5 * HBC_OP * (mode_choice_pa_hc_base['mf.hcprtrtd.cv1.h.op'] + mode_choice_pa_hc_base['mf.hcprtrtd.cv23.h.op'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv1.h.op'] + mode_choice_pa_hc_build['mf.hcprtrtd.cv23.h.op']) * ((build_dtransit_md_travel_time - base_dtransit_md_travel_time) * (VOT_HBC/60.0))
+,,sch_dtransit_am_travel_time_benefit,0
+,,sch_dtransit_md_travel_time_benefit,0
 ,hbw lowinc dtransit benefit,hbw_lowinc_dtransit_travel_time_benefit,(hbw_lowinc_dtransit_am_travel_time_benefit + hbw_lowinc_dtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw medinc dtransit benefit,hbw_medinc_dtransit_travel_time_benefit,(hbw_medinc_dtransit_am_travel_time_benefit + hbw_medinc_dtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw highinc dtransit benefit,hbw_highinc_dtransit_travel_time_benefit,(hbw_highinc_dtransit_am_travel_time_benefit + hbw_highinc_dtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -486,184 +358,50 @@ silos,description,target,expression
 ,hbc highinc dtransit benefit,hbc_highinc_dtransit_travel_time_benefit,(hbc_highinc_dtransit_am_travel_time_benefit + hbc_highinc_dtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,sch dtransit benefit,sch_dtransit_travel_time_benefit,(sch_dtransit_am_travel_time_benefit + sch_dtransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,_,logger.info('drive transit auto leg')
-,,_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_L_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_L_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_M_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_M_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_H_PK,0
-,,_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_H_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_L_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_L_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_M_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_M_OP,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_H_PK,0
-,,_BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_H_OP,0
-,,_BASE_ATRANSIT_PA_TRIPS_SC,0
-,,_BUILD_ATRANSIT_PA_TRIPS_SC,0
-,,hbw_lowinc_atransit_am_travel_time_benefit, -0.5 * HBW_PK * (_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_L_PK + mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.l.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.l.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_L_PK + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.l.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBW/60.0))
-,,hbw_medinc_atransit_am_travel_time_benefit, -0.5 * HBW_PK * (_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_M_PK + mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.m.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.m.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_M_PK + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.m.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBW/60.0))
-,,hbw_highinc_atransit_am_travel_time_benefit, -0.5 * HBW_PK * (_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_H_PK + mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.h.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.h.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_H_PK + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.h.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBW/60.0))
-,,hbw_lowinc_atransit_md_travel_time_benefit, -0.5 * HBW_OP * (_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_L_OP + mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.l.op'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.l.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_L_OP + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.l.op'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBW/60.0))
-,,hbw_medinc_atransit_md_travel_time_benefit, -0.5 * HBW_OP * (_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_M_OP + mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.m.op'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.m.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_M_OP + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.m.op'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBW/60.0))
-,,hbw_highinc_atransit_md_travel_time_benefit, -0.5 * HBW_OP * (_BASE_ATRANSIT_PA_TRIPS_HBW_CV0_H_OP + mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.h.op'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.h.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBW_CV0_H_OP + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.h.op'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBW/60.0))
-,,nhbw_lowinc_atransit_am_travel_time_benefit, -0.5 * NHBW_PK * (_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_L_PK + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_L_PK + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_L_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_L_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_L_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_L_PK) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_NHBW/60.0))
-,,nhbw_medinc_atransit_am_travel_time_benefit, -0.5 * NHBW_PK * (_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_M_PK + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_M_PK + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_M_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_M_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_M_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_M_PK) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_NHBW/60.0))
-,,nhbw_highinc_atransit_am_travel_time_benefit, -0.5 * NHBW_PK * (_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_H_PK + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_H_PK + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_H_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_H_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_H_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_H_PK) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_NHBW/60.0))
-,,nhbw_lowinc_atransit_md_travel_time_benefit, -0.5 * NHBW_OP * (_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_L_OP + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_L_OP + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_L_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_L_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_L_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_L_OP) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_NHBW/60.0))
-,,nhbw_medinc_atransit_md_travel_time_benefit, -0.5 * NHBW_OP * (_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_M_OP + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_M_OP + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_M_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_M_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_M_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_M_OP) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_NHBW/60.0))
-,,nhbw_highinc_atransit_md_travel_time_benefit, -0.5 * NHBW_OP * (_BASE_ATRANSIT_PA_TRIPS_NHBW_CV0_H_OP + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV1_H_OP + _BASE_ATRANSIT_PA_TRIPS_NHBW_CV23_H_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV0_H_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV1_H_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBW_CV23_H_OP) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_NHBW/60.0))
-,,nhbnw_lowinc_atransit_am_travel_time_benefit, -0.5 * NHBNW_PK * (_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_L_PK + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_L_PK + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_L_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_L_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_L_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_L_PK) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_NHBNW/60.0))
-,,nhbnw_medinc_atransit_am_travel_time_benefit, -0.5 * NHBNW_PK * (_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_M_PK + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_M_PK + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_M_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_M_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_M_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_M_PK) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_NHBNW/60.0))
-,,nhbnw_highinc_atransit_am_travel_time_benefit, -0.5 * NHBNW_PK * (_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_H_PK + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_H_PK + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_H_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_H_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_H_PK + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_H_PK) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_NHBNW/60.0))
-,,nhbnw_lowinc_atransit_md_travel_time_benefit, -0.5 * NHBNW_OP * (_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_L_OP + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_L_OP + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_L_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_L_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_L_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_L_OP) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_NHBNW/60.0))
-,,nhbnw_medinc_atransit_md_travel_time_benefit, -0.5 * NHBNW_OP * (_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_M_OP + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_M_OP + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_M_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_M_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_M_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_M_OP) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_NHBNW/60.0))
-,,nhbnw_highinc_atransit_md_travel_time_benefit, -0.5 * NHBNW_OP * (_BASE_ATRANSIT_PA_TRIPS_NHBNW_CV0_H_OP + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV1_H_OP + _BASE_ATRANSIT_PA_TRIPS_NHBNW_CV23_H_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV0_H_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV1_H_OP + _BUILD_ATRANSIT_PA_TRIPS_NHBNW_CV23_H_OP) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_NHBNW/60.0))
-,,hbo_lowinc_atransit_am_travel_time_benefit, -0.5 * HBO_PK * (_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_L_PK + mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.l.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.l.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_L_PK + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.l.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBO/60.0))
-,,hbo_medinc_atransit_am_travel_time_benefit, -0.5 * HBO_PK * (_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_M_PK + mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.m.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.m.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_M_PK + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.m.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBO/60.0))
-,,hbo_highinc_atransit_am_travel_time_benefit, -0.5 * HBO_PK * (_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_H_PK + mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.h.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.h.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_H_PK + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.h.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBO/60.0))
-,,hbo_lowinc_atransit_md_travel_time_benefit, -0.5 * HBO_OP * (_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_L_OP + mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.l.op'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.l.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_L_OP + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.l.op'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBO/60.0))
-,,hbo_medinc_atransit_md_travel_time_benefit, -0.5 * HBO_OP * (_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_M_OP + mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.m.op'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.m.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_M_OP + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.m.op'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBO/60.0))
-,,hbo_highinc_atransit_md_travel_time_benefit, -0.5 * HBO_OP * (_BASE_ATRANSIT_PA_TRIPS_HBO_CV0_H_OP + mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.h.op'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.h.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBO_CV0_H_OP + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.h.op'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBO/60.0))
-,,hbs_lowinc_atransit_am_travel_time_benefit, -0.5 * HBS_PK * (_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_L_PK + mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.l.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.l.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_L_PK + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.l.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBS/60.0))
-,,hbs_medinc_atransit_am_travel_time_benefit, -0.5 * HBS_PK * (_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_M_PK + mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.m.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.m.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_M_PK + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.m.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBS/60.0))
-,,hbs_highinc_atransit_am_travel_time_benefit, -0.5 * HBS_PK * (_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_H_PK + mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.h.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.h.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_H_PK + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.h.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBS/60.0))
-,,hbs_lowinc_atransit_md_travel_time_benefit, -0.5 * HBS_OP * (_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_L_OP + mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.l.op'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.l.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_L_OP + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.l.op'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBS/60.0))
-,,hbs_medinc_atransit_md_travel_time_benefit, -0.5 * HBS_OP * (_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_M_OP + mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.m.op'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.m.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_M_OP + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.m.op'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBS/60.0))
-,,hbs_highinc_atransit_md_travel_time_benefit, -0.5 * HBS_OP * (_BASE_ATRANSIT_PA_TRIPS_HBS_CV0_H_OP + mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.h.op'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.h.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBS_CV0_H_OP + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.h.op'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBS/60.0))
-,,hbr_lowinc_atransit_am_travel_time_benefit, -0.5 * HBR_PK * (_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_L_PK + mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.l.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.l.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_L_PK + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.l.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBR/60.0))
-,,hbr_medinc_atransit_am_travel_time_benefit, -0.5 * HBR_PK * (_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_M_PK + mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.m.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.m.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_M_PK + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.m.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBR/60.0))
-,,hbr_highinc_atransit_am_travel_time_benefit, -0.5 * HBR_PK * (_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_H_PK + mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.h.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.h.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_H_PK + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.h.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBR/60.0))
-,,hbr_lowinc_atransit_md_travel_time_benefit, -0.5 * HBR_OP * (_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_L_OP + mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.l.op'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.l.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_L_OP + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.l.op'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBR/60.0))
-,,hbr_medinc_atransit_md_travel_time_benefit, -0.5 * HBR_OP * (_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_M_OP + mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.m.op'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.m.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_M_OP + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.m.op'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBR/60.0))
-,,hbr_highinc_atransit_md_travel_time_benefit, -0.5 * HBR_OP * (_BASE_ATRANSIT_PA_TRIPS_HBR_CV0_H_OP + mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.h.op'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.h.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBR_CV0_H_OP + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.h.op'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBR/60.0))
-,,hbc_lowinc_atransit_am_travel_time_benefit, -0.5 * HBC_PK * (_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_L_PK + mode_choice_pa_hc_base['mf.hcprtrtl.cv1.l.pk'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.l.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_L_PK + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.l.pk'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBC/60.0))
-,,hbc_medinc_atransit_am_travel_time_benefit, -0.5 * HBC_PK * (_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_M_PK + mode_choice_pa_hc_base['mf.hcprtrtl.cv1.m.pk'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.m.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_M_PK + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.m.pk'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBC/60.0))
-,,hbc_highinc_atransit_am_travel_time_benefit, -0.5 * HBC_PK * (_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_H_PK + mode_choice_pa_hc_base['mf.hcprtrtl.cv1.h.pk'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.h.pk'] + _BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_H_PK + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.h.pk'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBC/60.0))
-,,hbc_lowinc_atransit_md_travel_time_benefit, -0.5 * HBC_OP * (_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_L_OP + mode_choice_pa_hc_base['mf.hcprtrtl.cv1.l.op'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.l.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_L_OP + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.l.op'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBC/60.0))
-,,hbc_medinc_atransit_md_travel_time_benefit, -0.5 * HBC_OP * (_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_M_OP + mode_choice_pa_hc_base['mf.hcprtrtl.cv1.m.op'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.m.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_M_OP + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.m.op'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBC/60.0))
-,,hbc_highinc_atransit_md_travel_time_benefit, -0.5 * HBC_OP * (_BASE_ATRANSIT_PA_TRIPS_HBC_CV0_H_OP + mode_choice_pa_hc_base['mf.hcprtrtl.cv1.h.op'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.h.op'] + _BUILD_ATRANSIT_PA_TRIPS_HBC_CV0_H_OP + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.h.op'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBC/60.0))
-,,sch_atransit_am_travel_time_benefit, -0.5 * SCH_PK * (_BASE_ATRANSIT_PA_TRIPS_SC + _BUILD_ATRANSIT_PA_TRIPS_SC) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_SCH/60.0))
-,,sch_atransit_md_travel_time_benefit, -0.5 * SCH_OP * (_BASE_ATRANSIT_PA_TRIPS_SC + _BUILD_ATRANSIT_PA_TRIPS_SC) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_SCH/60.0))
+,,hbw_lowinc_atransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.l.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.l.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.l.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBW/60.0))
+,,hbw_medinc_atransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.m.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.m.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.m.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBW/60.0))
+,,hbw_highinc_atransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.h.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.h.pk'] +  mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.h.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBW/60.0))
+,,hbw_lowinc_atransit_md_travel_time_benefit, -0.5 * HBW_OP * (mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.l.op'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.l.op'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.l.op'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBW/60.0))
+,,hbw_medinc_atransit_md_travel_time_benefit, -0.5 * HBW_OP * (mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.m.op'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.m.op'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.m.op'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBW/60.0))
+,,hbw_highinc_atransit_md_travel_time_benefit, -0.5 * HBW_OP * (mode_choice_pa_hbw_base['mf.hwprtrtl.cv1.h.op'] + mode_choice_pa_hbw_base['mf.hwprtrtl.cv23.h.op'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv1.h.op'] + mode_choice_pa_hbw_build['mf.hwprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBW/60.0))
+,,nhbw_lowinc_atransit_am_travel_time_benefit,0
+,,nhbw_medinc_atransit_am_travel_time_benefit,0
+,,nhbw_highinc_atransit_am_travel_time_benefit,0
+,,nhbw_lowinc_atransit_md_travel_time_benefit,0
+,,nhbw_medinc_atransit_md_travel_time_benefit,0
+,,nhbw_highinc_atransit_md_travel_time_benefit,0
+,,nhbnw_lowinc_atransit_am_travel_time_benefit,0
+,,nhbnw_medinc_atransit_am_travel_time_benefit,0
+,,nhbnw_highinc_atransit_am_travel_time_benefit,0
+,,nhbnw_lowinc_atransit_md_travel_time_benefit,0
+,,nhbnw_medinc_atransit_md_travel_time_benefit,0
+,,nhbnw_highinc_atransit_md_travel_time_benefit,0
+,,hbo_lowinc_atransit_am_travel_time_benefit, -0.5 * HBO_PK * (mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.l.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.l.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.l.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBO/60.0))
+,,hbo_medinc_atransit_am_travel_time_benefit, -0.5 * HBO_PK * (mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.m.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.m.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.m.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBO/60.0))
+,,hbo_highinc_atransit_am_travel_time_benefit, -0.5 * HBO_PK * (mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.h.pk'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.h.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.h.pk'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBO/60.0))
+,,hbo_lowinc_atransit_md_travel_time_benefit, -0.5 * HBO_OP * (mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.l.op'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.l.op'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.l.op'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBO/60.0))
+,,hbo_medinc_atransit_md_travel_time_benefit, -0.5 * HBO_OP * (mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.m.op'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.m.op'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.m.op'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBO/60.0))
+,,hbo_highinc_atransit_md_travel_time_benefit, -0.5 * HBO_OP * (mode_choice_pa_hbo_base['mf.hoprtrtl.cv1.h.op'] + mode_choice_pa_hbo_base['mf.hoprtrtl.cv23.h.op'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv1.h.op'] + mode_choice_pa_hbo_build['mf.hoprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBO/60.0))
+,,hbs_lowinc_atransit_am_travel_time_benefit, -0.5 * HBS_PK * (mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.l.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.l.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.l.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBS/60.0))
+,,hbs_medinc_atransit_am_travel_time_benefit, -0.5 * HBS_PK * (mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.m.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.m.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.m.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBS/60.0))
+,,hbs_highinc_atransit_am_travel_time_benefit, -0.5 * HBS_PK * (mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.h.pk'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.h.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.h.pk'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBS/60.0))
+,,hbs_lowinc_atransit_md_travel_time_benefit, -0.5 * HBS_OP * (mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.l.op'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.l.op'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.l.op'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBS/60.0))
+,,hbs_medinc_atransit_md_travel_time_benefit, -0.5 * HBS_OP * (mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.m.op'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.m.op'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.m.op'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBS/60.0))
+,,hbs_highinc_atransit_md_travel_time_benefit, -0.5 * HBS_OP * (mode_choice_pa_hbs_base['mf.hsprtrtl.cv1.h.op'] + mode_choice_pa_hbs_base['mf.hsprtrtl.cv23.h.op'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv1.h.op'] + mode_choice_pa_hbs_build['mf.hsprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBS/60.0))
+,,hbr_lowinc_atransit_am_travel_time_benefit, -0.5 * HBR_PK * (mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.l.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.l.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.l.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBR/60.0))
+,,hbr_medinc_atransit_am_travel_time_benefit, -0.5 * HBR_PK * (mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.m.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.m.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.m.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBR/60.0))
+,,hbr_highinc_atransit_am_travel_time_benefit, -0.5 * HBR_PK * (mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.h.pk'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.h.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.h.pk'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBR/60.0))
+,,hbr_lowinc_atransit_md_travel_time_benefit, -0.5 * HBR_OP * (mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.l.op'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.l.op'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.l.op'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBR/60.0))
+,,hbr_medinc_atransit_md_travel_time_benefit, -0.5 * HBR_OP * (mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.m.op'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.m.op'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.m.op'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBR/60.0))
+,,hbr_highinc_atransit_md_travel_time_benefit, -0.5 * HBR_OP * (mode_choice_pa_hbr_base['mf.hrprtrtl.cv1.h.op'] + mode_choice_pa_hbr_base['mf.hrprtrtl.cv23.h.op'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv1.h.op'] + mode_choice_pa_hbr_build['mf.hrprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBR/60.0))
+,,hbc_lowinc_atransit_am_travel_time_benefit, -0.5 * HBC_PK * (mode_choice_pa_hc_base['mf.hcprtrtl.cv1.l.pk'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.l.pk'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.l.pk'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.l.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBC/60.0))
+,,hbc_medinc_atransit_am_travel_time_benefit, -0.5 * HBC_PK * (mode_choice_pa_hc_base['mf.hcprtrtl.cv1.m.pk'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.m.pk'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.m.pk'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.m.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBC/60.0))
+,,hbc_highinc_atransit_am_travel_time_benefit, -0.5 * HBC_PK * (mode_choice_pa_hc_base['mf.hcprtrtl.cv1.h.pk'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.h.pk'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.h.pk'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.h.pk']) * ((skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * (VOT_HBC/60.0))
+,,hbc_lowinc_atransit_md_travel_time_benefit, -0.5 * HBC_OP * (mode_choice_pa_hc_base['mf.hcprtrtl.cv1.l.op'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.l.op'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.l.op'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.l.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBC/60.0))
+,,hbc_medinc_atransit_md_travel_time_benefit, -0.5 * HBC_OP * (mode_choice_pa_hc_base['mf.hcprtrtl.cv1.m.op'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.m.op'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.m.op'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.m.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBC/60.0))
+,,hbc_highinc_atransit_md_travel_time_benefit, -0.5 * HBC_OP * (mode_choice_pa_hc_base['mf.hcprtrtl.cv1.h.op'] + mode_choice_pa_hc_base['mf.hcprtrtl.cv23.h.op'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv1.h.op'] + mode_choice_pa_hc_build['mf.hcprtrtl.cv23.h.op']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_HBC/60.0))
+,,sch_atransit_am_travel_time_benefit,0
+,,sch_atransit_md_travel_time_benefit,0
 ,hbw lowinc atransit benefit,hbw_lowinc_atransit_travel_time_benefit,(hbw_lowinc_atransit_am_travel_time_benefit + hbw_lowinc_atransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw medinc atransit benefit,hbw_medinc_atransit_travel_time_benefit,(hbw_medinc_atransit_am_travel_time_benefit + hbw_medinc_atransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,hbw highinc atransit benefit,hbw_highinc_atransit_travel_time_benefit,(hbw_highinc_atransit_am_travel_time_benefit + hbw_highinc_atransit_md_travel_time_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
@@ -716,14 +454,16 @@ silos,description,target,expression
 ,hbc highinc travel time benefit,hbc_highinc_travel_time_benefit,hbc_highinc_da_travel_time_benefit + hbc_highinc_dp_travel_time_benefit + hbc_highinc_p_travel_time_benefit + hbc_highinc_wtransit_travel_time_benefit + hbc_highinc_dtransit_travel_time_benefit + hbc_highinc_atransit_travel_time_benefit
 ,hbc travel time benefit,hbc_travel_time_benefit,hbc_lowinc_travel_time_benefit + hbc_medinc_travel_time_benefit + hbc_highinc_travel_time_benefit
 ,sch travel time benefit,sch_travel_time_benefit,sch_da_travel_time_benefit + sch_p_travel_time_benefit + sch_wtransit_travel_time_benefit + sch_dtransit_travel_time_benefit + sch_schbus_travel_time_benefit
-*,person travel time benefit,person_travel_time_benefit,hbw_travel_time_benefit + nhbw_travel_time_benefit + nhbnw_travel_time_benefit + hbo_travel_time_benefit + hbs_travel_time_benefit + hbr_travel_time_benefit + hbc_travel_time_benefit + sch_travel_time_benefit
+,person travel time benefit all zones,person_travel_time_benefit_all_zones,hbw_travel_time_benefit + nhbw_travel_time_benefit + nhbnw_travel_time_benefit + hbo_travel_time_benefit + hbs_travel_time_benefit + hbr_travel_time_benefit + hbc_travel_time_benefit + sch_travel_time_benefit
+*,person travel time benefit,person_travel_time_benefit,person_travel_time_benefit_all_zones * internal_internal_filter
 ,,_,logger.info('truck travel time')
 ,truck trips,base_hvytrk_am_trips,skims_base['mf.pm2Hpe']
 ,,hvytrk_am_time_benefit, -0.5 * (base_hvytrk_am_trips + skims_build['mf.pm2Hpe']) * (skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * VOT_HVYTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,medtrk_am_time_benefit, -0.5 * (skims_base['mf.pm2Mpe'] + skims_build['mf.pm2Mpe']) * (skims_build['mf.am2stt'] - skims_base['mf.am2stt']) * VOT_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,hvytrk_md_time_benefit, -0.5 * (skims_base['mf.md1Hpe'] + skims_build['mf.md1Hpe']) * (skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * VOT_HVYTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,medtrk_md_time_benefit, -0.5 * (skims_base['mf.md1Mpe'] + skims_build['mf.md1Mpe']) * (skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * VOT_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,truck travel time benefit,trk_travel_time_benefit,hvytrk_am_time_benefit + medtrk_am_time_benefit + hvytrk_md_time_benefit + medtrk_md_time_benefit
+,truck travel time benefit all zones,trk_travel_time_benefit_all_zones,hvytrk_am_time_benefit + medtrk_am_time_benefit + hvytrk_md_time_benefit + medtrk_md_time_benefit
+*,truck travel time benefit,trk_travel_time_benefit,trk_travel_time_benefit_all_zones * internal_internal_filter
 *,travel time benefit,travel_time_benefit,person_travel_time_benefit + trk_travel_time_benefit
 ,,_,logger.info('travel time reliability')
 ,,base_am_reliability,np.sqrt( skims_base['mf.am2rls'] )
@@ -847,12 +587,14 @@ silos,description,target,expression
 ,hbc highinc travel time reliability benefit,hbc_travel_time_reliability_benefit_highinc,(hbc_am_reliability_benefit_highinc + hbc_md_reliability_benefit_highinc) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,hbc_travel_time_reliability_benefit,hbc_travel_time_reliability_benefit_lowinc + hbc_travel_time_reliability_benefit_medinc + hbc_travel_time_reliability_benefit_highinc
 ,sch travel time reliability benefit,sch_travel_time_reliability_benefit,(sch_am_reliability_benefit + sch_md_reliability_benefit) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-*,person travel time reliability benefit,person_travel_time_reliability_benefit,hbw_travel_time_reliability_benefit+nhbw_travel_time_reliability_benefit+nhbnw_travel_time_reliability_benefit+hbo_travel_time_reliability_benefit+hbs_travel_time_reliability_benefit+hbr_travel_time_reliability_benefit+hbc_travel_time_reliability_benefit+sch_travel_time_reliability_benefit
+,person travel time reliability benefit all zones,person_travel_time_reliability_benefit_all_zones,hbw_travel_time_reliability_benefit+nhbw_travel_time_reliability_benefit+nhbnw_travel_time_reliability_benefit+hbo_travel_time_reliability_benefit+hbs_travel_time_reliability_benefit+hbr_travel_time_reliability_benefit+hbc_travel_time_reliability_benefit+sch_travel_time_reliability_benefit
+*,person travel time reliability benefit,person_travel_time_reliability_benefit,person_travel_time_reliability_benefit_all_zones * internal_internal_filter
 ,,_,logger.info('truck travel time reliability')
 ,,hvytrk_am_reliability_benefit, -0.5 * (base_hvytrk_am_trips + skims_build['mf.pm2Hpe']) * (build_am_reliability - base_am_reliability) * VOT_HVYTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,medtrk_am_reliability_benefit, -0.5 * (skims_base['mf.pm2Mpe'] + skims_build['mf.pm2Mpe']) * (build_am_reliability - base_am_reliability) * VOT_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,hvytrk_md_reliability_benefit, -0.5 * (skims_base['mf.md1Hpe'] + skims_build['mf.md1Hpe']) * (build_md_reliability - base_md_reliability) * VOT_HVYTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,medtrk_md_reliability_benefit, -0.5 * (skims_base['mf.md1Mpe'] + skims_build['mf.md1Mpe']) * (build_md_reliability - base_md_reliability) * VOT_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,truck reliability benefit,trk_travel_time_reliability_benefit,hvytrk_am_reliability_benefit + medtrk_am_reliability_benefit + hvytrk_md_reliability_benefit + medtrk_md_reliability_benefit
-*,travel time reliability benefit,travel_time_reliability_benefit,person_travel_time_reliability_benefit + trk_travel_time_reliability_benefit
+,truck reliability benefit all zones,trk_travel_time_reliability_benefit_all_zones,hvytrk_am_reliability_benefit + medtrk_am_reliability_benefit + hvytrk_md_reliability_benefit + medtrk_md_reliability_benefit
+*,truck reliability benefit,trk_travel_time_reliability_benefit,trk_travel_time_reliability_benefit_all_zones * internal_internal_filter
+*,travel time reliability benefit,travel_time_reliability_benefit,person_travel_time_reliability_benefit+trk_travel_time_reliability_benefit
 ,,_,logger.info('finish od benefit calculation')
