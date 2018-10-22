@@ -211,7 +211,7 @@ silos,description,target,expression
 ,,build_wtransit_am_travel_time_raw,skims_build['mf.amwt1'] + skims_build['mf.amwt2'] + skims_build['mf.amwalk'] +  skims_build['mf.amivt'] + MINUTES_PER_TRANSFER * skims_build['mf.amxfr'] + (transit_fare_build['mf.trfare'] / VOT_WALK_TRANSIT) * 60
 ,,base_wtransit_md_travel_time_raw,skims_base['mf.mdwt1'] + skims_base['mf.mdwt2'] + skims_base['mf.mdwalk'] +  skims_base['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_base['mf.mdxfr'] + (transit_fare_base['mf.trfare'] / VOT_WALK_TRANSIT) * 60
 ,,build_wtransit_md_travel_time_raw,skims_build['mf.mdwt1'] + skims_build['mf.mdwt2'] + skims_build['mf.mdwalk'] +  skims_build['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_build['mf.mdxfr'] + (transit_fare_build['mf.trfare'] / VOT_WALK_TRANSIT) * 60
-,,_,logger.info('walk transit skip ODs where no alternative base and build')
+,,_,logger.info('skip ODs where no alt base and build')
 ,,base_wtransit_am_travel_time,"base_wtransit_am_travel_time_raw * (np.logical_and(skims_base['mf.amwt1'] != TRANSIT_NA, skims_build['mf.amwt1'] != TRANSIT_NA))"
 ,,build_wtransit_am_travel_time,"build_wtransit_am_travel_time_raw * (np.logical_and(skims_base['mf.amwt1'] != TRANSIT_NA, skims_build['mf.amwt1'] != TRANSIT_NA))"
 ,,base_wtransit_md_travel_time,"base_wtransit_md_travel_time_raw * (np.logical_and(skims_base['mf.mdwt1'] != TRANSIT_NA, skims_build['mf.mdwt1'] != TRANSIT_NA))"
@@ -287,10 +287,15 @@ silos,description,target,expression
 ,,_,logger.info('schbus')
 ,,sch_schbus_travel_time_benefit, -0.5 * (mode_choice_pa_sc_base['mf.schbus'] + mode_choice_pa_sc_build['mf.schbus']) * ((skims_build['mf.md1stt'] - skims_base['mf.md1stt']) * (VOT_SCH/60.0))
 ,,_,logger.info('drive transit transit leg')
-,,base_dtransit_am_travel_time,skims_base['mf.amwt1'] + skims_base['mf.amwt2'] + skims_base['mf.amwalk'] +  skims_base['mf.amivt'] + MINUTES_PER_TRANSFER * skims_base['mf.amxfr'] + (transit_fare_base['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
-,,build_dtransit_am_travel_time,skims_build['mf.amwt1'] + skims_build['mf.amwt2'] + skims_build['mf.amwalk'] +  skims_build['mf.amivt'] + MINUTES_PER_TRANSFER * skims_build['mf.amxfr'] + (transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
-,,base_dtransit_md_travel_time,skims_base['mf.mdwt1'] + skims_base['mf.mdwt2'] + skims_base['mf.mdwalk'] +  skims_base['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_base['mf.mdxfr'] + (transit_fare_base['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
-,,build_dtransit_md_travel_time,skims_build['mf.mdwt1'] + skims_build['mf.mdwt2'] + skims_build['mf.mdwalk'] +  skims_build['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_build['mf.mdxfr'] + (transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
+,,base_dtransit_am_travel_time_raw,skims_base['mf.amwt1'] + skims_base['mf.amwt2'] + skims_base['mf.amwalk'] +  skims_base['mf.amivt'] + MINUTES_PER_TRANSFER * skims_base['mf.amxfr'] + (transit_fare_base['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
+,,build_dtransit_am_travel_time_raw,skims_build['mf.amwt1'] + skims_build['mf.amwt2'] + skims_build['mf.amwalk'] +  skims_build['mf.amivt'] + MINUTES_PER_TRANSFER * skims_build['mf.amxfr'] + (transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
+,,base_dtransit_md_travel_time_raw,skims_base['mf.mdwt1'] + skims_base['mf.mdwt2'] + skims_base['mf.mdwalk'] +  skims_base['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_base['mf.mdxfr'] + (transit_fare_base['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
+,,build_dtransit_md_travel_time_raw,skims_build['mf.mdwt1'] + skims_build['mf.mdwt2'] + skims_build['mf.mdwalk'] +  skims_build['mf.mdivt'] + MINUTES_PER_TRANSFER * skims_build['mf.mdxfr'] + (transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
+,,_,logger.info('skip ODs where no alt base and build')
+,,base_dtransit_am_travel_time,"base_dtransit_am_travel_time_raw * (np.logical_and(skims_base['mf.amwt1'] != TRANSIT_NA, skims_build['mf.amwt1'] != TRANSIT_NA))"
+,,build_dtransit_am_travel_time,"build_dtransit_am_travel_time_raw * (np.logical_and(skims_base['mf.amwt1'] != TRANSIT_NA, skims_build['mf.amwt1'] != TRANSIT_NA))"
+,,base_dtransit_md_travel_time,"base_dtransit_md_travel_time_raw * (np.logical_and(skims_base['mf.mdwt1'] != TRANSIT_NA, skims_build['mf.mdwt1'] != TRANSIT_NA))"
+,,build_dtransit_md_travel_time,"build_dtransit_md_travel_time_raw * (np.logical_and(skims_base['mf.mdwt1'] != TRANSIT_NA, skims_build['mf.mdwt1'] != TRANSIT_NA))"
 ,,hbw_lowinc_dtransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.l.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.l.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.l.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.l.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBW/60.0))
 ,,hbw_medinc_dtransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.m.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.m.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.m.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.m.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBW/60.0))
 ,,hbw_highinc_dtransit_am_travel_time_benefit, -0.5 * HBW_PK * (mode_choice_pa_hbw_base['mf.hwprtrtd.cv1.h.pk'] + mode_choice_pa_hbw_base['mf.hwprtrtd.cv23.h.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv1.h.pk'] + mode_choice_pa_hbw_build['mf.hwprtrtd.cv23.h.pk']) * ((build_dtransit_am_travel_time - base_dtransit_am_travel_time) * (VOT_HBW/60.0))
