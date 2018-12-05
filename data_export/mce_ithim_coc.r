@@ -629,6 +629,7 @@ for(coc in colnames(cocs)) {
 print("write output file")
 dalys = data.frame(t(data.frame(dalys)))
 colnames(dalys) = c("coc","dalys")
-dalys["dollars"] = as.numeric(as.character(dalys["dalys"])) * DOLLARS_PER_DALY
+dalys = data.frame(coc=as.character(dalys$coc), dalys=as.double(as.character(dalys$dalys)))
+dalys["dollars"] = dalys["dalys"] * DOLLARS_PER_DALY
 dalys_file = paste0(projectDirectory_run,  "/dalys_cocs.csv")
 write.csv(dalys, dalys_file, row.names=F)
