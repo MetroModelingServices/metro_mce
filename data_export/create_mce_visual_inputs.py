@@ -17,21 +17,41 @@ sys.path.append(os.path.join(os.getcwd(),"inputs"))
 
 def buildBarChartFile(fileName,regionfileloc,datasetname):
     directory = regionfileloc.replace('region.json', '')
-    BENEFIT_GROUPS = {'travel_options_benefit': 'Social Goods','physical_activity_benefit': 'Social Goods','safety_cost_benefit': 'Social Goods', 'hhs_for_the_coc': 'Social Goods',
-                        'veh_ownership_cost_benefit': 'Economic Vitality', 'travel_time_reliability_benefit': 'Economic Vitality', 'travel_time_benefit': 'Economic Vitality',
-                        'trk_travel_time_benefit': 'Economic Vitality', 'dtransit_travel_time_benefit': 'Economic Vitality', 'sch_travel_time_benefit': 'Economic Vitality',
-                        'hbc_travel_time_benefit': 'Economic Vitality','hbr_travel_time_benefit': 'Economic Vitality','hbs_travel_time_benefit': 'Economic Vitality',
-                        'hbo_travel_time_benefit': 'Economic Vitality','nhbnw_travel_time_benefit': 'Economic Vitality','nhbw_travel_time_benefit': 'Economic Vitality',
-                        'hbw_travel_time_benefit': 'Economic Vitality','veh_operating_cost_benefit': 'Economic Vitality',
-                        'emissions_cost_benefit': 'Environmental Stewardship', 'noise_pollution_cost_benefit': 'Environmental Stewardship', 'surface_water_pollution_cost_benefit': 'Environmental Stewardship'
-                      }
+    
+    BENEFIT_GROUPS = {'travel_options_benefit': 'Social Goods',
+    	                'physical_activity_benefit': 'Social Goods',
+    	                'safety_cost_benefit': 'Social Goods', 
+    	                'hhs_for_the_coc': 'Social Goods',
+                      'veh_ownership_cost_benefit': 'Economic Vitality', 
+                      'travel_time_reliability_benefit': 'Economic Vitality', 
+                      'travel_time_benefit': 'Economic Vitality',
+                      'trk_travel_time_benefit': 'Economic Vitality', 
+                      'dtransit_travel_time_benefit': 'Economic Vitality', 
+                      'sch_travel_time_benefit': 'Economic Vitality',
+                      'hbc_travel_time_benefit': 'Economic Vitality',
+                      'hbr_travel_time_benefit': 'Economic Vitality',
+                      'hbs_travel_time_benefit': 'Economic Vitality',
+                      'hbo_travel_time_benefit': 'Economic Vitality',
+                      'nhbnw_travel_time_benefit': 'Economic Vitality',
+                      'nhbw_travel_time_benefit': 'Economic Vitality',
+                      'hbw_travel_time_benefit': 'Economic Vitality',
+                      'veh_operating_cost_benefit': 'Economic Vitality',
+                      'emissions_cost_benefit': 'Environmental Stewardship', 
+                      'noise_pollution_cost_benefit': 'Environmental Stewardship',
+                      'surface_water_pollution_cost_benefit': 'Environmental Stewardship'
+    }
+                      
     RENAME_BENEFITS = [
-        'sch_travel_time_benefit',    'hbc_travel_time_benefit', 'hbr_travel_time_benefit',
+        'sch_travel_time_benefit',    
+        'hbc_travel_time_benefit', 
+        'hbr_travel_time_benefit',
         'hbs_travel_time_benefit',
-        'hbo_travel_time_benefit', 'nhbnw_travel_time_benefit',
+        'hbo_travel_time_benefit', 
+        'nhbnw_travel_time_benefit',
         'nhbw_travel_time_benefit',
         'hbw_travel_time_benefit'
     ]
+    
     with open(fileName,'r') as sourcefile:
         benefits = pd.read_csv(sourcefile)
         benefits.pop('Processor')
@@ -50,8 +70,16 @@ def buildBarChartFile(fileName,regionfileloc,datasetname):
 
 def animatedMapData(fileName,regionfileloc,datasetname):
     directory = regionfileloc.replace('region.json', '')
-    BENEFIT_COLUMNS = {'travel_options_benefit': 'ALL PURPOSES','access_benefit_hbc': 'HBC','access_benefit_hbo': 'HBO','access_benefit_hbr': 'HBR','access_benefit_hbs': 'HBS',
-                       'access_benefit_hbw': 'HBW','access_benefit_nhbnw': 'NHBNW', 'access_benefit_nhbw': 'NHBW', 'access_benefit_sch': 'SCH'
+    
+    BENEFIT_COLUMNS = {'travel_options_benefit': 'ALL PURPOSES',
+    	                 'access_benefit_hbc': 'HBC',
+    	                 'access_benefit_hbo': 'HBO',
+    	                 'access_benefit_hbr': 'HBR',
+    	                 'access_benefit_hbs': 'HBS',
+                       'access_benefit_hbw': 'HBW',
+                       'access_benefit_nhbnw': 'NHBNW',
+                       'access_benefit_nhbw': 'NHBW',
+                       'access_benefit_sch': 'SCH'
     }
 
     with open(fileName, 'r') as sourcefile:
@@ -71,16 +99,23 @@ def animatedMapData(fileName,regionfileloc,datasetname):
 
 def barchartMap(fileName, countyFile,regionfileloc,datasetname):
     directory = regionfileloc.replace('region.json', '')
-    BENEFIT_COLUMNS = {'access_benefit_hbc':'HBC','access_benefit_hbo':'HBO','access_benefit_hbr':'HBR','access_benefit_hbs':'HBS',
-                       'access_benefit_hbw':'HBW','access_benefit_nhbnw':'NHBNW','access_benefit_nhbw':'NHBW','access_benefit_sch':'SCH'
+    
+    BENEFIT_COLUMNS = {'access_benefit_hbc':'HBC',
+    	                 'access_benefit_hbo':'HBO',
+    	                 'access_benefit_hbr':'HBR',
+    	                 'access_benefit_hbs':'HBS',
+                       'access_benefit_hbw':'HBW',
+                       'access_benefit_nhbnw':'NHBNW',
+                       'access_benefit_nhbw':'NHBW',
+                       'access_benefit_sch':'SCH'
     }
+    
     countys = []
     with open (countyFile,'r') as cntyFile:
         getcntys = pd.read_csv(cntyFile, usecols=['County'])
         countys = getcntys.dropna()
 
     totaldf = pd.DataFrame(['Total'],[countys.shape[0]],columns=['County'])
-
 
     countys = countys.append(totaldf)
 
