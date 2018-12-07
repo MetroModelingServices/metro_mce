@@ -51,6 +51,7 @@ The benefits calculator outputs the following files to the ```output``` folder:
 
 # ITHIM R
 To run the ITHIM R active transportation benefit calculator:
+  - Run the `mce_ithim.R` or `mce_ithim_coc.R` (for results by COC) script
   - Revise the following settings at the top of the script if needed:
     - projectDirectory_base = "data/base-data"
     - projectDirectory_build = "data/build-data"
