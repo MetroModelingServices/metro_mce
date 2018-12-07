@@ -84,18 +84,7 @@ The steps to run the complete toolkit from start to finish are:
   - Travel Model
     1. Code the base and build model scenarios
     2. Run the demand and supply models with the MCE export option
-  - ITHIMProcessor,Target,Description,coc_ext_minority,coc_ext_lowengpro,coc_ext_age18or65,coc_lowinc_ext,everybody
-aggregate_demographics,hhs_for_the_coc,total hhs for each coc,222882.7195,42092.97561,637087.2221,229606.8432,1187017.822
-aggregate_zone_benefits,travel_options_benefit,travel options benefit,3984553.192,690223.3457,14487780.09,4101208.492,26464943.03
-aggregate_zone_benefits,veh_ownership_cost_benefit,vehicle ownership cost benefit,42423.32203,7297.519501,65077.62659,76432.79347,209216.0647
-aggregate_od,travel_time_reliability_benefit,travel time reliability benefit,431999.0763,72609.44038,1416161.879,470330.629,2779973.528
-aggregate_od,travel_time_benefit,travel time benefit,3561067.388,632461.4153,12362331.42,3834376.866,23301994.39
-link_daily,veh_operating_cost_benefit,vehicle operating cost benefit,,,,,-15499198.37
-link_daily,emissions_cost_benefit,emissions cost benefit,,,,,-4708070.842
-link_daily,noise_pollution_cost_benefit,noise pollution cost benefit,,,,,-945067.5563
-link_daily,surface_water_pollution_cost_benefit,surface water pollution cost benefit,,,,,-1103101.181
-link_daily,safety_cost_benefit,roadway safety cost benefit,,,,,-1484723.26
-
+  - ITHIM
     1. Configure and run `mce_ithim.R` or `mce_ithim_coc.R` (for results by COC)
   - Benefits Calculator
     1. Setup and run the benefits calculator.  Make sure to review and update the settings as needed.
