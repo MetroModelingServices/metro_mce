@@ -61,7 +61,7 @@ To run the ITHIM R active transportation benefit calculator:
     - BIKE_SPEED = 10
     - AVG_HH_SIZE = 2.4
     - DOLLARS_PER_DALY = 80000
-  - Run the script from the `bc_setup` folder to produce the `dalys.csv` output file with three columns - coc, dalys, and dollars
+  - Run the script from the `bc_setup` folder to produce the `dalys.csv` or `dalys_cocs.csv` output file with DALYs and dollars
   
 # Project Costing Workbook
 The project cost workbook calculates total project costs by type and Net Present Value.  Instructions are on the first worksheet.
