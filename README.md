@@ -62,7 +62,6 @@ To run the ITHIM R active transportation benefit calculator:
     - AVG_HH_SIZE = 2.4
     - DOLLARS_PER_DALY = 80000
   - Run the script from the `bc_setup` folder to produce the `dalys.csv` output file with three columns - coc, dalys, and dollars
-  - Copy the `dalys.csv` to the zone_benefits_file `final_aggregate_zone_summary.csv` for the visualizer if desired
   
 # Project Costing Workbook
 The project cost workbook calculates total project costs by type and Net Present Value.  Instructions are on the first worksheet.
@@ -75,6 +74,7 @@ outputs. Instructions for running the script are in the script header. The input
   - zone_benefits_file - final_aggregate_zone_summary.csv
   - counties_and_cocs_file - cocs.csv
   - od_districts_benefits_file - final_aggregate_od_district_summary.csv
+  - ithim_file - dalys.csv
   - ABMViz_Region.json_File_Local_Location - region.json
   - New_Scenario_Name - I205test
 
@@ -85,7 +85,6 @@ The steps to run the complete toolkit from start to finish are:
     2. Run the demand and supply models with the MCE export option
   - ITHIM
     1. Configure and run `mce_ithim.R` or `mce_ithim_coc.R` (for results by COC)
-    2. Copy the `dalys.csv` to the zone_benefits_file `final_aggregate_zone_summary.csv` for the visualizer if desired
   - Benefits Calculator
     1. Setup and run the benefits calculator.  Make sure to review and update the settings as needed.
     2. The results are in the `final_aggregate_results.csv` output file.
