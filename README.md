@@ -71,7 +71,7 @@ The project cost workbook calculates total project costs by type and Net Present
 The visualization dashboard is at https://github.com/MetroModelingServices/MCEVIZ.  The `create_mce_visual_inputs.py` script 
 in the data_export folder creates the MCE visualization dashboard input tables based on the benefits calculator 
 outputs. Instructions for running the script are in the script header. Before running the script, some of the inputs files should be modified by hand.  The input files are:
-  - benefits_file - final_aggregate_results.csv - make sure to remove unwanted COCs and benefits (the target field), and to rename COCs and benefits for the visualizer.  A seperate benefits file for benefits per HH can be calculated by dividing the benefits by the HHs for the COC
+  - benefits_file - final_aggregate_results.csv - make sure to remove unwanted COCs and benefits (the target field), and to rename COCs and benefits for the visualizer.  The total households target needs to be named "households" for calculating benefits per household. 
   - zone_benefits_file - final_aggregate_zone_summary.csv
   - counties_and_cocs_file - cocs.csv
   - od_districts_benefits_file - final_aggregate_od_district_summary.csv
