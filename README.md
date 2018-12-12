@@ -88,7 +88,6 @@ scrit since it compares scenarios. The input files are:
   - cost_b - 160000000
   - years_of_benefit - 10
   - New_Scenario_Name - Scenarios
- DivisionBRT\BarChartData.csv 260000000 160000000 10 Scenarios
 
 # Running the Complete MCE Toolkit
 The steps to run the complete toolkit from start to finish are:
