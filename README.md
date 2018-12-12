@@ -70,7 +70,7 @@ The project cost workbook calculates total project costs by type and Net Present
 # Visualization Dashboard 
 The visualization dashboard is at https://github.com/MetroModelingServices/MCEVIZ.  The `create_mce_visual_inputs.py` script 
 in the data_export folder creates the MCE visualization dashboard input tables based on the benefits calculator 
-outputs. Instructions for running the script are in the script header. Before running the script, some of the inputs files should be modified by hand.  The input files are:
+outputs. Instructions for running the script are in the script header. The input files are:
   - benefits_file - final_aggregate_results.csv
   - zone_benefits_file - final_aggregate_zone_summary.csv
   - counties_and_cocs_file - cocs.csv
@@ -78,6 +78,17 @@ outputs. Instructions for running the script are in the script header. Before ru
   - ithim_file - dalys.csv
   - ABMViz_Region.json_File_Local_Location - region.json
   - New_Scenario_Name - I205test
+
+The `create_mce_visual_scen_comp_inputs.py` script in the data_export folder creates the MCE visualization dashboard scenario comparison input 
+tables. Instructions for running the script are in the script header.  This script operates on outputs from the `create_mce_visual_inputs.py` 
+scrit since it compares scenarios. The input files are:
+  - benefits_a - I205\BarChartData.csv
+  - benefits_b - DivisionBRT\BarChartData.csv
+  - cost_a - 260000000
+  - cost_b - 160000000
+  - years_of_benefit - 10
+  - New_Scenario_Name - Scenarios
+ DivisionBRT\BarChartData.csv 260000000 160000000 10 Scenarios
 
 # Running the Complete MCE Toolkit
 The steps to run the complete toolkit from start to finish are:
@@ -95,6 +106,7 @@ The steps to run the complete toolkit from start to finish are:
     2. The results are in the Present Value Sum table on the PV_Summary tab
   - Visualization Dashboard
     1. Run the `create_mce_visual_inputs.py` script to convert the data to the format expected by the visualizer
-    2. Add the visualizer inputs to your local MCEVIZ git repo and push the changes up to GitHub
-    3. Go to https://github.com/metromodelingservices/mceviz and do a pull request from the master branch into the gh-pages branch to publish the new data
-    4. The visualizer is running at http://metromodelingservices.github.io/MCEVIZ
+    2. Run the `create_mce_visual_scen_comp_inputs.py` script to create the scenario comparison data expected by the visualizer
+    3. Add the visualizer inputs to your local MCEVIZ git repo and push the changes up to GitHub
+    4. Go to https://github.com/metromodelingservices/mceviz and do a pull request from the master branch into the gh-pages branch to publish the new data
+    5. The visualizer is running at http://metromodelingservices.github.io/MCEVIZ
