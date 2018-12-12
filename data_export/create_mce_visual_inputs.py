@@ -1,7 +1,7 @@
 # Create MCE Visualization Dashboard Input Tables
 # Mike Dailey, Ben Stabler, RSG, 02/02/18
 # python create_mce_visual_inputs.py benefits_file zone_benefits_file counties_and_cocs_file od_districts_benefits_file ithim_file zoneFile ABMViz_Region.json_File_Local_Location New_Scenario_Name
-# python create_mce_visual_inputs.py final_aggregate_results_viz.csv final_aggregate_zone_summary.csv cocs.csv final_aggregate_od_district_summary.csv dalys.csv final_zone_demographics.csv C:\SVN\ABMVIZ\data\portland\region.json I205test
+# python create_mce_visual_inputs.py final_aggregate_results.csv final_aggregate_zone_summary.csv cocs.csv final_aggregate_od_district_summary.csv dalys.csv final_zone_demographics.csv C:\projects\development\ActivityViz\data\portland\region.json I205test
 # Outputs 3DAnimatedMapData.csv, BarChartAndMapData.csv, BarChartData.csv, ChordData.csv
 
 import os, sys
@@ -18,77 +18,81 @@ sys.path.append(os.path.join(os.getcwd(),"inputs"))
 def buildBarChartFile(fileName,ithim_file,regionfileloc,datasetname):
     directory = regionfileloc.replace('region.json', '')
     
-    ithim_benefit = pd.read_csv(ithim_file)['dollars'][0]
-    ithim_rec = pd.DataFrame({"BENEFIT":"active transportation", "BENEFIT GROUP":"everybody", "VALUE":ithim_benefit, "CHART":"Benefits"}, index=[0])
-    ithim_rec = ithim_rec[["BENEFIT","BENEFIT GROUP","VALUE","CHART"]]
+    #benefits
+    benefits = pd.read_csv(fileName)
+    benefitsToKeep = ["hhs_for_the_coc","travel_options_benefit","veh_ownership_cost_benefit","travel_time_reliability_benefit","travel_time_benefit","veh_operating_cost_benefit","emissions_cost_benefit","noise_pollution_cost_benefit","surface_water_pollution_cost_benefit","safety_cost_benefit"]
+    benefits = benefits.drop(['Processor','Description','coc_lowinc','coc_medinc','coc_highinc','coc_veryhighinc'], axis=1)
+    benefits.columns = ["Target","minority","low english proficiency","children and seniors","low income","everybody"]
+    benefits = benefits[benefits["Target"].isin(benefitsToKeep)]
+    benefits["Target"] = benefits["Target"].str.replace("_benefit", "")
+    df = pd.melt(benefits, id_vars=["Target"],value_name="VALUE", var_name="BENEFIT GROUP")
+    df.columns.values[0] = 'BENEFIT'
+    df["CHART"] = "Benefits"
+    df["VALUE"] = df["VALUE"].fillna(0)
     
-    with open(fileName,'r') as sourcefile:
-        benefits = pd.read_csv(sourcefile)
-        benefits.pop('Processor')
-        benefits.pop('Description')
-        df = pd.melt(benefits, id_vars=["Target"],value_name="VALUE", var_name="BENEFIT GROUP")
-        df.columns.values[0] = 'BENEFIT'
-        df["CHART"] = "Benefits"
-        df["VALUE"] = df["VALUE"].fillna(0)
-        df = df.append(ithim_rec)
-        df.to_csv(directory+datasetname+"\BarChartData.csv", encoding='utf-8', index=False)
+    #ithim benefits
+    ithim_benefit = pd.read_csv(ithim_file)['dollars'][0]
+    ithim_rec = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"everybody", "VALUE":ithim_benefit, "CHART":"Benefits"}, index=[0])
+    ithim_rec = ithim_rec[["BENEFIT","BENEFIT GROUP","VALUE","CHART"]]
+    df = df.append(ithim_rec)
+    
+    #total households
+    hh_count_recs = df[df["BENEFIT"] == "hhs_for_the_coc"]
+    hh_count_recs = hh_count_recs.set_index("BENEFIT GROUP", drop=False)
+    df = df[df["BENEFIT"] != "hhs_for_the_coc"]
 
-def animatedMapData(fileName,regionfileloc,datasetname):
+    #benefits per hh
+    df_per_hh = df.copy()
+    df_per_hh["CHART"] = "BenefitsPerHousehold"
+    df_per_hh = df_per_hh.set_index("BENEFIT GROUP", drop=False)
+    df_per_hh = df_per_hh.join(hh_count_recs["VALUE"], rsuffix="_HH")
+    df_per_hh["VALUE"] = df_per_hh["VALUE"] / df_per_hh["VALUE_HH"]
+    df_per_hh = df_per_hh[["BENEFIT","BENEFIT GROUP","VALUE","CHART"]]
+    
+    #write results
+    df = df.append(df_per_hh)
+    df.to_csv(directory+datasetname+"\BarChartData.csv", encoding='utf-8', index=False)
+
+def animatedMapData(fileName,zoneFile,regionfileloc,datasetname):
     directory = regionfileloc.replace('region.json', '')
+    animated, outputFields = codeDataFields(zoneFile, fileName)
+    
+    tempdf = pd.DataFrame(columns=['ZONE','PER','TRAVEL OPTIONS BENEFIT'])
+    animated = animated.fillna(0)
+    animated = animated.loc[~(animated == 0).all(axis=1)]
 
-    with open(fileName, 'r') as sourcefile:
-        animated = pd.read_csv(sourcefile)
-        animated = animated[animated['ZONE'] < 2148] #internal zones only
-        animated['ALLPURPOSES'] = animated['travel_options_benefit'] 
-        animated['MANDATORY'] = animated['access_benefit_hbw'] + animated['access_benefit_sch'] + animated['access_benefit_hbc']
-        animated['OTHER'] = animated['access_benefit_hbs'] + animated['access_benefit_hbr'] + animated['access_benefit_hbo'] + animated['access_benefit_nhbw'] + animated['access_benefit_nhbnw']
-        tempdf = pd.DataFrame(columns=['ZONE','PER','TRAVEL OPTIONS BENEFIT'])
-        animated = animated.fillna(0)
-        animated = animated.loc[~(animated == 0).all(axis=1)]
-
-        masterFrame =pd.DataFrame(columns=['ZONE','PER','TRAVEL OPTIONS BENEFIT'])
-        for key in ['ALLPURPOSES','MANDATORY','OTHER']:
-            tempdf['ZONE'] = range(1,len(animated))
-            tempdf['PER'] = key
-            tempdf['TRAVEL OPTIONS BENEFIT'] = animated.loc[:,[key]]
-            masterFrame = masterFrame.append(tempdf,ignore_index=True)
-        masterFrame = masterFrame.fillna(0)
-        masterFrame.to_csv(directory+datasetname+"\\3DAnimatedMapData.csv", encoding='utf-8', index=False)
+    masterFrame =pd.DataFrame(columns=['ZONE','PER','TRAVEL OPTIONS BENEFIT'])
+    for key in outputFields:
+        tempdf['ZONE'] = range(1,len(animated))
+        tempdf['PER'] = key
+        tempdf['TRAVEL OPTIONS BENEFIT'] = animated.loc[:,[key]]
+        masterFrame = masterFrame.append(tempdf,ignore_index=True)
+    masterFrame = masterFrame.fillna(0)
+    masterFrame.to_csv(directory+datasetname+"\\3DAnimatedMapData.csv", encoding='utf-8', index=False)
 
 def barchartMap(fileName,countyFile,zoneFile,regionfileloc,datasetname):
     directory = regionfileloc.replace('region.json', '')
     countys = []
-    with open (countyFile,'r') as cntyFile:
-        getcntys = pd.read_csv(cntyFile, usecols=['County'])
-        countys = getcntys.dropna()
+    getcntys = pd.read_csv(countyFile, usecols=['County'])
+    countys = getcntys.dropna()
     totaldf = pd.DataFrame(['Total'],[countys.shape[0]],columns=['County'])
     countys = countys.append(totaldf)
-
-    zone_demo = pd.read_csv(zoneFile)
-    zone_demo["households"]  ## NEED TO CREATE FOR EACH COC
     
-    with open(fileName, 'r') as sourcefile:
-        animated = pd.read_csv(sourcefile)
-        animated = animated[animated['ZONE'] < 2148] #internal zones only
-        animated['ALLPURPOSES'] = animated['travel_options_benefit'] 
-        animated['MANDATORY'] = animated['access_benefit_hbw'] + animated['access_benefit_sch'] + animated['access_benefit_hbc']
-        animated['OTHER'] = animated['access_benefit_hbs'] + animated['access_benefit_hbr'] + animated['access_benefit_hbo'] + animated['access_benefit_nhbw'] + animated['access_benefit_nhbnw']
-        animated['HOUSEHOLDS'] = zone_demo["households"]
+    animated, outputFields = codeDataFields(zoneFile, fileName)
 
-        tempdf = pd.DataFrame(columns=['ZONE','QUANTITY','TRAVEL OPTIONS BENEFIT','COUNTY'])
-        masterFrame =pd.DataFrame(columns=['ZONE','COUNTY','TRAVEL OPTIONS BENEFIT','QUANTITY'])
-        for key in ['ALLPURPOSES','MANDATORY','OTHER','HOUSEHOLDS']:
-            tempdf['ZONE'] = range(1,len(animated))
-            tempdf['TRAVEL OPTIONS BENEFIT'] = key
-            tempdf['QUANTITY'] = animated.loc[:,[key]]
-            tempdf['COUNTY'] = countys
-            tempdf.loc[tempdf.index[tempdf['COUNTY']=='Total'].tolist(),'QUANTITY'] = tempdf['QUANTITY'].sum()
-            masterFrame = masterFrame.append(tempdf,ignore_index=True)
-        condition = np.isnan(masterFrame['QUANTITY'])
-        masterFrame.loc[masterFrame['QUANTITY'].isnull(),'QUANTITY'] = 0.0
-
-        masterFrame = masterFrame.dropna()
-        masterFrame.to_csv(directory+datasetname+"\BarChartAndMapData.csv", encoding='utf-8', index=False,columns=['ZONE','COUNTY','TRAVEL OPTIONS BENEFIT','QUANTITY'])
+    tempdf = pd.DataFrame(columns=['ZONE','QUANTITY','TRAVEL OPTIONS BENEFIT','COUNTY'])
+    masterFrame =pd.DataFrame(columns=['ZONE','COUNTY','TRAVEL OPTIONS BENEFIT','QUANTITY'])
+    for key in outputFields:
+        tempdf['ZONE'] = range(1,len(animated))
+        tempdf['TRAVEL OPTIONS BENEFIT'] = key
+        tempdf['QUANTITY'] = animated.loc[:,[key]]
+        tempdf['COUNTY'] = countys
+        tempdf.loc[tempdf.index[tempdf['COUNTY']=='Total'].tolist(),'QUANTITY'] = tempdf['QUANTITY'].sum()
+        masterFrame = masterFrame.append(tempdf,ignore_index=True)
+    condition = np.isnan(masterFrame['QUANTITY'])
+    masterFrame.loc[masterFrame['QUANTITY'].isnull(),'QUANTITY'] = 0.0
+    masterFrame = masterFrame.dropna()
+    masterFrame.to_csv(directory+datasetname+"\BarChartAndMapData.csv", encoding='utf-8', index=False,columns=['ZONE','COUNTY','TRAVEL OPTIONS BENEFIT','QUANTITY'])
 
 def chordData(od_districts_benefits_file,regionfileloc,datasetname):
     agg_od = pd.read_csv(od_districts_benefits_file)
@@ -99,7 +103,7 @@ def chordData(od_districts_benefits_file,regionfileloc,datasetname):
     
 def runConvertData(benefitsFile,zoneBenefitsFile,county_file,od_districts_benefits_file,ithim_file,zoneFile,regionfileloc,datasetname):
     buildBarChartFile(benefits_file,ithim_file,regionfileloc,datasetname)
-    animatedMapData(zoneBenefitsFile,regionfileloc,datasetname)
+    animatedMapData(zoneBenefitsFile,zoneFile,regionfileloc,datasetname)
     barchartMap(zoneBenefitsFile,county_file,zoneFile,regionfileloc,datasetname)
     chordData(od_districts_benefits_file,regionfileloc,datasetname)
 
@@ -116,6 +120,42 @@ def editRegionFile(regionfileloc, datasetname,county_file):
     if not os.path.exists(directory+datasetname):
         os.makedirs(directory+datasetname)
     copyfile(county_file,directory+datasetname+"\\"+county_file)
+
+def codeDataFields(zoneFile, fileName):
+    
+    zone_demo = pd.read_csv(zoneFile) #total households and percent of hhs by coc
+    zone_demo = zone_demo[["households","coc_ext_minority","coc_ext_lowengpro","coc_ext_age18or65","coc_lowinc_ext"]]
+    
+    animated = pd.read_csv(fileName)
+    animated = animated[animated['ZONE'] < 2148] #internal zones only
+    animated['TRAVEL-all'] = animated['travel_options_benefit'] 
+    animated['TRAVEL-mandatory'] = animated['access_benefit_hbw'] + animated['access_benefit_sch'] + animated['access_benefit_hbc']
+    animated['TRAVEL-other'] = animated['access_benefit_hbs'] + animated['access_benefit_hbr'] + animated['access_benefit_hbo'] + animated['access_benefit_nhbw'] + animated['access_benefit_nhbnw']
+
+    animated['TRAVEL-all-minority'] = animated["TRAVEL-all"] * zone_demo["coc_ext_minority"]
+    animated['TRAVEL-all-low eng prof'] = animated["TRAVEL-all"] * zone_demo["coc_ext_lowengpro"]
+    animated['TRAVEL-all-child or senior'] = animated["TRAVEL-all"] * zone_demo["coc_ext_age18or65"]
+    animated['TRAVEL-all-low income'] = animated["TRAVEL-all"] * zone_demo["coc_lowinc_ext"]
+
+    animated['TRAVEL-mandatory-minority'] = animated["TRAVEL-mandatory"] * zone_demo["coc_ext_minority"]
+    animated['TRAVEL-mandatory-low eng prof'] = animated["TRAVEL-mandatory"] * zone_demo["coc_ext_lowengpro"]
+    animated['TRAVEL-mandatory-child or senior'] = animated["TRAVEL-mandatory"] * zone_demo["coc_ext_age18or65"]
+    animated['TRAVEL-mandatory-low income'] = animated["TRAVEL-mandatory"] * zone_demo["coc_lowinc_ext"]
+    
+    animated['TRAVEL-other-minority'] = animated["TRAVEL-other"] * zone_demo["coc_ext_minority"]
+    animated['TRAVEL-other-low eng prof'] = animated["TRAVEL-other"] * zone_demo["coc_ext_lowengpro"]
+    animated['TRAVEL-other-child or senior'] = animated["TRAVEL-other"] * zone_demo["coc_ext_age18or65"]
+    animated['TRAVEL-other-low income'] = animated["TRAVEL-other"] * zone_demo["coc_lowinc_ext"]
+    
+    animated['HHs-all'] = zone_demo["households"]
+    animated['HHs-minority'] = zone_demo["households"] * zone_demo["coc_ext_minority"]
+    animated['HHs-low eng prof'] = zone_demo["households"] * zone_demo["coc_ext_lowengpro"]
+    animated['HHs-child or senior'] = zone_demo["households"] * zone_demo["coc_ext_age18or65"]
+    animated['HHs-low income'] = zone_demo["households"] * zone_demo["coc_lowinc_ext"]
+
+    outputFields = animated.columns.values[pd.Series(animated.columns.values).str.contains('TRAVEL-') + pd.Series(animated.columns.values).str.contains('HHs-')]
+    
+    return animated, outputFields
 
 
 if __name__ == "__main__":
