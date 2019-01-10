@@ -33,6 +33,11 @@ def buildBarChartFile(fileName,ithim_file,regionfileloc,datasetname):
     #ithim benefits
     ithim_benefit = pd.read_csv(ithim_file)['dollars'][0]
     ithim_rec = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"everybody", "VALUE":ithim_benefit, "CHART":"Benefits"}, index=[0])
+    ithim_rec_m = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"minority", "VALUE":0, "CHART":"Benefits"}, index=[0])
+    ithim_rec_l = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"low english proficiency", "VALUE":0, "CHART":"Benefits"}, index=[0])
+    ithim_rec_c = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"children and seniors", "VALUE":0, "CHART":"Benefits"}, index=[0])
+    ithim_rec_i = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"low income", "VALUE":0, "CHART":"Benefits"}, index=[0])
+    ithim_rec = ithim_rec.append(ithim_rec_m).append(ithim_rec_l).append(ithim_rec_c).append(ithim_rec_i)
     ithim_rec = ithim_rec[["BENEFIT","BENEFIT GROUP","VALUE","CHART"]]
     df = df.append(ithim_rec)
     
@@ -43,7 +48,7 @@ def buildBarChartFile(fileName,ithim_file,regionfileloc,datasetname):
 
     #benefits per hh
     df_per_hh = df.copy()
-    df_per_hh["CHART"] = "BenefitsPerHousehold"
+    df_per_hh["CHART"] = "Benefits Per Household"
     df_per_hh = df_per_hh.set_index("BENEFIT GROUP", drop=False)
     df_per_hh = df_per_hh.join(hh_count_recs["VALUE"], rsuffix="_HH")
     df_per_hh["VALUE"] = df_per_hh["VALUE"] / df_per_hh["VALUE_HH"]
@@ -51,6 +56,7 @@ def buildBarChartFile(fileName,ithim_file,regionfileloc,datasetname):
     
     #write results
     df = df.append(df_per_hh)
+    df = df.sort_values(["CHART","BENEFIT GROUP","BENEFIT"])
     df.to_csv(directory+datasetname+"\BarChartData.csv", encoding='utf-8', index=False)
 
 def animatedMapData(fileName,zoneFile,regionfileloc,datasetname):
@@ -107,20 +113,6 @@ def runConvertData(benefitsFile,zoneBenefitsFile,county_file,od_districts_benefi
     barchartMap(zoneBenefitsFile,county_file,zoneFile,regionfileloc,datasetname)
     chordData(od_districts_benefits_file,regionfileloc,datasetname)
 
-def editRegionFile(regionfileloc, datasetname,county_file):
-    jsonfile = open(regionfileloc,"r")
-    data = json.load(jsonfile,object_pairs_hook=OrderedDict)
-    tmp = data["scenarios"]
-    tmp[datasetname] = "- " + datasetname
-    jsonfile = open(regionfileloc,"w+")
-    jsonfile.write(json.dumps(data, indent=4))
-    jsonfile.close()
-    directory = regionfileloc.replace('region.json', '')
-
-    if not os.path.exists(directory+datasetname):
-        os.makedirs(directory+datasetname)
-    copyfile(county_file,directory+datasetname+"\\"+county_file)
-
 def codeDataFields(zoneFile, fileName):
     
     zone_demo = pd.read_csv(zoneFile) #total households and percent of hhs by coc
@@ -128,32 +120,35 @@ def codeDataFields(zoneFile, fileName):
     
     animated = pd.read_csv(fileName)
     animated = animated[animated['ZONE'] < 2148] #internal zones only
-    animated['TRAVEL-all'] = animated['travel_options_benefit'] 
-    animated['TRAVEL-mandatory'] = animated['access_benefit_hbw'] + animated['access_benefit_sch'] + animated['access_benefit_hbc']
-    animated['TRAVEL-other'] = animated['access_benefit_hbs'] + animated['access_benefit_hbr'] + animated['access_benefit_hbo'] + animated['access_benefit_nhbw'] + animated['access_benefit_nhbnw']
-
-    animated['TRAVEL-all-minority'] = animated["TRAVEL-all"] * zone_demo["coc_ext_minority"]
-    animated['TRAVEL-all-low eng prof'] = animated["TRAVEL-all"] * zone_demo["coc_ext_lowengpro"]
-    animated['TRAVEL-all-child or senior'] = animated["TRAVEL-all"] * zone_demo["coc_ext_age18or65"]
-    animated['TRAVEL-all-low income'] = animated["TRAVEL-all"] * zone_demo["coc_lowinc_ext"]
-
-    animated['TRAVEL-mandatory-minority'] = animated["TRAVEL-mandatory"] * zone_demo["coc_ext_minority"]
-    animated['TRAVEL-mandatory-low eng prof'] = animated["TRAVEL-mandatory"] * zone_demo["coc_ext_lowengpro"]
-    animated['TRAVEL-mandatory-child or senior'] = animated["TRAVEL-mandatory"] * zone_demo["coc_ext_age18or65"]
-    animated['TRAVEL-mandatory-low income'] = animated["TRAVEL-mandatory"] * zone_demo["coc_lowinc_ext"]
     
-    animated['TRAVEL-other-minority'] = animated["TRAVEL-other"] * zone_demo["coc_ext_minority"]
-    animated['TRAVEL-other-low eng prof'] = animated["TRAVEL-other"] * zone_demo["coc_ext_lowengpro"]
-    animated['TRAVEL-other-child or senior'] = animated["TRAVEL-other"] * zone_demo["coc_ext_age18or65"]
-    animated['TRAVEL-other-low income'] = animated["TRAVEL-other"] * zone_demo["coc_lowinc_ext"]
-    
-    animated['HHs-all'] = zone_demo["households"]
-    animated['HHs-minority'] = zone_demo["households"] * zone_demo["coc_ext_minority"]
-    animated['HHs-low eng prof'] = zone_demo["households"] * zone_demo["coc_ext_lowengpro"]
-    animated['HHs-child or senior'] = zone_demo["households"] * zone_demo["coc_ext_age18or65"]
-    animated['HHs-low income'] = zone_demo["households"] * zone_demo["coc_lowinc_ext"]
+    #benefits 
+    animated['all'] = animated['travel_options_benefit'] 
+    animated['mandatory'] = animated['access_benefit_hbw'] + animated['access_benefit_sch'] + animated['access_benefit_hbc']
+    animated['other'] = animated['access_benefit_hbs'] + animated['access_benefit_hbr'] + animated['access_benefit_hbo'] + animated['access_benefit_nhbw'] + animated['access_benefit_nhbnw']
 
-    outputFields = animated.columns.values[pd.Series(animated.columns.values).str.contains('TRAVEL-') + pd.Series(animated.columns.values).str.contains('HHs-')]
+    animated['all-minority'] = animated["all"] * zone_demo["coc_ext_minority"]
+    animated['all-low eng prof'] = animated["all"] * zone_demo["coc_ext_lowengpro"]
+    animated['all-child or senior'] = animated["all"] * zone_demo["coc_ext_age18or65"]
+    animated['all-low income'] = animated["all"] * zone_demo["coc_lowinc_ext"]
+
+    animated['mandatory-minority'] = animated["mandatory"] * zone_demo["coc_ext_minority"]
+    animated['mandatory-low eng prof'] = animated["mandatory"] * zone_demo["coc_ext_lowengpro"]
+    animated['mandatory-child or senior'] = animated["mandatory"] * zone_demo["coc_ext_age18or65"]
+    animated['mandatory-low income'] = animated["mandatory"] * zone_demo["coc_lowinc_ext"]
+    
+    animated['other-minority'] = animated["other"] * zone_demo["coc_ext_minority"]
+    animated['other-low eng prof'] = animated["other"] * zone_demo["coc_ext_lowengpro"]
+    animated['other-child or senior'] = animated["other"] * zone_demo["coc_ext_age18or65"]
+    animated['other-low income'] = animated["other"] * zone_demo["coc_lowinc_ext"]
+    
+    #total hhs
+    #animated['HHs-all'] = zone_demo["households"]
+    #animated['HHs-minority'] = zone_demo["households"] * zone_demo["coc_ext_minority"]
+    #animated['HHs-low eng prof'] = zone_demo["households"] * zone_demo["coc_ext_lowengpro"]
+    #animated['HHs-child or senior'] = zone_demo["households"] * zone_demo["coc_ext_age18or65"]
+    #animated['HHs-low income'] = zone_demo["households"] * zone_demo["coc_lowinc_ext"]
+
+    outputFields = animated.columns.values[pd.Series(animated.columns.values).str.contains('all-') + pd.Series(animated.columns.values).str.contains('mandatory-') + pd.Series(animated.columns.values).str.contains('other-')]
     
     return animated, outputFields
 
@@ -168,5 +163,4 @@ if __name__ == "__main__":
     zoneFile = sys.argv[6]
     regionfileloc = sys.argv[7]
     datasetname = sys.argv[8]
-    editRegionFile(regionfileloc,datasetname,county_file)
     runConvertData(benefits_file,zone_benefits_file,county_file,od_districts_benefits_file,ithim_file,zoneFile,regionfileloc,datasetname)

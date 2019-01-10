@@ -34,17 +34,51 @@ if __name__ == "__main__":
     benefits = benefits.drop(["BENEFIT GROUP"], axis=1)
     
     benefits_out = benefits[benefits["CHART"] == "Benefits-everybody"]
-    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "BenefitsPerHousehold-everybody"])
+    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "Benefits Per Household-everybody"])
     
     benefits_out = benefits_out.append(benefits[benefits["CHART"] == "Benefits-minority"])
     benefits_out = benefits_out.append(benefits[benefits["CHART"] == "Benefits-low english proficiency"])
     benefits_out = benefits_out.append(benefits[benefits["CHART"] == "Benefits-children and seniors"])
     benefits_out = benefits_out.append(benefits[benefits["CHART"] == "Benefits-low income"])
     
-    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "BenefitsPerHousehold-minority"])
-    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "BenefitsPerHousehold-low english proficiency"])
-    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "BenefitsPerHousehold-children and seniors"])
-    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "BenefitsPerHousehold-low income"])
+    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "Benefits Per Household-minority"])
+    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "Benefits Per Household-low english proficiency"])
+    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "Benefits Per Household-children and seniors"])
+    benefits_out = benefits_out.append(benefits[benefits["CHART"] == "Benefits Per Household-low income"])
+    
+    #add benefits share of everyone for each COC
+    benefits_m = benefits[benefits["CHART"] == "Benefits-minority"]
+    benefits_m["CHART"] = "Benefits Share-minority"
+    benefits_l = benefits[benefits["CHART"] == "Benefits-low english proficiency"]
+    benefits_l["CHART"] = "Benefits Share-low english proficiency"
+    benefits_c = benefits[benefits["CHART"] == "Benefits-children and seniors"]
+    benefits_c["CHART"] = "Benefits Share-children and seniors"
+    benefits_i = benefits[benefits["CHART"] == "Benefits-low income"]
+    benefits_i["CHART"] = "Benefits Share-low income"
+    benefits_out = benefits_out.append(benefits_m).append(benefits_l).append(benefits_c).append(benefits_i)
+      
+    benefits_m = benefits[benefits["CHART"] == "Benefits Per Household-minority"]
+    benefits_m["CHART"] = "Benefits Per Household Share-minority"
+    benefits_l = benefits[benefits["CHART"] == "Benefits Per Household-low english proficiency"]
+    benefits_l["CHART"] = "Benefits Per Household Share-low english proficiency"
+    benefits_c = benefits[benefits["CHART"] == "Benefits Per Household-children and seniors"]
+    benefits_c["CHART"] = "Benefits Per Household Share-children and seniors"
+    benefits_i = benefits[benefits["CHART"] == "Benefits Per Household-low income"]
+    benefits_i["CHART"] = "Benefits Per Household Share-low income"
+    benefits_out = benefits_out.append(benefits_m).append(benefits_l).append(benefits_c).append(benefits_i)
+
+    benefits_out = benefits_out.reset_index()
+    benefits_out = benefits_out.drop("index", axis=1)
+    
+    benefits_out["VALUE"].loc[benefits_out["CHART"] == "Benefits Share-minority"] = ((pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Share-minority"].tolist()) / pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits-everybody"].tolist())) * 100 ).tolist()
+    benefits_out["VALUE"].loc[benefits_out["CHART"] == "Benefits Share-low english proficiency"] = ((pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Share-low english proficiency"].tolist()) / pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits-everybody"].tolist())) * 100 ).tolist()
+    benefits_out["VALUE"].loc[benefits_out["CHART"] == "Benefits Share-children and seniors"] = ((pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Share-children and seniors"].tolist()) / pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits-everybody"].tolist())) * 100 ).tolist()
+    benefits_out["VALUE"].loc[benefits_out["CHART"] == "Benefits Share-low income"] = ((pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Share-low income"].tolist()) / pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits-everybody"].tolist())) * 100 ).tolist()
+
+    benefits_out["VALUE"].loc[benefits_out["CHART"] == "Benefits Per Household Share-minority"] = ((pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Per Household Share-minority"].tolist()) / pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Per Household-everybody"].tolist())) * 100 ).tolist()
+    benefits_out["VALUE"].loc[benefits_out["CHART"] == "Benefits Per Household Share-low english proficiency"] = ((pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Per Household Share-low english proficiency"].tolist()) / pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Per Household-everybody"].tolist())) * 100 ).tolist()
+    benefits_out["VALUE"].loc[benefits_out["CHART"] == "Benefits Per Household Share-children and seniors"] = ((pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Per Household Share-children and seniors"].tolist()) / pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Per Household-everybody"].tolist())) * 100 ).tolist()
+    benefits_out["VALUE"].loc[benefits_out["CHART"] == "Benefits Per Household Share-low income"] = ((pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Per Household Share-low income"].tolist()) / pd.Series(benefits_out["VALUE"][benefits_out["CHART"] == "Benefits Per Household-everybody"].tolist())) * 100 ).tolist()
     
     benefits_out.to_csv(dataset_name + "\BarChartData.csv", encoding='utf-8', index=False)
 
