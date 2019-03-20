@@ -20,10 +20,10 @@ output_tables:
     - aggregate_zone_summary
     - aggregate_results
 
-#resume_after: aggregate_zone_processor
+# resume_after: aggregate_zone_processor
 
 dump: True
-trace_od: [727, 967]
+trace_od: [291, 216]
 
 # values available to all processors
 globals:
