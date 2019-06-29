@@ -23,8 +23,8 @@ The steps to run the complete toolkit from start to finish are:
     3. Clone the MCEVIZ repository to your location machine using the git address - https://github.com/MetroModelingServices/MCEVIZ.git
     4. Commit the visualizer inputs to the master (default) branch of your local clone of the MCEVIZ git repository
     5. Push the changes up to GitHub and check the online repository master branch to ensure the files have been uploaded.
-    6. On the website, create a Pull Request from the master branch into the gh-pages branch in order to publish the new data for the website.  Merge the pull request in order to copy the data files from the master branch to the gh-pages branch.  The website displays the gh-pages branch files.  
-    7. Verify the updated data is displayed at http://metromodelingservices.github.io/MCEVIZ
+    6. On the website, create and then merge a Pull Request from the master branch into the gh-pages branch in order to publish the new data for the website.  
+    7. Verify the updated data is displayed on the [website](http://metromodelingservices.github.io/MCEVIZ)
     
 # Benefits Calculator
 
@@ -126,9 +126,9 @@ After creating all the data inputs for the visualizer, the data files need to be
 
   - Clone the MCEVIZ repository to your local machine by Right Clicking in the desired destination Windows explorer folder and then selecting Git Clone and entering the project git address - https://github.com/MetroModelingServices/MCEVIZ.git
   - Copy the revised visualizer data inputs into the data \ portland \ new_scenario_if_needed folder.  
-  - Configure the visualizer according to the visualizer documentation - https://github.com/MetroModelingServices/MCEVIZ/blob/master/README.md
+  - Configure the visualizer according to the visualizer [documentation](https://github.com/MetroModelingServices/MCEVIZ/blob/master/README.md)
   - Commit the visualizer setup revisions to the master (default) branch of your local clone of the MCEVIZ git repository via Right Click + Git Commit Master.
   - Push the changes up to GitHub via Right Click + Tortoise Git + Push and check the online repository master branch to ensure the files have been uploaded.
   - On the website, create a Pull Request from the master branch to the gh-pages branch in order to publish the new data for the website.  After creating the pull request, merge the pull request in order to finalize copying the data files from the master branch to the gh-pages branch.  The website displays the gh-pages branch files.  
-  - Verify the updated data is displayed at http://metromodelingservices.github.io/MCEVIZ
+  - Verify the updated data is displayed on the [website](http://metromodelingservices.github.io/MCEVIZ)
   
