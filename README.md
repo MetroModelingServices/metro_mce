@@ -122,7 +122,7 @@ The input files for the script are:
   - years_of_benefit - 10
   - New_Scenario_Name - Scenarios
 
-After creating all the data inputs for the visualizer, the data files need to be uploaded to the online MCEVIZ GitHub repository since the website is hosted by [GitHub pages](https://pages.github.com/).  The steps to update/publish new scenarios with the visualizer require familiarity with git and GitHub.  The instructions below use [Git for Windows](https://git-scm.com/download/win) and [TortoiseGit](https://tortoisegit.org) for working with git and GitHub.  To post the data files online, do the following:
+After creating all the data inputs for the visualizer, the data files need to be uploaded to the online MCEVIZ GitHub repository since the website is hosted by [GitHub pages](https://pages.github.com/).  The steps to update/publish new scenarios with the visualizer require familiarity with git and GitHub.  The instructions below use [Git for Windows](https://git-scm.com/download/win) and [TortoiseGit](https://tortoisegit.org).  To post the data files online, do the following:
 
   - Clone the MCEVIZ repository to your local machine by Right Clicking in the desired destination Windows explorer folder and then selecting Git Clone and entering the project git address - https://github.com/MetroModelingServices/MCEVIZ.git
   - Copy the revised visualizer data inputs into the data \ portland \ new_scenario_if_needed folder.  
