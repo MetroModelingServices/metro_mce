@@ -4,7 +4,7 @@ The [Oregon Metro](http://www.oregonmetro.gov/) Multi-Criteria Evaluation (MCE) 
   - [Visualizer](#visualization-dashboard) - web-based visualization of the results
 
 # Running the Complete MCE Toolkit
-The steps to run the complete toolkit from start to finish are:
+In brief, the steps to run the complete toolkit from start to finish are:
   - Travel Model
     1. Code the base and build model scenarios
     2. Run the demand and supply models with the MCE export option
@@ -20,9 +20,8 @@ The steps to run the complete toolkit from start to finish are:
   - Visualization Dashboard (MCEVIZ)
     1. Run the `create_mce_visual_inputs.py` script to convert the data to the format expected by the visualizer.
     2. Run the `create_mce_visual_scen_comp_inputs.py` script to create the scenario comparison data expected by the visualizer.
-    3. Clone the MCEVIZ repository to your location machine using the git address - https://github.com/MetroModelingServices/MCEVIZ.git
-    4. Commit the visualizer inputs to the master (default) branch of your local clone of the MCEVIZ git repository
-    5. Push the changes up to GitHub and check the online repository master branch to ensure the files have been uploaded.
+    3. Commit the visualizer inputs to a local clone of the MCEVIZ git repository.
+    5. Push the changes up to GitHub and check the online repository to ensure the files have been uploaded.
     6. On the website, create and then merge a Pull Request from the master branch into the gh-pages branch in order to publish the new data for the website.  
     7. Verify the updated data is displayed on the [website](http://metromodelingservices.github.io/MCEVIZ)
     
