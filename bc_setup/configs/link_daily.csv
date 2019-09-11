@@ -1,64 +1,29 @@
 Silos,Description,Target,Expression
-# link volume calculations,,,
-,,_auto_volume_MD,links.auto_volume
-,,_auto_volume_PM,links.auto_volume_PM2
-,,_med_truck_volume_MD,links.mtvol 
-,,_med_truck_volume_PM,links.mtvol_PM2 
-,,_heavy_truck_volume_MD,links.htvol
-,,_heavy_truck_volume_PM,links.htvol_PM2
-,,_truck_volume_MD,_med_truck_volume_MD + _heavy_truck_volume_MD
-,,_truck_volume_PM,_med_truck_volume_PM + _heavy_truck_volume_PM
-,,_auto_volume_daily,LINK_PEAK_TOD_SHARE_AUTO *_auto_volume_PM + LINK_OFFPEAK_TOD_SHARE_AUTO * _auto_volume_MD
-,,_med_truck_volume_daily,LINK_PEAK_TOD_SHARE_AUTO * _med_truck_volume_PM + LINK_OFFPEAK_TOD_SHARE_AUTO * _med_truck_volume_MD
-,,_heavy_truck_volume_daily,LINK_PEAK_TOD_SHARE_AUTO * _heavy_truck_volume_PM + LINK_OFFPEAK_TOD_SHARE_AUTO * _heavy_truck_volume_MD
-,,_truck_volume_daily,LINK_PEAK_TOD_SHARE_AUTO * _truck_volume_PM + LINK_OFFPEAK_TOD_SHARE_AUTO * _truck_volume_MD
+# link data processing,,,
+,,_auto_volume_daily,links[links.columns[links.columns.str.contains('auto_volume')]].sum(axis=1)
+,,_med_truck_volume_daily,links[links.columns[links.columns.str.contains('mtvol')]].sum(axis=1)
+,,_heavy_truck_volume_daily,links[links.columns[links.columns.str.contains('htvol')]].sum(axis=1)
+,,_truck_volume_daily,_med_truck_volume_daily + _heavy_truck_volume_daily
 ,,_total_volume_daily,_auto_volume_daily + _truck_volume_daily
-,,_length_MD,links.length
-,,_length_PM,links.length_PM2
-,,_length,"pd.concat([_length_MD,_length_PM],axis=1).max(axis=1)"
-,,_waterf_MD,1 - links.waterf
-,,_waterf_PM,1 - links.waterf_PM2
-,,_waterf,"pd.concat([_waterf_MD,_waterf_PM],axis=1).max(axis=1)"
-,,_noisef_MD,1 - links.noisef
-,,_noisef_PM,1 - links.noisef_PM2
-,,_noisef,"pd.concat([_noisef_MD, _noisef_PM],axis=1).max(axis=1)"
+,,_length,links.length_h1
+,,_waterf,1 - links.waterf_h1
+,,_noisef,1 - links.noisef_h1
 ,,_vmt_total,_total_volume_daily * _length
-,,_freeway_MD,(links.type==10) | (links.type==19)
-,,_arterial_MD,(links.type==20)
-,,_collector_MD,(links.type==29) | (links.type==30) | (links.type==40)
-,,_ramp_MD,(links.type==70) | (links.type==79)
-,,_freeway_PM,(links.type_PM2==10) | (links.type_PM2==19)
-,,_arterial_PM,(links.type_PM2==20)
-,,_collector_PM,(links.type_PM2==29) | (links.type_PM2==30) | (links.type_PM2==40)
-,,_ramp_PM,(links.type_PM2==70) | (links.type_PM2==79)
-,,_freeway,(_freeway_MD) | (_freeway_PM)
-,,_arterial,(_arterial_MD) |( _arterial_PM)
-,,_collector,(_collector_MD) | (_collector_PM)
-,,_ramp,(_ramp_MD) | (_ramp_PM)
-,,_speed_MD,links.speed
-,,_speed_PM,links.speed_PM2
-,,_speed,"pd.concat([_speed_MD,_speed_PM],axis=1).max(axis=1)"
-,,_urbrur_MD,"pd.Series(links.urbrur, dtype='bool')"
-,,_urbrur_PM,"pd.Series(links.urbrur_PM2, dtype='bool')"
-,,_urbrur,(_urbrur_MD) | (_urbrur_PM)
-,,_barrier_MD,"pd.Series(links.barrier, dtype='bool')"
-,,_barrier_PM,"pd.Series(links.barrier_PM2, dtype='bool')"
-,,_barrier,(_barrier_MD) | (_barrier_PM)
-,,_num_lanes_MD,links.num_lanes
-,,_num_lanes_PM,links.num_lanes_PM2
-,,_num_lanes,"pd.concat([_num_lanes_MD,_num_lanes_PM],axis=1).max(axis=1)"
+,,_freeway,(links.type_h1==10) | (links.type_h1==19)
+,,_arterial,(links.type_h1==20)
+,,_collector,(links.type_h1==29) | (links.type_h1==30) | (links.type_h1==40)
+,,_ramp,(links.type_h1==70) | (links.type_h1==79)
+,,_speed,links.speed_h1
+,,_urbrur,"pd.Series(links.mpa_h1, dtype='bool')"
+,,_barrier,"pd.Series(links.barrier_h1, dtype='bool')"
+,,_num_lanes,links.num_lanes_h1
 ,,_num_lanes_original,_num_lanes
 ,don’t count turning lane for crash equations,_num_lanes,_num_lanes - _num_lanes%1
 ,,_num_lanes_x,"np.where((_num_lanes>1), 4, 2)"
-,,_divhwy_MD,"pd.Series(links.divhwy, dtype='bool')"
-,,_divhwy_PM,"pd.Series(links.divhwy_PM2, dtype='bool')"
-,,_divhwy,(_divhwy_MD) |( _divhwy_PM)
-,,_signal_MD,"pd.Series(links.signal, dtype='bool')"
-,,_signal_PM,"pd.Series(links.signal_PM2, dtype='bool')"
-,,_signal,(_signal_MD) | (_signal_PM)
-,,_stop_MD,"pd.Series(links.stop, dtype='bool')"
-,,_stop_PM,"pd.Series(links.stop_PM2, dtype='bool')"
-,,_stop,(_stop_MD) |( _stop_PM)
+,,_divhwy,"pd.Series(links.divhwy_h1, dtype='bool')"
+,,_signal,"pd.Series(links.signal_h1, dtype='bool')"
+,,_stop,"pd.Series(links.stop_h1, dtype='bool')"
+# calculations,,,
 ,HSM - Freeway,_hsm_fwy,(_freeway==1) | (_ramp==1)
 ,HSM - Rural Multi Lane Highways,_hsm_rural_XL,(((_urbrur==0) & (_arterial==1)) | ((_urbrur==0) & (_collector==1))) & (_num_lanes>1)
 ,HSM - Rural Two Lane Highways,_hsm_rural_2L,(((_urbrur==0) & (_arterial==1)) | ((_urbrur==0) & (_collector==1))) & (_num_lanes==1)

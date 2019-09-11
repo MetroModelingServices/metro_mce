@@ -1,5 +1,5 @@
 # file name for hhs table csv data input file (expect versions in build and base data subdirs)
-cval_file_name: mce_input_cval.csv
+hh_file_name: mce_input_cval.csv
 
 # file name for external cocs table csv data input file (expect versions in build and base data subdirs)
 ext_cocs_file_name: cocs.csv
