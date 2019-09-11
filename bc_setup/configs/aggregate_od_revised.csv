@@ -544,8 +544,8 @@ silos,description,target,expression
 *,truck travel time benefit,trk_travel_time_benefit,trk_travel_time_benefit_all_zones * internal_internal_filter
 *,travel time benefit,travel_time_benefit,person_travel_time_benefit + trk_travel_time_benefit
 ,,_,logger.info('travel time reliability')
-,,base_am_reliability,(np.sqrt(skims_base['mf.0708rls']) + np.sqrt(skims_base['mf.0708rls']))/2
-,,build_am_reliability,(np.sqrt(skims_build['mf.0708rls']) + np.sqrt(skims_build['mf.0708rls']))/2
+,,base_am_reliability,(np.sqrt(skims_base['mf.0708rls']) + np.sqrt(skims_base['mf.0809rls']))/2
+,,build_am_reliability,(np.sqrt(skims_build['mf.0708rls']) + np.sqrt(skims_build['mf.0809rls']))/2
 ,,base_pm_reliability,(np.sqrt(skims_base['mf.1617rls']) + np.sqrt(skims_base['mf.1718rls']))/2
 ,,build_pm_reliability,(np.sqrt(skims_build['mf.1617rls']) + np.sqrt(skims_build['mf.1718rls']))/2
 ,,base_md_reliability,np.sqrt(skims_base['mf.1213rls']) 
