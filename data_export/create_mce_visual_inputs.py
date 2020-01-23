@@ -1,8 +1,7 @@
 # Create MCE Visualization Dashboard Input Tables
 # Mike Dailey, Ben Stabler, RSG, 02/02/18
-# python create_mce_visual_inputs.py benefits_file zone_benefits_file counties_and_cocs_file od_districts_benefits_file ithim_file zoneFile ABMViz_Region.json_File_Local_Location New_Scenario_Name
-# python create_mce_visual_inputs.py final_aggregate_results.csv final_aggregate_zone_summary.csv cocs.csv final_aggregate_od_district_summary.csv dalys.csv final_zone_demographics.csv C:\projects\development\ActivityViz\data\portland\region.json I205test
-# set ithim_file to "none" to not include 
+# python create_mce_visual_inputs.py benefits_file zone_benefits_file counties_and_cocs_file od_districts_benefits_file ithim_file zoneFile region_file output_folder_name
+# python create_mce_visual_inputs.py final_aggregate_results.csv final_aggregate_zone_summary.csv cocs.csv final_aggregate_od_district_summary.csv dalys.csv final_zone_demographics.csv region.json outputs
 # Outputs 3DAnimatedMapData.csv, BarChartAndMapData.csv, BarChartData.csv, ChordData.csv
 
 import os, sys
@@ -32,16 +31,15 @@ def buildBarChartFile(fileName,ithim_file,regionfileloc,datasetname):
     df["VALUE"] = df["VALUE"].fillna(0)
     
     #ithim benefits
-    if ithim_file != "none":
-      ithim_benefit = pd.read_csv(ithim_file)['dollars'][0]
-      ithim_rec = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"everybody", "VALUE":ithim_benefit, "CHART":"Benefits"}, index=[0])
-      ithim_rec_m = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"minority", "VALUE":0, "CHART":"Benefits"}, index=[0])
-      ithim_rec_l = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"low english proficiency", "VALUE":0, "CHART":"Benefits"}, index=[0])
-      ithim_rec_c = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"children and seniors", "VALUE":0, "CHART":"Benefits"}, index=[0])
-      ithim_rec_i = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"low income", "VALUE":0, "CHART":"Benefits"}, index=[0])
-      ithim_rec = ithim_rec.append(ithim_rec_m).append(ithim_rec_l).append(ithim_rec_c).append(ithim_rec_i)
-      ithim_rec = ithim_rec[["BENEFIT","BENEFIT GROUP","VALUE","CHART"]]
-      df = df.append(ithim_rec)
+    ithim_benefit = pd.read_csv(ithim_file)['dollars'][0]
+    ithim_rec = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"everybody", "VALUE":ithim_benefit, "CHART":"Benefits"}, index=[0])
+    ithim_rec_m = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"minority", "VALUE":0, "CHART":"Benefits"}, index=[0])
+    ithim_rec_l = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"low english proficiency", "VALUE":0, "CHART":"Benefits"}, index=[0])
+    ithim_rec_c = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"children and seniors", "VALUE":0, "CHART":"Benefits"}, index=[0])
+    ithim_rec_i = pd.DataFrame({"BENEFIT":"active_transportation", "BENEFIT GROUP":"low income", "VALUE":0, "CHART":"Benefits"}, index=[0])
+    ithim_rec = ithim_rec.append(ithim_rec_m).append(ithim_rec_l).append(ithim_rec_c).append(ithim_rec_i)
+    ithim_rec = ithim_rec[["BENEFIT","BENEFIT GROUP","VALUE","CHART"]]
+    df = df.append(ithim_rec)
     
     #total households
     hh_count_recs = df[df["BENEFIT"] == "hhs_for_the_coc"]
@@ -165,4 +163,6 @@ if __name__ == "__main__":
     zoneFile = sys.argv[6]
     regionfileloc = sys.argv[7]
     datasetname = sys.argv[8]
+    if not os.path.exists(datasetname):
+      os.mkdir(datasetname)
     runConvertData(benefits_file,zone_benefits_file,county_file,od_districts_benefits_file,ithim_file,zoneFile,regionfileloc,datasetname)
