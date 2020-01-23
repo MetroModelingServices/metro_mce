@@ -95,7 +95,7 @@ The visualization dashboard is online at https://github.com/MetroModelingService
 The `create_mce_visual_inputs.py` script in the data_export folder creates the MCE visualization dashboard input tables for one scenario based on the benefits calculator outputs.  An example command line call to run the script is below.  Instructions for running the script are in the script header.
 
 ```
-python create_mce_visual_inputs.py final_aggregate_results.csv final_aggregate_zone_summary.csv cocs.csv final_aggregate_od_district_summary.csv dalys.csv final_zone_demographics.csv C:\projects\development\ActivityViz\data\portland\region.json I205
+python create_mce_visual_inputs.py final_aggregate_results.csv final_aggregate_zone_summary.csv cocs.csv final_aggregate_od_district_summary.csv dalys.csv final_zone_demographics.csv region.json outputs
 ````
 
 The input files for the script are:
@@ -104,8 +104,8 @@ The input files for the script are:
   - counties_and_cocs_file - cocs.csv
   - od_districts_benefits_file - final_aggregate_od_district_summary.csv
   - ithim_file - dalys.csv
-  - ABMViz_Region.json_File_Local_Location - region.json
-  - New_Scenario_Name - I205test
+  - region.json - region.json
+  - output folder name - outputs
 
 The `create_mce_visual_scen_comp_inputs.py` script in the data_export folder creates the MCE visualization dashboard scenario comparison input tables for two scenarios (scenario "a" and scenario "b").  An example command line call to run the script is below.  Instructions for running the script are in the script header.  This script operates on outputs from the `create_mce_visual_inputs.py` described above since it compares scenarios.
 
@@ -121,13 +121,11 @@ The input files for the script are:
   - years_of_benefit - 10
   - New_Scenario_Name - Scenarios
 
-After creating all the data inputs for the visualizer, the data files need to be uploaded to the online MCEVIZ GitHub repository since the website is hosted by [GitHub pages](https://pages.github.com/).  The steps to update/publish new scenarios with the visualizer require familiarity with git and GitHub.  The instructions below use [Git for Windows](https://git-scm.com/download/win) and [TortoiseGit](https://tortoisegit.org).  To post the data files online, do the following:
+After creating all the data inputs for the visualizer, the data files need to be uploaded to the online MCEVIZ data GitHub repository since the website is hosted by [GitHub pages](https://pages.github.com/).  The steps to update/publish new scenarios with the visualizer require familiarity with git and GitHub.  The instructions below use [Git for Windows](https://git-scm.com/download/win) and [TortoiseGit](https://tortoisegit.org).  To post the data files online, do the following:
 
-  - Clone the MCEVIZ repository to your local machine by Right Clicking in the desired destination Windows explorer folder and then selecting Git Clone and entering the project git address - https://github.com/MetroModelingServices/MCEVIZ.git
-  - Copy the revised visualizer data inputs into the data \ portland \ new_scenario_if_needed folder.  
-  - Configure the visualizer according to the visualizer [documentation](https://github.com/MetroModelingServices/MCEVIZ/blob/master/README.md)
-  - Commit the visualizer setup revisions to the master (default) branch of your local clone of the MCEVIZ git repository via Right Click + Git Commit Master.
+  - Clone the MCEVIZ data repository to your local machine by Right Clicking in the desired destination Windows explorer folder and then selecting Git Clone and entering the project git address - https://github.com/MetroModelingServices/ActivityViz_Data.git
+  - Copy the revised visualizer data inputs into the data \ portland \ new_scenario_folder.  
+  - Configure the visualizer according to the visualizer [documentation](https://github.com/MetroModelingServices/MCEVIZ/blob/master/README.md).  To get something up and running, it is easiest to copy an existing scenario setup in the region.json file, confirm that it works, and then make edits/revisions as needed.
+  - Commit the visualizer setup revisions to the master (default) branch of your local clone of the MCEVIZ data git repository via Right Click + Git Commit Master.
   - Push the changes up to GitHub via Right Click + Tortoise Git + Push and check the online repository master branch to ensure the files have been uploaded.
-  - On the website, create a Pull Request from the master branch to the gh-pages branch in order to publish the new data for the website.  After creating the pull request, merge the pull request in order to finalize copying the data files from the master branch to the gh-pages branch.  The website displays the gh-pages branch files.  
-  - Verify the updated data is displayed on the [website](http://metromodelingservices.github.io/MCEVIZ)
-  
+  - Verify the updated data is displayed on the [website](http://metromodelingservices.github.io/MCEVIZ).  You may need to refresh / clear your browser cache to see the edits.
