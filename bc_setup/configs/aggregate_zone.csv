@@ -156,16 +156,16 @@ Silos,Description,Target,Expression
 # calculate auto ownership benefit,,,
 ,base scenario auto ownership cost,base_auto_ownership_cost_I1,base_auto_ownership_I1 * ANNUAL_COST_PER_VEHICLE
 ,build scenario auto ownership cost,build_auto_ownership_cost_I1,build_auto_ownership_I1 * ANNUAL_COST_PER_VEHICLE
-,vehicle ownership cost benefit,veh_ownership_cost_benefit_I1,(build_auto_ownership_cost_I1 - base_auto_ownership_cost_I1) * -1
+coc_lowinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I1,(build_auto_ownership_cost_I1 - base_auto_ownership_cost_I1) * -1
 ,base scenario auto ownership cost,base_auto_ownership_cost_I2,base_auto_ownership_I2 * ANNUAL_COST_PER_VEHICLE
 ,build scenario auto ownership cost,build_auto_ownership_cost_I2,build_auto_ownership_I2 * ANNUAL_COST_PER_VEHICLE
-,vehicle ownership cost benefit,veh_ownership_cost_benefit_I2,(build_auto_ownership_cost_I2 - base_auto_ownership_cost_I2) * -1
+coc_medinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I2,(build_auto_ownership_cost_I2 - base_auto_ownership_cost_I2) * -1
 ,base scenario auto ownership cost,base_auto_ownership_cost_I3,base_auto_ownership_I3 * ANNUAL_COST_PER_VEHICLE
 ,build scenario auto ownership cost,build_auto_ownership_cost_I3,build_auto_ownership_I3 * ANNUAL_COST_PER_VEHICLE
-,vehicle ownership cost benefit,veh_ownership_cost_benefit_I3,(build_auto_ownership_cost_I3 - base_auto_ownership_cost_I3) * -1
+coc_highinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I3,(build_auto_ownership_cost_I3 - base_auto_ownership_cost_I3) * -1
 ,base scenario auto ownership cost,base_auto_ownership_cost_I4,base_auto_ownership_I4 * ANNUAL_COST_PER_VEHICLE
 ,build scenario auto ownership cost,build_auto_ownership_cost_I4,build_auto_ownership_I4 * ANNUAL_COST_PER_VEHICLE
-,vehicle ownership cost benefit,veh_ownership_cost_benefit_I4,(build_auto_ownership_cost_I4 - base_auto_ownership_cost_I4) * -1
+coc_veryhighinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I4,(build_auto_ownership_cost_I4 - base_auto_ownership_cost_I4) * -1
 *,vehicle ownership cost benefit,veh_ownership_cost_benefit,veh_ownership_cost_benefit_I1 + veh_ownership_cost_benefit_I2 + veh_ownership_cost_benefit_I3 + veh_ownership_cost_benefit_I4
 # calculate productions by purpose for accessibility benefit,,,
 ,hbc productions in base scenario,base_prod_hbc,"zones[""base_hclpr""] + zones[""base_hcmpr""] + zones[""base_hchpr""]"
