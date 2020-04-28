@@ -2,6 +2,7 @@
 CONSTANTS:
   #auto ownership variables
   ANNUAL_COST_PER_VEHICLE: 6611
+  AVERAGE_AUTOS_IN_3PLUS: 3.5
   #utilities per minute (Kate IVT coefficients, use work for sch as well)
   UPM_HBC: 0.0346
   UPM_HBO: 0.0315

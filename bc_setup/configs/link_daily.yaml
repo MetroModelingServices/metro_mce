@@ -78,13 +78,13 @@ link_daily_table_column_map:
   "@updist" : updist
   "@waterf" : waterf
   "@zone" : zone
-  additional_volume : additional_volume
+  #additional_volume : additional_volume
   auto_time : auto_time
   auto_volume : auto_volume
-  aux_transit_volume : aux_transit_volume
-  data1 : data1
-  data2 : data2
-  data3 : data3
+  #aux_transit_volume : aux_transit_volume
+  #data1 : data1
+  #data2 : data2
+  #data3 : data3
   length : length
   num_lanes : num_lanes
   type : type
