@@ -12,12 +12,20 @@ globals:
   DISCOUNT_RATE: 1.0
   ANNUALIZATION_FACTOR: 326 #Orange Line New Starts fct.
 
+settings:
+  peaking_factors:
+    filename: peaking_factors_allday.csv
+    column_map:
+      Start: start
+      Stop: stop
+
 
 models:
+#  - input_pre_processor
 #  - aggregate_demographics_processor
 #  - aggregate_zone_processor
 #  - aggregate_zone_benefits
-#  - aggregate_od_processor
+  - aggregate_od_processor
   - link_daily_processor
   - write_data_dictionary
   - write_tables

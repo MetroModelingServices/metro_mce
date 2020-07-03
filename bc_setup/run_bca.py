@@ -37,8 +37,7 @@ warnings.simplefilter("always")
 logging.captureWarnings(capture=True)
 
 old_settings = np.seterr(divide='raise', over='raise', invalid='raise', under='ignore')
-print "numpy.geterr: %s" % np.geterr()
-
+print("numpy.geterr: %s" % np.geterr())
 
 t0 = tracing.print_elapsed_time()
 
@@ -50,8 +49,7 @@ MODELS = setting('models')
 resume_after = setting('resume_after', None)
 
 if resume_after:
-    print "resume_after", resume_after
-
+    print("resume_after", resume_after)
 
 pipeline.run(models=MODELS, resume_after=resume_after)
 
