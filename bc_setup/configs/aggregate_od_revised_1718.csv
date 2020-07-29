@@ -3,13 +3,13 @@ silos,description,target,expression
 ,,park_cost_diff_pa,(dest_zone['ltpkg_build'] - dest_zone['ltpkg_base']) / 2
 ,,internal_internal_filter,(origin_zone['zone_base'] < FIRST_EXTERNAL_ZONE) * (dest_zone['zone_base'] < FIRST_EXTERNAL_ZONE)
 ,,base_stt,skims_base['mf.1718stn']
-,with tolls as minutes,build_stt,skims_build['mf.1718stn'] - skims_build['mf.1718sln']
+,with tolls as minutes,build_stt,skims_build['mf.1718stn']
 ,,base_htt,skims_base['mf.1718htn']
-,with tolls as minutes,build_htt,skims_build['mf.1718htn'] - skims_build['mf.1718hln']
+,with tolls as minutes,build_htt,skims_build['mf.1718htn']
 ,,base_hptt,skims_base['mf.1718hptn']
-,with tolls as minutes,build_hptt,skims_build['mf.1718hptn'] - skims_build['mf.1718hpln']
+,with tolls as minutes,build_hptt,skims_build['mf.1718hptn']
 ,,base_mptt,skims_base['mf.1718mptn']
-,with tolls as minutes,build_mptt,skims_build['mf.1718mptn'] - skims_build['mf.1718mpln']
+,with tolls as minutes,build_mptt,skims_build['mf.1718mptn']
 ,,_,logger.info('pa table to od tables using peaking factors')
 ,,_PKPERIODS,"['0607','0708','0809','1617','1718']"
 ,,_PKPERIODINDEX,"np.isin(list(TIMEPERIOD.keys()), _PKPERIODS)"
