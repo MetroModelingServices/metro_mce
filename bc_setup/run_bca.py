@@ -30,6 +30,12 @@ parent_dir = os.path.dirname(__file__)
 #     --resume : resume_after
 handle_standard_args()
 
+# Handle config file passed on as argument:
+config_dir = inject.get_injectable('configs_dir')
+if isinstance(config_dir, list):
+    config_dir = config_dir[0]
+    inject.add_injectable('configs_dir', config_dir)
+
 tracing.config_logger()
 
 warnings.simplefilter("always")
