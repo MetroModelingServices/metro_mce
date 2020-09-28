@@ -489,8 +489,8 @@ silos,description,target,expression
 ,person toll travel time benefit all zones,person_toll_travel_time_benefit_all_zones,hbw_toll_travel_time_benefit + nhbw_toll_travel_time_benefit + nhbnw_toll_travel_time_benefit + hbo_toll_travel_time_benefit + hbs_toll_travel_time_benefit + hbr_toll_travel_time_benefit + hbc_toll_travel_time_benefit + sch_toll_travel_time_benefit
 *,person toll travel time benefit,person_toll_travel_time_benefit,person_toll_travel_time_benefit_all_zones * internal_internal_filter
 ,,_,logger.info('truck toll travel time toll cost')
-,,hvytrk_toll_time_benefit, -0.5 * (base_hvytrk_trips + build_hvytrk_trips) * (build_toll_hptt - base_toll_hptt) * VOT_TOLL_PK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,,medtrk_toll_time_benefit, -0.5 * (base_medtrk_trips + build_medtrk_trips) * (build_toll_mptt - base_toll_mptt) * VOT_TOLL_PK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,hvytrk_toll_time_benefit, -0.5 * (base_hvytrk_trips + build_hvytrk_trips) * (build_toll_hptt - base_toll_hptt) * VOT_TOLL_HVYTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,medtrk_toll_time_benefit, -0.5 * (base_medtrk_trips + build_medtrk_trips) * (build_toll_mptt - base_toll_mptt) * VOT_TOLL_MEDTRK/60.0 * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,truck toll travel time benefit all zones,trk_toll_travel_time_benefit_all_zones,hvytrk_toll_time_benefit + medtrk_toll_time_benefit
 *,truck toll travel time benefit,trk_toll_travel_time_benefit,trk_toll_travel_time_benefit_all_zones * internal_internal_filter
 *,toll travel time benefit,toll_travel_time_benefit,person_toll_travel_time_benefit + trk_toll_travel_time_benefit
