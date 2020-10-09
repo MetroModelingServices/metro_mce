@@ -25,7 +25,7 @@ dest_zone_matrices:
   - stpkg
 
 CONSTANTS:
-  #value-of-time ($/hour; currently all equal to 2010$ in Kate)
+  #value-of-time ($/hour; currently all equal to 2010$ in Kate) for travel time benefit calculations
   VOT_HBC: 11.07
   VOT_HBO: 12.48
   VOT_HBR: 12.48
@@ -38,6 +38,7 @@ CONSTANTS:
   VOT_HVYTRK: 30.72
   VOT_DRIVE_TRANSIT: 12.48
   VOT_WALK_TRANSIT: 12.48
+  #value-of-time ($/hour; currently all equal to 2010$ in Kate) for toll travel time benefit calculations
   VOT_TOLL_PK: 19.27
   VOT_TOLL_OP: 12.80
   VOT_TOLL_MEDTRK: 28.20
