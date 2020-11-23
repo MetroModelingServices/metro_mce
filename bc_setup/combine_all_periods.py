@@ -14,7 +14,6 @@ for file_name in os.listdir(copy_folder):
     if os.path.isfile(full_name):
         shutil.copy(full_name, os.path.join(os.getcwd(), 'output'))
 
-
 final_aggregate_od_district_summary_file = 'final_aggregate_od_district_summary.csv'
 final_aggregate_od_zone_summary_file = 'final_aggregate_od_zone_summary.csv'
 trace_aggregate_od_file = 'trace.aggregate_od.csv'
@@ -26,6 +25,7 @@ trace_aggregate_od_df = pd.DataFrame()
 final_aggregate_results_df = pd.DataFrame()
 final_agg_results_pk = pd.DataFrame()
 final_agg_results_op = pd.DataFrame()
+agg_variables = ['aggregate_od', 'link_daily']
 
 idx = pd.IndexSlice
 
@@ -88,15 +88,16 @@ for time_period in time_periods:
         final_aggregate_results_df = pd.read_csv(os.path.join(os.getcwd(),
                                                               'output_' + time_period,
                                                               final_aggregate_results_file))
+        agg_var = [var for var in agg_variables if var in final_aggregate_results_df.Processor.unique()]
         final_aggregate_results_df = final_aggregate_results_df.set_index(['Processor', 'Target', 'Description'])
 
         if time_period in pk_periods:
-            final_agg_results_pk = final_aggregate_results_df.loc[idx['aggregate_od', :, :], ]
+            final_agg_results_pk = final_aggregate_results_df.loc[idx[agg_var, :, :], ]
             final_agg_results_op = final_agg_results_pk.copy()
             for col in final_agg_results_op.columns:
                 final_agg_results_op[col].values[:] = 0
         else:
-            final_agg_results_op = final_aggregate_results_df.loc[idx['aggregate_od', :, :], ]
+            final_agg_results_op = final_aggregate_results_df.loc[idx[agg_var, :, :], ]
             final_agg_results_pk = final_agg_results_op.copy()
             for col in final_agg_results_pk.columns:
                 final_agg_results_pk[col].values[:] = 0
@@ -106,15 +107,15 @@ for time_period in time_periods:
                                                                 'output_' + time_period,
                                                                 final_aggregate_results_file))
         s_final_aggregate_results_df = s_final_aggregate_results_df.set_index(['Processor', 'Target', 'Description'])
-        result_df = final_aggregate_results_df.loc[idx['aggregate_od', :, :], ] + \
-                    s_final_aggregate_results_df.loc[idx['aggregate_od', :, :], ]
-        final_aggregate_results_df.loc[idx['aggregate_od', :, :]] = result_df
+        result_df = final_aggregate_results_df.loc[idx[agg_var, :, :], ] + \
+                    s_final_aggregate_results_df.loc[idx[agg_var, :, :], ]
+        final_aggregate_results_df.loc[idx[agg_var, :, :]] = result_df
         if time_period in pk_periods:
-            final_agg_results_pk = final_agg_results_pk.loc[idx['aggregate_od', :, :], ] + \
-                    s_final_aggregate_results_df.loc[idx['aggregate_od', :, :], ]
+            final_agg_results_pk = final_agg_results_pk.loc[idx[agg_var, :, :], ] + \
+                    s_final_aggregate_results_df.loc[idx[agg_var, :, :], ]
         else:
-            final_agg_results_op = final_agg_results_op.loc[idx['aggregate_od', :, :], ] + \
-                    s_final_aggregate_results_df.loc[idx['aggregate_od', :, :], ]
+            final_agg_results_op = final_agg_results_op.loc[idx[agg_var, :, :], ] + \
+                    s_final_aggregate_results_df.loc[idx[agg_var, :, :], ]
 
 
 # Combine the peak and offpeak results with total results
