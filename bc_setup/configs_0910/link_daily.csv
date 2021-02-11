@@ -54,7 +54,7 @@ Silos,Description,Target,Expression
 ,MV - FI - Urban - 8 lanes,_nmvfi_u8,"np.where((_urbrur==1) & (_num_lanes==4) & (_hsm_fwy==1),_length*np.exp(-5.635+1.492*np.log(0.001*_adt)),0)"
 ,MV - FI - Urban - >=10 lanes,_nmvfi_u10,"np.where((_urbrur==1) & (_num_lanes>=5) & (_hsm_fwy==1),_length*np.exp(-5.842+1.492*np.log(0.001*_adt)),0)"
 ,,_nmvfi,_nmvfi_r4 + _nmvfi_r6 + _nmvfi_r8 + _nmvfi_u4 + _nmvfi_u6 + _nmvfi_u8 + _nmvfi_u10
-,CMF Inside Shoulder Width MV - FI,_nmvfi,"np.where((_hsm_fwy==1) & (urbrur<=1) & (2<=ISW_FWY<=12),_nmvfi*np.exp(-0.0172*(ISW_FWY-6)),_nmvfi)"
+,CMF Inside Shoulder Width MV - FI,_nmvfi,"np.where((_hsm_fwy==1) & (_urbrur<=1) & (2<=ISW_FWY<=12),_nmvfi*np.exp(-0.0172*(ISW_FWY-6)),_nmvfi)"
 ,MV - PDO - Rural - 4 lanes,_nmvpdo_r4,"np.where((_urbrur==0) & (_num_lanes==2) & (_hsm_fwy==1),_length*np.exp(-6.882+1.936*np.log(0.001*_adt)),0)"
 ,MV - PDO - Rural - 6 lanes,_nmvpdo_r6,"np.where((_urbrur==0) & (_num_lanes==3) & (_hsm_fwy==1),_length*np.exp(-7.141+1.936*np.log(0.001*_adt)),0)"
 ,MV - PDO - Rural - >=8 lanes,_nmvpdo_r8,"np.where((_urbrur==0) & (_num_lanes>=4) & (_hsm_fwy==1),_length*np.exp(-7.329+1.936*np.log(0.001*_adt)),0)"
@@ -63,7 +63,7 @@ Silos,Description,Target,Expression
 ,MV - PDO - Urban - 8 lanes,_nmvpdo_u8,"np.where((_urbrur==1) & (_num_lanes==4) & (_hsm_fwy==1),_length*np.exp(-6.997+1.936*np.log(0.001*_adt)),0)"
 ,MV - PDO - Urban - >=10 lanes,_nmvpdo_u10,"np.where((_urbrur==1) & (_num_lanes>=5) & (_hsm_fwy==1),_length*np.exp(-7.260+1.936*np.log(0.001*_adt)),0)"
 ,,_nmvpdo,_nmvpdo_r4 + _nmvpdo_r6 + _nmvpdo_r8 + _nmvpdo_u4 + _nmvpdo_u6 + _nmvpdo_u8 + _nmvpdo_u10
-,CMF Inside Shoulder Width MV - PDO,_nmvpdo,"np.where((_hsm_fwy==1) & (urbrur<=1) & (2<=ISW_FWY<=12),_nmvpdo*np.exp(-0.0153*(ISW_FWY-6)),_nmvpdo)"
+,CMF Inside Shoulder Width MV - PDO,_nmvpdo,"np.where((_hsm_fwy==1) & (_urbrur<=1) & (2<=ISW_FWY<=12),_nmvpdo*np.exp(-0.0153*(ISW_FWY-6)),_nmvpdo)"
 ,SV - FI - Rural - 4 lanes,_nsvfi_r4,"np.where((_urbrur==0) & (_num_lanes==2) & (_hsm_fwy==1),_length*np.exp(-2.126+0.646*np.log(0.001*_adt)),0)"
 ,SV - FI - Rural - 6 lanes,_nsvfi_r6,"np.where((_urbrur==0) & (_num_lanes==3) & (_hsm_fwy==1),_length*np.exp(-2.055+0.646*np.log(0.001*_adt)),0)"
 ,SV - FI - Rural - >=8 lanes,_nsvfi_r8,"np.where((_urbrur==0) & (_num_lanes>=4) & (_hsm_fwy==1),_length*np.exp(-1.985+0.646*np.log(0.001*_adt)),0)"
@@ -72,7 +72,7 @@ Silos,Description,Target,Expression
 ,SV - FI - Urban - 8 lanes,_nsvfi_u8,"np.where((_urbrur==1) & (_num_lanes==4) & (_hsm_fwy==1),_length*np.exp(-1.985+0.646*np.log(0.001*_adt)),0)"
 ,SV - FI - Urban - >=10 lanes,_nsvfi_u10,"np.where((_urbrur==1) & (_num_lanes>=5) & (_hsm_fwy==1),_length*np.exp(-1.915+0.646*np.log(0.001*_adt)),0)"
 ,,_nsvfi,_nsvfi_r4 + _nsvfi_r6 + _nsvfi_r8 + _nsvfi_u4 + _nsvfi_u6 + _nsvfi_u8 + _nsvfi_u10
-,CMF Inside Shoulder Width SV - FI,_nsvfi,"np.where((_hsm_fwy==1) & (urbrur<=1) & (2<=ISW_FWY<=12),_nsvfi*np.exp(-0.0172*(ISW_FWY-6)),_nsvfi)"
+,CMF Inside Shoulder Width SV - FI,_nsvfi,"np.where((_hsm_fwy==1) & (_urbrur<=1) & (2<=ISW_FWY<=12),_nsvfi*np.exp(-0.0172*(ISW_FWY-6)),_nsvfi)"
 ,SV - PDO - Rural - 4 lanes,_nsvpdo_r4,"np.where((_urbrur==0) & (_num_lanes==2) & (_hsm_fwy==1),_length*np.exp(-2.235+0.876*np.log(0.001*_adt)),0)"
 ,SV - PDO - Rural - 6 lanes,_nsvpdo_r6,"np.where((_urbrur==0) & (_num_lanes==3) & (_hsm_fwy==1),_length*np.exp(-2.274+0.876*np.log(0.001*_adt)),0)"
 ,SV - PDO - Rural - >=8 lanes,_nsvpdo_r8,"np.where((_urbrur==0) & (_num_lanes>=4) & (_hsm_fwy==1),_length*np.exp(-2.312+0.876*np.log(0.001*_adt)),0)"
@@ -81,7 +81,7 @@ Silos,Description,Target,Expression
 ,SV - PDO - Urban - 8 lanes,_nsvpdo_u8,"np.where((_urbrur==1) & (_num_lanes==4) & (_hsm_fwy==1),_length*np.exp(-2.312+0.876*np.log(0.001*_adt)),0)"
 ,SV - PDO - Urban - >=10 lanes,_nsvpdo_u10,"np.where((_urbrur==1) & (_num_lanes>=5) & (_hsm_fwy==1),_length*np.exp(-2.351+0.876*np.log(0.001*_adt)),0)"
 ,,_nsvpdo,_nsvpdo_r4 + _nsvpdo_r6 + _nsvpdo_r8 + _nsvpdo_u4 + _nsvpdo_u6 + _nsvpdo_u8 + _nsvpdo_u10
-,CMF Inside Shoulder Width SV - PDO,_nsvpdo,"np.where((_hsm_fwy==1) & (urbrur<=1) & (2<=ISW_FWY<=12),_nsvpdo*np.exp(-0.0153*(ISW_FWY-6)),_nsvpdo)"
+,CMF Inside Shoulder Width SV - PDO,_nsvpdo,"np.where((_hsm_fwy==1) & (_urbrur<=1) & (2<=ISW_FWY<=12),_nsvpdo*np.exp(-0.0153*(ISW_FWY-6)),_nsvpdo)"
 ,CMF Lane Width FI,_cmflwfi_fwy,"np.where((LW_FWY<13)  & (_hsm_fwy==1), np.exp(-0.0376*(LW_FWY-12)), 0.963)"
 ,CMF Lane Width PDO,_cmflwpdo_fwy,"np.where((_hsm_fwy==1),1, 0)"
 ,CMF - presence of median barrier FI,_cmfmpfi_fwy,"np.where((_hsm_fwy==1) & (_barrier==1),1, 1)"
@@ -353,7 +353,7 @@ Silos,Description,Target,Expression
 ,Final Total Urban Arterial Crashes,_ntot_urb,_npdo_urb+_nf_urb+_ni_urb
 ,Urban Intersection Types,_ui3st,(_hsm_urb_Art==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==3)
 ,,_ui4st,(_hsm_urb_Art==1) & (_is_intersection==1) & (_stop==1) & (_num_legs>=4)
-,,_ui3sg,
+,,_ui3sg,(_hsm_urb_Art==1) & (_is_intersection==1) & (_signal==1) & (_num_legs==3)
 ,,_ui4sg,(_hsm_urb_Art==1) & (_is_intersection==1) & (_signal==1) & (_num_legs>=4)
 ,Total Urban Intersection crashes,_nbimv3st,"np.where((_ui3st==1),(np.exp(-13.36 + 1.11*np.log(_max_vol + 1) + 0.41*np.log(_min_vol + 1)))*(1/_num_legs),0)"
 ,Discount by number of legs since the calculation gets repeated for each to_node in the intersection,_nbimv3sg,"np.where((_ui3sg==1),(np.exp(-12.13 + 1.11*np.log(_max_vol + 1) + 0.26*np.log(_min_vol + 1)))*(1/_num_legs),0)"
