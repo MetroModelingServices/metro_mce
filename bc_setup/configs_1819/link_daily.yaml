@@ -125,7 +125,9 @@ CONSTANTS:
   #Urban Arterials
   CU2U: 0.62
   CU3T: 0.81
-  CU4D: 1.411
+  #CU4D should be corrected to 0.64 to match the APM and Oregon calibration factor from HSM spreadsheets (9/21/20)
+  CU4D: 0.64
+  #change: CU4D: 1.411
   CU4U: 0.63
   CU5T: 0.64
   #Urban Arterials Intersections
@@ -133,13 +135,18 @@ CONSTANTS:
   CU4ST_X: 0.45
   CU3SG_X: 0.73
   CU4SG_X: 1.05
-  # Proportion of fatal in F/I crashes from ODOT 2004-06 (http://www.oregon.gov/ODOT/Data/Pages/Crash.aspx)
-  PERCENT_FATAL: 0.0212
+  # It was determined on 9/16/20 that the proportion of fatal in F/I crashes should be updated to a Region 1 value from a statewide value of 0.0212 
+  # representing the years 2004-06 ODOT(http://www.oregon.gov/ODOT/Data/Pages/Crash.aspx).The appropriate year range to use still needs to be determined. Currently using 5 most recent years of data available: 
+  # 2014-18, but years aligned with the calibration factors applied may be more appropriate.
+  # change:PERCENT_FATAL: 0.0212
+  PERCENT_FATAL: 0.0071
   #Distribution of crashes on rural 2 lane highways
+  #change: CMW COMMENT. **THEY SEEM TO BE CORRECT TO ME** The existing Distribution of crashes on rural 2 lane highways doesn't sum to 100% and doesn’t match the distribution in the Oregon calibrated rural 2-lane predictive spreadsheets.
   R2L_PDO: 0.46
   R2L_I: 0.509
   R2L_F: 0.031
   #Number of driveways within roadway segment of driveway type
+  #change: It may be necessary to re-visit what values could/should be used as defaults, more differentiation by driveway type and urban vs. rural. 
   #Major Commercial
   DMJC: 0.01
   #Minor Commercial
@@ -152,7 +159,10 @@ CONSTANTS:
   DMJR: 0.01
   #Minor Residential
   DMNR: 0.01
-  # Crash costs in Dollars
+  # Crash costs in Dollars should be changed to match urban values applied in ARTS. There are different values per facility type. Which ones to include here needs to be determined. Vary by facility type? (9/16/20) 
+  # change: CRASH_COST_PDO: 1522
+  # change: CRASH_COST_INJURY: 441800
+  # change: CRASH_COST_FATAL: 9400000
   CRASH_COST_PDO: 1522
   CRASH_COST_INJURY: 441800
   CRASH_COST_FATAL: 9400000
@@ -168,13 +178,15 @@ CONSTANTS:
   NOISE_COST_HEVTRUCKS_FREEWAY: 41.955
   NOISE_COST_HEVTRUCKS_ARTERIAL: 44.17
   NOISE_COST_HEVTRUCKS_COLLECTOR: 8.71
-  #Vehicle operating cost (validate year)
+  #Vehicle operating cost
   GAS_COST: 2.80
   TRUCK_GAS_COST: 3.08
   GALLON_TO_BTU: 120524
   CAR_COST_PER_MILE: 0.0628
   TRUCK_COST_PER_MILE: 0.5070
-  #emissions (validate year)
+  # per mile auto costs for the Metro region for fuel and non-fuel
+  CAR_ALLCOST_PER_MILE: 0.20
+  #emissions
   GRAMS_TO_METRIC_TONS: 0.000001
   CO2_COST: 51.81
   PM25_COST: 459000

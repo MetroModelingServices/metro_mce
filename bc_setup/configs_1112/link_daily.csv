@@ -54,6 +54,7 @@ Silos,Description,Target,Expression
 ,MV - FI - Urban - 8 lanes,_nmvfi_u8,"np.where((_urbrur==1) & (_num_lanes==4) & (_hsm_fwy==1),_length*np.exp(-5.635+1.492*np.log(0.001*_adt)),0)"
 ,MV - FI - Urban - >=10 lanes,_nmvfi_u10,"np.where((_urbrur==1) & (_num_lanes>=5) & (_hsm_fwy==1),_length*np.exp(-5.842+1.492*np.log(0.001*_adt)),0)"
 ,,_nmvfi,_nmvfi_r4 + _nmvfi_r6 + _nmvfi_r8 + _nmvfi_u4 + _nmvfi_u6 + _nmvfi_u8 + _nmvfi_u10
+,CMF Inside Shoulder Width MV - FI,_nmvfi,"np.where((_hsm_fwy==1) & (urbrur<=1) & (2<=ISW_FWY<=12),_nmvfi*np.exp(-0.0172*(ISW_FWY-6)),_nmvfi)"
 ,MV - PDO - Rural - 4 lanes,_nmvpdo_r4,"np.where((_urbrur==0) & (_num_lanes==2) & (_hsm_fwy==1),_length*np.exp(-6.882+1.936*np.log(0.001*_adt)),0)"
 ,MV - PDO - Rural - 6 lanes,_nmvpdo_r6,"np.where((_urbrur==0) & (_num_lanes==3) & (_hsm_fwy==1),_length*np.exp(-7.141+1.936*np.log(0.001*_adt)),0)"
 ,MV - PDO - Rural - >=8 lanes,_nmvpdo_r8,"np.where((_urbrur==0) & (_num_lanes>=4) & (_hsm_fwy==1),_length*np.exp(-7.329+1.936*np.log(0.001*_adt)),0)"
@@ -62,6 +63,7 @@ Silos,Description,Target,Expression
 ,MV - PDO - Urban - 8 lanes,_nmvpdo_u8,"np.where((_urbrur==1) & (_num_lanes==4) & (_hsm_fwy==1),_length*np.exp(-6.997+1.936*np.log(0.001*_adt)),0)"
 ,MV - PDO - Urban - >=10 lanes,_nmvpdo_u10,"np.where((_urbrur==1) & (_num_lanes>=5) & (_hsm_fwy==1),_length*np.exp(-7.260+1.936*np.log(0.001*_adt)),0)"
 ,,_nmvpdo,_nmvpdo_r4 + _nmvpdo_r6 + _nmvpdo_r8 + _nmvpdo_u4 + _nmvpdo_u6 + _nmvpdo_u8 + _nmvpdo_u10
+,CMF Inside Shoulder Width MV - PDO,_nmvpdo,"np.where((_hsm_fwy==1) & (urbrur<=1) & (2<=ISW_FWY<=12),_nmvpdo*np.exp(-0.0153*(ISW_FWY-6)),_nmvpdo)"
 ,SV - FI - Rural - 4 lanes,_nsvfi_r4,"np.where((_urbrur==0) & (_num_lanes==2) & (_hsm_fwy==1),_length*np.exp(-2.126+0.646*np.log(0.001*_adt)),0)"
 ,SV - FI - Rural - 6 lanes,_nsvfi_r6,"np.where((_urbrur==0) & (_num_lanes==3) & (_hsm_fwy==1),_length*np.exp(-2.055+0.646*np.log(0.001*_adt)),0)"
 ,SV - FI - Rural - >=8 lanes,_nsvfi_r8,"np.where((_urbrur==0) & (_num_lanes>=4) & (_hsm_fwy==1),_length*np.exp(-1.985+0.646*np.log(0.001*_adt)),0)"
@@ -70,6 +72,7 @@ Silos,Description,Target,Expression
 ,SV - FI - Urban - 8 lanes,_nsvfi_u8,"np.where((_urbrur==1) & (_num_lanes==4) & (_hsm_fwy==1),_length*np.exp(-1.985+0.646*np.log(0.001*_adt)),0)"
 ,SV - FI - Urban - >=10 lanes,_nsvfi_u10,"np.where((_urbrur==1) & (_num_lanes>=5) & (_hsm_fwy==1),_length*np.exp(-1.915+0.646*np.log(0.001*_adt)),0)"
 ,,_nsvfi,_nsvfi_r4 + _nsvfi_r6 + _nsvfi_r8 + _nsvfi_u4 + _nsvfi_u6 + _nsvfi_u8 + _nsvfi_u10
+,CMF Inside Shoulder Width SV - FI,_nsvfi,"np.where((_hsm_fwy==1) & (urbrur<=1) & (2<=ISW_FWY<=12),_nsvfi*np.exp(-0.0172*(ISW_FWY-6)),_nsvfi)"
 ,SV - PDO - Rural - 4 lanes,_nsvpdo_r4,"np.where((_urbrur==0) & (_num_lanes==2) & (_hsm_fwy==1),_length*np.exp(-2.235+0.876*np.log(0.001*_adt)),0)"
 ,SV - PDO - Rural - 6 lanes,_nsvpdo_r6,"np.where((_urbrur==0) & (_num_lanes==3) & (_hsm_fwy==1),_length*np.exp(-2.274+0.876*np.log(0.001*_adt)),0)"
 ,SV - PDO - Rural - >=8 lanes,_nsvpdo_r8,"np.where((_urbrur==0) & (_num_lanes>=4) & (_hsm_fwy==1),_length*np.exp(-2.312+0.876*np.log(0.001*_adt)),0)"
@@ -78,10 +81,11 @@ Silos,Description,Target,Expression
 ,SV - PDO - Urban - 8 lanes,_nsvpdo_u8,"np.where((_urbrur==1) & (_num_lanes==4) & (_hsm_fwy==1),_length*np.exp(-2.312+0.876*np.log(0.001*_adt)),0)"
 ,SV - PDO - Urban - >=10 lanes,_nsvpdo_u10,"np.where((_urbrur==1) & (_num_lanes>=5) & (_hsm_fwy==1),_length*np.exp(-2.351+0.876*np.log(0.001*_adt)),0)"
 ,,_nsvpdo,_nsvpdo_r4 + _nsvpdo_r6 + _nsvpdo_r8 + _nsvpdo_u4 + _nsvpdo_u6 + _nsvpdo_u8 + _nsvpdo_u10
+,CMF Inside Shoulder Width SV - PDO,_nsvpdo,"np.where((_hsm_fwy==1) & (urbrur<=1) & (2<=ISW_FWY<=12),_nsvpdo*np.exp(-0.0153*(ISW_FWY-6)),_nsvpdo)"
 ,CMF Lane Width FI,_cmflwfi_fwy,"np.where((LW_FWY<13)  & (_hsm_fwy==1), np.exp(-0.0376*(LW_FWY-12)), 0.963)"
 ,CMF Lane Width PDO,_cmflwpdo_fwy,"np.where((_hsm_fwy==1),1, 0)"
-,CMF - presence of median barrier FI,_cmfmpfi_fwy,"np.where((_hsm_fwy==1) & (_barrier==1),0.131, 1)"
-,CMF - presence of median barrier PDO,_cmfmppdo_fwy,"np.where((_hsm_fwy==1) & (_barrier==1),0.169, 1)"
+,CMF - presence of median barrier FI,_cmfmpfi_fwy,"np.where((_hsm_fwy==1) & (_barrier==1),1, 1)"
+,CMF - presence of median barrier PDO,_cmfmppdo_fwy,"np.where((_hsm_fwy==1) & (_barrier==1),1, 1)"
 ,Divide by half since calculation is repeated for both directions,_nfi_fwy,0.5*(_nsvfi + _nmvfi)*_cmflwfi_fwy*_cmfmpfi_fwy
 ,Divide by half since calculation is repeated for both directions,_npdo_fwy,0.5*(_nsvpdo + _nmvpdo)*_cmflwpdo_fwy*_cmfmppdo_fwy
 ,,_nf_fwy,_nfi_fwy*PERCENT_FATAL
@@ -106,14 +110,14 @@ Silos,Description,Target,Expression
 ,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=11)  & (_adt>2000) & (_divhwy==1),1.03,_cmfra_xl)"
 ,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=11)  & (_adt<400) & (_divhwy==1),1.01,_cmfra_xl)"
 ,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=12) & (_divhwy==1),1,_cmfra_xl)"
-,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (_divhwy==0),(1.03 + 0.0001380*(_adt - 400)),_cmfra_xl)"
-,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (_adt>2000) & (_divhwy==0),1.25,_cmfra_xl)"
-,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (_adt<400) & (_divhwy==0),1.03,_cmfra_xl)"
-,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=10) & (_divhwy==0),(1.01 + 0.0000875*(_adt - 400)),_cmfra_xl)"
-,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=10)  & (_adt>2000) & (_divhwy==0),1.15,_cmfra_xl)"
-,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=10)  & (_adt<400) & (_divhwy==0),1.01,_cmfra_xl)"
-,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=11) & (_divhwy==0),(1.01 + 0.0000125*(_adt - 400)),_cmfra_xl)"
-,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=11)  & (_adt>2000) & (_divhwy==0),1.03,_cmfra_xl)"
+,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (_divhwy==0),(1.04 + 0.000213*(_adt - 400)),_cmfra_xl)"
+,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (_adt>2000) & (_divhwy==0),1.38,_cmfra_xl)"
+,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (_adt<400) & (_divhwy==0),1.04,_cmfra_xl)"
+,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=10) & (_divhwy==0),(1.02 + 0.000131*(_adt - 400)),_cmfra_xl)"
+,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=10)  & (_adt>2000) & (_divhwy==0),1.23,_cmfra_xl)"
+,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=10)  & (_adt<400) & (_divhwy==0),1.02,_cmfra_xl)"
+,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=11) & (_divhwy==0),(1.01 + 0.0000188*(_adt - 400)),_cmfra_xl)"
+,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=11)  & (_adt>2000) & (_divhwy==0),1.04,_cmfra_xl)"
 ,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=11)  & (_adt<400) & (_divhwy==0),1.01,_cmfra_xl)"
 ,,_cmfra_xl,"np.where((_hsm_rural_XL==1) & (LW_HWY>=12) & (_divhwy==0),1,_cmfra_xl)"
 ,,_pra_xl,"np.where((_hsm_rural_XL==1) & (_divhwy==0),0.27,0)"
@@ -196,14 +200,14 @@ Silos,Description,Target,Expression
 ,,_ni_r2l,_ni_r2l*Cr2l
 ,Final Total Rural Two Lane Crashes,_ntot_r2l,_npdo_r2l+_nf_r2l+_ni_r2l
 ,Total Rural Two Lane Intersection crashes,_ntot_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_num_legs==3) & (_stop==1),Cr2l3ST_X*(np.exp(-9.86 + 0.79*np.log(_max_vol + 1) + 0.49*np.log(_min_vol + 1)))*(1/_num_legs),0)"
-,Discount by number of legs since the calculation gets repeated for each to_node in the intersection,_ntot_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_num_legs==4) & (_stop==1),Cr2l4ST_X*(np.exp(-8.86 + 0.60*np.log(_max_vol + 1) + 0.61*np.log(_min_vol + 1)))*(1/_num_legs),_ntot_r2l_x)"
+,Discount by number of legs since the calculation gets repeated for each to_node in the intersection,_ntot_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_num_legs==4) & (_stop==1),Cr2l4ST_X*(np.exp(-8.56 + 0.60*np.log(_max_vol + 1) + 0.61*np.log(_min_vol + 1)))*(1/_num_legs),_ntot_r2l_x)"
 ,,_ntot_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_num_legs==4) & (_signal==1),Cr2l4SG_X*(np.exp(-5.13 + 0.60*np.log(_max_vol + 1) + 0.20*np.log(_min_vol + 1)))*(1/_num_legs),_ntot_r2l_x)"
-,Fatal Rural X Lane Intersection Crashes,_nf_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_signal==1),(Cr2l3ST_X*_ntot_r2l_x*0.009)*(1/_num_legs),0)"
-,,_nf_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==3),(Cr2l4ST_X*_ntot_r2l_x*0.017)*(1/_num_legs),_nf_r2l_x)"
-,,_nf_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==4),(Cr2l4SG_X*_ntot_r2l_x*0.018)*(1/_num_legs),_nf_r2l_x)"
-,PDO Rural X Lane Intersection Crashes,_np_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_signal==1),(Cr2l3ST_X*_ntot_r2l_x*0.660)*(1/_num_legs),0)"
-,,_np_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==3),(Cr2l4ST_X*_ntot_r2l_x*0.585)*(1/_num_legs),_np_r2l_x)"
-,,_np_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==4),(Cr2l4SG_X*_ntot_r2l_x*0.569)*(1/_num_legs),_np_r2l_x)"
+,Fatal Rural X Lane Intersection Crashes,_nf_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_signal==1),(_ntot_r2l_x*0.009),0)"
+,,_nf_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==3),(_ntot_r2l_x*0.017),_nf_r2l_x)"
+,,_nf_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==4),(_ntot_r2l_x*0.018),_nf_r2l_x)"
+,PDO Rural X Lane Intersection Crashes,_np_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_signal==1),(_ntot_r2l_x*0.660),0)"
+,,_np_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==3),(_ntot_r2l_x*0.585),_np_r2l_x)"
+,,_np_r2l_x,"np.where((_hsm_rural_2L==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==4),(_ntot_r2l_x*0.569),_np_r2l_x)"
 ,,_ni_r2l_x,_ntot_r2l_x-_nf_r2l_x-_np_r2l_x
 ,,_ntot_r2l_x,_nf_r2l_x+_ni_r2l_x+_np_r2l_x
 *,Total Rural X Lane RS+Intrsn Crashes,_tot_crashes_r2l,_ntot_r2l+_ntot_r2l_x
@@ -271,11 +275,11 @@ Silos,Description,Target,Expression
 ,,_nbrdwy4u,"np.where((_u4u==1),((0.182*DMJC + 0.058*DMNC + 0.198*DMJI + 0.026*DMNI + 0.096*DMJR + 0.018*DMNR)*np.power(_adt/15000,1.172)),0)"
 ,,_nbrdwy4d,"np.where((_u4d==1),((0.033*DMJC + 0.011*DMNC + 0.036*DMJI + 0.005*DMNI + 0.018*DMJR + 0.003*DMNR)*np.power(_adt/15000,1.106)),0)"
 ,,_nbrdwy5t,"np.where((_u5t==1),((0.165*DMJC + 0.053*DMNC + 0.181*DMJI + 0.024*DMNI + 0.087*DMJR + 0.016*DMNR)*np.power(_adt/15000,1.172)),0)"
-,,_nbrdwyfi2u,0.556*_nbrdwy2u
-,,_nbrdwyfi3t,0.467*_nbrdwy3t
-,,_nbrdwyfi4u,0.462*_nbrdwy4u
-,,_nbrdwyfi4d,0.778*_nbrdwy4d
-,,_nbrdwyfi5t,0.500*_nbrdwy5t
+,,_nbrdwyfi2u,0.323*_nbrdwy2u
+,,_nbrdwyfi3t,0.243*_nbrdwy3t
+,,_nbrdwyfi4u,0.342*_nbrdwy4u
+,,_nbrdwyfi4d,0.284*_nbrdwy4d
+,,_nbrdwyfi5t,0.269*_nbrdwy5t
 ,,_nbr2u,_nbrmv2u+_nbrsv2u+_nbrdwy2u
 ,,_nbr3t,_nbrmv3t+_nbrsv3t+_nbrdwy3t
 ,,_nbr4u,_nbrmv4u+_nbrsv4u+_nbrdwy4u
@@ -301,31 +305,31 @@ Silos,Description,Target,Expression
 ,,_pnr,"np.where((_u4u==1), 0.365,_pnr)"
 ,,_pnr,"np.where((_u4d==1), 0.410,_pnr)"
 ,,_pnr,"np.where((_u5t==1), 0.274,_pnr)"
-,vehicle-pdestrian crash factor,_fpedr,"np.where((_u2u==1) & (_speed<=30), 0.034,0)"
-,,_fpedr,"np.where((_u3t==1) & (_speed<=30), 0.020,_fpedr)"
-,,_fpedr,"np.where((_u4u==1) & (_speed<=30), 0.016,_fpedr)"
-,,_fpedr,"np.where((_u4d==1) & (_speed<=30), 0.048,_fpedr)"
-,,_fpedr,"np.where((_u5t==1) & (_speed<=30), 0.010,_fpedr)"
-,,_fpedr,"np.where((_u2u==1) & (_speed>30), 0.012,_fpedr)"
-,,_fpedr,"np.where((_u3t==1) & (_speed>30), 0.014,_fpedr)"
-,,_fpedr,"np.where((_u4u==1) & (_speed>30), 0.004,_fpedr)"
-,,_fpedr,"np.where((_u4d==1) & (_speed>30), 0.013,_fpedr)"
-,,_fpedr,"np.where((_u5t==1) & (_speed>30), 0.021,_fpedr)"
+,vehicle-pdestrian crash factor,_fpedr,"np.where((_u2u==1) & (_speed<=30), 0.036,0)"
+,,_fpedr,"np.where((_u3t==1) & (_speed<=30), 0.041,_fpedr)"
+,,_fpedr,"np.where((_u4u==1) & (_speed<=30), 0.022,_fpedr)"
+,,_fpedr,"np.where((_u4d==1) & (_speed<=30), 0.067,_fpedr)"
+,,_fpedr,"np.where((_u5t==1) & (_speed<=30), 0.030,_fpedr)"
+,,_fpedr,"np.where((_u2u==1) & (_speed>30), 0.005,_fpedr)"
+,,_fpedr,"np.where((_u3t==1) & (_speed>30), 0.013,_fpedr)"
+,,_fpedr,"np.where((_u4u==1) & (_speed>30), 0.009,_fpedr)"
+,,_fpedr,"np.where((_u4d==1) & (_speed>30), 0.019,_fpedr)"
+,,_fpedr,"np.where((_u5t==1) & (_speed>30), 0.023,_fpedr)"
 ,,_npedr2u,_nbr2u*_fpedr
 ,,_npedr3t,_nbr3t*_fpedr
 ,,_npedr4u,_nbr4u*_fpedr
 ,,_npedr4d,_nbr4d*_fpedr
 ,,_npedr5t,_nbr5t*_fpedr
-,vehicle-bicycle crash factor,_fbiker,"np.where((_u2u==1) & (_speed<=30), 0.007,0)"
-,,_fbiker,"np.where((_u3t==1) & (_speed<=30), 0.016,_fbiker)"
-,,_fbiker,"np.where((_u4u==1) & (_speed<=30), 0.010,_fbiker)"
-,,_fbiker,"np.where((_u4d==1) & (_speed<=30), 0.024,_fbiker)"
-,,_fbiker,"np.where((_u5t==1) & (_speed<=30), 0.017,_fbiker)"
-,,_fbiker,"np.where((_u2u==1) & (_speed>30), 0.003,_fbiker)"
-,,_fbiker,"np.where((_u3t==1) & (_speed>30), 0.010,_fbiker)"
-,,_fbiker,"np.where((_u4u==1) & (_speed>30), 0.010,_fbiker)"
-,,_fbiker,"np.where((_u4d==1) & (_speed>30), 0.009,_fbiker)"
-,,_fbiker,"np.where((_u5t==1) & (_speed>30), 0.020,_fbiker)"
+,vehicle-bicycle crash factor,_fbiker,"np.where((_u2u==1) & (_speed<=30), 0.018,0)"
+,,_fbiker,"np.where((_u3t==1) & (_speed<=30), 0.027,_fbiker)"
+,,_fbiker,"np.where((_u4u==1) & (_speed<=30), 0.011,_fbiker)"
+,,_fbiker,"np.where((_u4d==1) & (_speed<=30), 0.013,_fbiker)"
+,,_fbiker,"np.where((_u5t==1) & (_speed<=30), 0.050,_fbiker)"
+,,_fbiker,"np.where((_u2u==1) & (_speed>30), 0.004,_fbiker)"
+,,_fbiker,"np.where((_u3t==1) & (_speed>30), 0.007,_fbiker)"
+,,_fbiker,"np.where((_u4u==1) & (_speed>30), 0.002,_fbiker)"
+,,_fbiker,"np.where((_u4d==1) & (_speed>30), 0.005,_fbiker)"
+,,_fbiker,"np.where((_u5t==1) & (_speed>30), 0.012,_fbiker)"
 ,,_nbiker2u,_nbr2u*_fbiker
 ,,_nbiker3t,_nbr3t*_fbiker
 ,,_nbiker4u,_nbr4u*_fbiker
@@ -349,7 +353,7 @@ Silos,Description,Target,Expression
 ,Final Total Urban Arterial Crashes,_ntot_urb,_npdo_urb+_nf_urb+_ni_urb
 ,Urban Intersection Types,_ui3st,(_hsm_urb_Art==1) & (_is_intersection==1) & (_stop==1) & (_num_legs==3)
 ,,_ui4st,(_hsm_urb_Art==1) & (_is_intersection==1) & (_stop==1) & (_num_legs>=4)
-,,_ui3sg,(_hsm_urb_Art==1) & (_is_intersection==1) & (_signal==1) & (_num_legs==3)
+,,_ui3sg,
 ,,_ui4sg,(_hsm_urb_Art==1) & (_is_intersection==1) & (_signal==1) & (_num_legs>=4)
 ,Total Urban Intersection crashes,_nbimv3st,"np.where((_ui3st==1),(np.exp(-13.36 + 1.11*np.log(_max_vol + 1) + 0.41*np.log(_min_vol + 1)))*(1/_num_legs),0)"
 ,Discount by number of legs since the calculation gets repeated for each to_node in the intersection,_nbimv3sg,"np.where((_ui3sg==1),(np.exp(-12.13 + 1.11*np.log(_max_vol + 1) + 0.26*np.log(_min_vol + 1)))*(1/_num_legs),0)"
@@ -375,9 +379,9 @@ Silos,Description,Target,Expression
 ,,_nbisv3sg,"np.where((_ui3sg==1),(np.exp(-9.02 + 0.42*np.log(_max_vol + 1) + 0.40*np.log(_min_vol + 1)))*(1/_num_legs),0)"
 ,,_nbisv4st,"np.where((_ui4st==1),(np.exp(-5.33 + 0.33*np.log(_max_vol + 1) + 0.12*np.log(_min_vol + 1)))*(1/_num_legs),0)"
 ,,_nbisv4sg,"np.where((_ui4sg==1),(np.exp(-10.21 + 0.68*np.log(_max_vol + 1) + 0.27*np.log(_min_vol + 1)))*(1/_num_legs),0)"
-,,_nbisvfi3st,"np.where((_ui3st==1),(0.9*_nbisv3st),0.0000001)"
+,,_nbisvfi3st,"np.where((_ui3st==1),(0.31*_nbisv3st),0.0000001)"
 ,,_nbisvfi3sg,"np.where((_ui3sg==1),(np.exp(-9.75 + 0.27*np.log(_max_vol + 1) + 0.51*np.log(_min_vol + 1)))*(1/_num_legs),0.0000001)"
-,,_nbisvfi4st,"np.where((_ui4st==1),(0.88*_nbisv4st),0.0000001)"
+,,_nbisvfi4st,"np.where((_ui4st==1),(0.28*_nbisv4st),0.0000001)"
 ,,_nbisvfi4sg,"np.where((_ui4sg==1),(np.exp(-9.25 + 0.43*np.log(_max_vol + 1) + 0.29*np.log(_min_vol + 1)))*(1/_num_legs),0.0000001)"
 ,,_nbisvpdo3st,"np.where((_ui3st==1),(np.exp(-8.36 + 0.25*np.log(_max_vol + 1) + 0.55*np.log(_min_vol + 1)))*(1/_num_legs),0.0000001)"
 ,,_nbisvpdo3sg,"np.where((_ui3sg==1),(np.exp(-9.08 + 0.45*np.log(_max_vol + 1) + 0.33*np.log(_min_vol + 1)))*(1/_num_legs),0.0000001)"
@@ -399,18 +403,18 @@ Silos,Description,Target,Expression
 ,,_nbifi3sg,_nbimvfi3sg+_nbisvfi3sg
 ,,_nbifi4st,_nbimvfi4st+_nbisvfi4st
 ,,_nbifi4sg,_nbimvfi4sg+_nbisvfi4sg
-,Pedestrian crashes,_npedi3st,"np.where((_ui3st==1),(0.025*_nbi3st),0)"
+,Pedestrian crashes,_npedi3st,"np.where((_ui3st==1),(0.021*_nbi3st),0)"
 ,Discount by number of legs since the calculation gets repeated for each to_node in the intersection,_npedi3sg,"np.where((_ui3sg==1),(np.exp(-6.60 + 0.05*np.log(_max_vol+_min_vol + 1) + 0.24*np.log((_min_vol + 1)/(_max_vol + 1))+0.41*np.log(400)+0.09*_num_lanes_x))*(1/_num_legs),0)"
-,,_npedi4st,"np.where((_ui4st==1),(0.016*_nbisv4st),0)"
+,,_npedi4st,"np.where((_ui4st==1),(0.022*_nbisv4st),0)"
 ,,_npedi4sg,"np.where((_ui4sg==1),(np.exp(-9.53 + 0.40*np.log(_max_vol+_min_vol + 1) + 0.26*np.log((_min_vol + 1)/(_max_vol + 1))+0.45*np.log(700)+0.04*_num_lanes_x))*(1/_num_legs),0)"
-,,_npedi,_npedi3st*CU3ST_X+_npedi3sg*CU4ST_X+_npedi4st*CU3SG_X+_npedi4sg*CU4SG_X
-,,_nbikei3st,"np.where((_ui3st==1),(0.022*_nbi3st),0)"
-,,_nbikei3sg,"np.where((_ui3sg==1),(0.016*_nbi3sg),0)"
-,,_nbikei4st,"np.where((_ui4st==1),(0.023*_nbi4st),0)"
-,,_nbikei4sg,"np.where((_ui4sg==1),(0.013*_nbi4sg),0)"
-,,_nbikei,_nbikei3st*CU3ST_X+_nbikei3sg*CU4ST_X+_nbikei4st*CU3SG_X+_nbikei4sg*CU4SG_X
-,,_ntot_urb_x,_nbi3st*CU3ST_X+_nbi3sg*CU4ST_X+_nbi4st*CU3SG_X+_nbi4sg*CU4SG_X+_npedi+_nbikei
-,,_nfi_urb_x,_nbifi3st*CU3ST_X+_nbifi3sg*CU4ST_X+_nbifi4st*CU3SG_X*CU4SG_X+_nbifi4sg+_npedi+_nbikei
+,,_npedi,_npedi3st*CU3ST_X+_npedi3sg*CU3SG_X+_npedi4st*CU4ST_X+_npedi4sg*CU4SG_X
+,,_nbikei3st,"np.where((_ui3st==1),(0.016*_nbi3st),0)"
+,,_nbikei3sg,"np.where((_ui3sg==1),(0.011*_nbi3sg),0)"
+,,_nbikei4st,"np.where((_ui4st==1),(0.018*_nbi4st),0)"
+,,_nbikei4sg,"np.where((_ui4sg==1),(0.015*_nbi4sg),0)"
+,,_nbikei,_nbikei3st*CU3ST_X+_nbikei3sg*CU3SG_X+_nbikei4st*CU4ST_X+_nbikei4sg*CU4SG_X
+,,_ntot_urb_x,_nbi3st*CU3ST_X+_nbi3sg*CU3SG_X+_nbi4st*CU4ST_X+_nbi4sg*CU4SG_X+_npedi+_nbikei
+,,_nfi_urb_x,_nbifi3st*CU3ST_X+_nbifi3sg*CU3SG_X+_nbifi4st*CU4ST_X*CU4SG_X+_nbifi4sg+_npedi+_nbikei
 ,,_nf_urb_x,_nfi_urb_x*PERCENT_FATAL
 ,,_ni_urb_x,_nfi_urb_x-_nf_urb_x
 ,,_np_urb_x,_ntot_urb_x-_nfi_urb_x
@@ -468,5 +472,7 @@ Silos,Description,Target,Expression
 ,,auto_nonfuel_cost,_auto_volume_daily * _length * CAR_COST_PER_MILE
 ,,truck_nonfuel_cost,_truck_volume_daily * _length * TRUCK_COST_PER_MILE
 ,nonfuel auto operating cost,nonfuel_cost,((auto_nonfuel_cost + truck_nonfuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
-*,vehicle operating cost benefit,veh_operating_cost_benefit,fuel_cost + nonfuel_cost
+,truck operating cost benefit,truck_cost,((truck_fuel_cost + truck_nonfuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
+,auto fuel and other costs,auto_cost,_auto_volume_daily * _length * CAR_ALLCOST_PER_MILE
+*,vehicle operating cost benefit,veh_operating_cost_benefit,auto_cost + truck_cost
 *,vmt for reporting,vmt_total,vmt_total
