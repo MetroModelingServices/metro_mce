@@ -672,9 +672,9 @@ silos,description,target,expression
 ,,sch_schbus_transit_fare_diff, (-_AVERAGE_PARAMETER) * (mode_choice_pa_sc_base['mf.schbus'] + ((mode_choice_pa_sc_build['mf.schbus']) * (1 - ONLY_BASE))) * (_ALLPERIODSCHTRANSITFACTORS[6])  * ((build_stt - base_stt) * (VOT_SCH/60.0)) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,_,logger.info('drive transit transit leg')
 ,,base_dtransit_am_transit_fare,(transit_fare_base['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
-,,build_dtransit_am_transit_fare,(transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
+,,build_dtransit_am_transit_fare,(transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60 * (1 - ONLY_BASE)
 ,,base_dtransit_md_transit_fare,(transit_fare_base['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
-,,build_dtransit_md_transit_fare,(transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60
+,,build_dtransit_md_transit_fare,(transit_fare_build['mf.trfare'] / VOT_DRIVE_TRANSIT) * 60 * (1 - ONLY_BASE)
 ,,_,logger.info('skip ODs where no alt base and build')
 ,,base_dtransit_am_transit_fare,"base_dtransit_am_transit_fare * (np.logical_and(skims_base['mf.amwt1'] != TRANSIT_NA, skims_build['mf.amwt1'] != TRANSIT_NA))"
 ,,build_dtransit_am_transit_fare,"build_dtransit_am_transit_fare * (np.logical_and(skims_base['mf.amwt1'] != TRANSIT_NA, skims_build['mf.amwt1'] != TRANSIT_NA))"
