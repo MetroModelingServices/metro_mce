@@ -1,5 +1,7 @@
 # values available to expressions in aggregate_zone_processor
 CONSTANTS:
+  # BASE only calculations
+  ONLY_BASE: 0
   #auto ownership variables (need to validate the year for this one)
   ANNUAL_COST_PER_VEHICLE: 6611
   AVERAGE_AUTOS_IN_3PLUS: 3.5

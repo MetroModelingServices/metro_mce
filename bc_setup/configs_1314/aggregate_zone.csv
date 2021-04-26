@@ -94,6 +94,10 @@ Silos,Description,Target,Expression
 ,Autos in HHs with 2 auto in build year,build_2_I1_auto,"zones.loc[:, _BUILD_AUTO_2_I1_COLNAMES].sum(axis=1) * 2"
 ,Autos in HHs with 3 auto in build year,build_3_I1_auto,"zones.loc[:, _BUILD_AUTO_3_I1_COLNAMES].sum(axis=1) * 3"
 ,Autos in HHs with 4 auto in build year,build_4_I1_auto,"zones.loc[:, _BUILD_AUTO_4_I1_COLNAMES].sum(axis=1) * 4"
+,Update autos in HHs with 1 auto in build year if only base scenario,build_1_I1_auto,build_1_I1_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 2 auto in build year if only base scenario,build_2_I1_auto,build_2_I1_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 3 auto in build year if only base scenario,build_3_I1_auto,build_3_I1_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 4 auto in build year if only base scenario,build_4_I1_auto,build_4_I1_auto * (1 - ONLY_BASE)
 ,base scenario auto ownership,base_auto_ownership_I1,base_1_I1_auto + base_2_I1_auto + base_3_I1_auto + base_4_I1_auto
 ,build scenario auto ownership,build_auto_ownership_I1,build_1_I1_auto + build_2_I1_auto + build_3_I1_auto + build_4_I1_auto
 # income 2,,,
@@ -113,6 +117,10 @@ Silos,Description,Target,Expression
 ,Autos in HHs with 2 auto in build year,build_2_I2_auto,"zones.loc[:, _BUILD_AUTO_2_I2_COLNAMES].sum(axis=1) * 2"
 ,Autos in HHs with 3 auto in build year,build_3_I2_auto,"zones.loc[:, _BUILD_AUTO_3_I2_COLNAMES].sum(axis=1) * 3"
 ,Autos in HHs with 4 auto in build year,build_4_I2_auto,"zones.loc[:, _BUILD_AUTO_4_I2_COLNAMES].sum(axis=1) * 4"
+,Update autos in HHs with 1 auto in build year,build_1_I2_auto,build_1_I2_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 2 auto in build year,build_2_I2_auto,build_2_I2_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 3 auto in build year,build_3_I2_auto,build_3_I2_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 4 auto in build year,build_4_I2_auto,build_4_I2_auto * (1 - ONLY_BASE)
 ,base scenario auto ownership,base_auto_ownership_I2,base_1_I2_auto + base_2_I2_auto + base_3_I2_auto + base_4_I2_auto
 ,build scenario auto ownership,build_auto_ownership_I2,build_1_I2_auto + build_2_I2_auto + build_3_I2_auto + build_4_I2_auto
 # income 3,,,
@@ -132,6 +140,10 @@ Silos,Description,Target,Expression
 ,Autos in HHs with 2 auto in build year,build_2_I3_auto,"zones.loc[:, _BUILD_AUTO_2_I3_COLNAMES].sum(axis=1) * 2"
 ,Autos in HHs with 3 auto in build year,build_3_I3_auto,"zones.loc[:, _BUILD_AUTO_3_I3_COLNAMES].sum(axis=1) * 3"
 ,Autos in HHs with 4 auto in build year,build_4_I3_auto,"zones.loc[:, _BUILD_AUTO_4_I3_COLNAMES].sum(axis=1) * 4"
+,Update autos in HHs with 1 auto in build year,build_1_I3_auto,build_1_I3_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 2 auto in build year,build_2_I3_auto,build_2_I3_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 3 auto in build year,build_3_I3_auto,build_3_I3_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 4 auto in build year,build_4_I3_auto,build_4_I3_auto * (1 - ONLY_BASE)
 ,base scenario auto ownership,base_auto_ownership_I3,base_1_I3_auto + base_2_I3_auto + base_3_I3_auto + base_4_I3_auto
 ,build scenario auto ownership,build_auto_ownership_I3,build_1_I3_auto + build_2_I3_auto + build_3_I3_auto + build_4_I3_auto
 # income 4,,,
@@ -151,6 +163,10 @@ Silos,Description,Target,Expression
 ,Autos in HHs with 2 auto in build year,build_2_I4_auto,"zones.loc[:, _BUILD_AUTO_2_I4_COLNAMES].sum(axis=1) * 2"
 ,Autos in HHs with 3 auto in build year,build_3_I4_auto,"zones.loc[:, _BUILD_AUTO_3_I4_COLNAMES].sum(axis=1) * 3"
 ,Autos in HHs with 4 auto in build year,build_4_I4_auto,"zones.loc[:, _BUILD_AUTO_4_I4_COLNAMES].sum(axis=1) * 4"
+,Update autos in HHs with 1 auto in build year,build_1_I4_auto,build_1_I4_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 2 auto in build year,build_2_I4_auto,build_2_I4_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 3 auto in build year,build_3_I4_auto,build_3_I4_auto * (1 - ONLY_BASE)
+,Update autos in HHs with 4 auto in build year,build_4_I4_auto,build_4_I4_auto * (1 - ONLY_BASE)
 ,base scenario auto ownership,base_auto_ownership_I4,base_1_I4_auto + base_2_I4_auto + base_3_I4_auto + base_4_I4_auto
 ,build scenario auto ownership,build_auto_ownership_I4,build_1_I4_auto + build_2_I4_auto + build_3_I4_auto + build_4_I4_auto
 # calculate auto ownership benefit,,,
@@ -184,6 +200,14 @@ coc_veryhighinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I4,(bu
 ,nhbnw productions in build scenario,build_prod_nhbnw,"zones[""build_nhnwpr""]"
 ,nhbw productions in build scenario,build_prod_nhbw,"zones[""build_nhwpr""]"
 ,sch productions in build scenario,build_prod_sch,"zones[""build_schpr""]"
+,Update hbc productions in build scenario,build_prod_hbc,build_prod_hbc * (1 - ONLY_BASE)
+,Update hbo productions in build scenario,build_prod_hbo,build_prod_hbo * (1 - ONLY_BASE)
+,Update hbr productions in build scenario,build_prod_hbr,build_prod_hbr * (1 - ONLY_BASE)
+,Update hbs productions in build scenario,build_prod_hbs,build_prod_hbs * (1 - ONLY_BASE)
+,Update hbw productions in build scenario,build_prod_hbw,build_prod_hbw * (1 - ONLY_BASE)
+,Update nhbnw productions in build scenario,build_prod_nhbnw,build_prod_nhbnw * (1 - ONLY_BASE)
+,Update nhbw productions in build scenario,build_prod_nhbw,build_prod_nhbw * (1 - ONLY_BASE)
+,Update sch productions in build scenario,build_prod_sch,build_prod_sch * (1 - ONLY_BASE)
 #get logsums by purpose,,,
 ,weighted hbc logsum in base scenario,base_ls_hbc,"( zones[""base_hcldcls""] * zones[""base_hclpr""] + zones[""base_hcmdcls""] * zones[""base_hcmpr""] + zones[""base_hchdcls""] * zones[""base_hchpr""]) / base_prod_hbc"
 ,weighted hbo logsum in base scenario,base_ls_hbo,"( zones[""base_holdcls""] * zones[""base_holpr""] + zones[""base_homdcls""] * zones[""base_hompr""] + zones[""base_hohdcls""] * zones[""base_hohpr""]) / base_prod_hbo"
@@ -201,13 +225,22 @@ coc_veryhighinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I4,(bu
 ,nhbnw logsum in build scenario,build_ls_nhbnw,"zones[""build_nhnwdcls""]"
 ,nhbw logsum in build scenario,build_ls_nhbw,"zones[""build_nhwdcls""]"
 ,sch logsum in build scenario,build_ls_sch,"zones[""build_schdcls""]"
+,Update weighted hbc logsum in build scenario,build_ls_hbc,build_ls_hbc * (1 - ONLY_BASE)
+,Update weighted hbo logsum in build scenario,build_ls_hbo,build_ls_hbo * (1 - ONLY_BASE)
+,Update weighted hbr logsum in build scenario,build_ls_hbr,build_ls_hbr * (1 - ONLY_BASE)
+,Update weighted hbs logsum in build scenario,build_ls_hbs,build_ls_hbs * (1 - ONLY_BASE)
+,Update weighted hbw logsum in build scenario,build_ls_hbw,build_ls_hbw * (1 - ONLY_BASE)
+,Update nhbnw logsum in build scenario,build_ls_nhbnw,build_ls_nhbnw * (1 - ONLY_BASE)
+,Update nhbw logsum in build scenario,build_ls_nhbw,build_ls_nhbw * (1 - ONLY_BASE)
+,Update sch logsum in build scenario,build_ls_sch,build_ls_sch * (1 - ONLY_BASE)
 #calculate travel options benefit,,,
-,,access_benefit_hbc,(0.5*(base_prod_hbc + build_prod_hbc)*(build_ls_hbc - base_ls_hbc)/UPM_HBC)*(VOT_HBC/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,,access_benefit_hbo,(0.5*(base_prod_hbo + build_prod_hbo)*(build_ls_hbo - base_ls_hbo)/UPM_HBO)*(VOT_HBO/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,,access_benefit_hbr,(0.5*(base_prod_hbr + build_prod_hbr)*(build_ls_hbr - base_ls_hbr)/UPM_HBR)*(VOT_HBR/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,,access_benefit_hbs,(0.5*(base_prod_hbs + build_prod_hbs)*(build_ls_hbs - base_ls_hbs)/UPM_HBS)*(VOT_HBS/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,,access_benefit_hbw,(0.5*(base_prod_hbw + build_prod_hbw)*(build_ls_hbw - base_ls_hbw)/UPM_HBW)*(VOT_HBW/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,,access_benefit_nhbnw,(0.5*(base_prod_nhbnw + build_prod_nhbnw)*(build_ls_nhbnw - base_ls_nhbnw)/UPM_NHBNW)*(VOT_NHBNW/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,,access_benefit_nhbw,(0.5*(base_prod_nhbw + build_prod_nhbw)*(build_ls_nhbw - base_ls_nhbw)/UPM_NHBW)*(VOT_NHBW/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,,access_benefit_sch,(0.5*(base_prod_sch + build_prod_sch)*(build_ls_sch - base_ls_sch)/UPM_SCH)*(VOT_SCH/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,average parameter,_AVERAGE_PARAMETER,0.5 if ONLY_BASE==0 else 1
+,,access_benefit_hbc,(_AVERAGE_PARAMETER*(base_prod_hbc + build_prod_hbc)*(build_ls_hbc - base_ls_hbc)/UPM_HBC)*(VOT_HBC/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,access_benefit_hbo,(_AVERAGE_PARAMETER*(base_prod_hbo + build_prod_hbo)*(build_ls_hbo - base_ls_hbo)/UPM_HBO)*(VOT_HBO/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,access_benefit_hbr,(_AVERAGE_PARAMETER*(base_prod_hbr + build_prod_hbr)*(build_ls_hbr - base_ls_hbr)/UPM_HBR)*(VOT_HBR/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,access_benefit_hbs,(_AVERAGE_PARAMETER*(base_prod_hbs + build_prod_hbs)*(build_ls_hbs - base_ls_hbs)/UPM_HBS)*(VOT_HBS/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,access_benefit_hbw,(_AVERAGE_PARAMETER*(base_prod_hbw + build_prod_hbw)*(build_ls_hbw - base_ls_hbw)/UPM_HBW)*(VOT_HBW/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,access_benefit_nhbnw,(_AVERAGE_PARAMETER*(base_prod_nhbnw + build_prod_nhbnw)*(build_ls_nhbnw - base_ls_nhbnw)/UPM_NHBNW)*(VOT_NHBNW/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,access_benefit_nhbw,(_AVERAGE_PARAMETER*(base_prod_nhbw + build_prod_nhbw)*(build_ls_nhbw - base_ls_nhbw)/UPM_NHBW)*(VOT_NHBW/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,access_benefit_sch,(_AVERAGE_PARAMETER*(base_prod_sch + build_prod_sch)*(build_ls_sch - base_ls_sch)/UPM_SCH)*(VOT_SCH/60)* DISCOUNT_RATE * ANNUALIZATION_FACTOR
 *,travel options benefit,travel_options_benefit,access_benefit_hbc + access_benefit_hbo + access_benefit_hbr + access_benefit_hbs + access_benefit_hbw + access_benefit_nhbnw + access_benefit_nhbw + access_benefit_sch
