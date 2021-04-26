@@ -11,10 +11,10 @@ silos,description,target,expression
 ,,base_mptt,skims_base['mf.0001mptn']
 ,with tolls as minutes,build_mptt,skims_build['mf.0001mptn'] * (1 - ONLY_BASE)
 ,,_,logger.info('origin destination pairs that have toll cost')
-,,index_sov_toll_cost,(skims_build['mf.0001sln'] > 0) & (INCLUDE_TOLL_COST == 1) & (ONLY_BASE == 0)
-,,index_hov_toll_cost,(skims_build['mf.0001hln'] > 0) & (INCLUDE_TOLL_COST == 1) & (ONLY_BASE == 0)
-,,index_hp_toll_cost,(skims_build['mf.0001hpln'] > 0) & (INCLUDE_TOLL_COST == 1) & (ONLY_BASE == 0)
-,,index_mp_toll_cost,(skims_build['mf.0001mpln'] > 0) & (INCLUDE_TOLL_COST == 1) & (ONLY_BASE == 0)
+,,index_sov_toll_cost,(skims_build['mf.0001sln'] > 0) & (SPLIT_TOLL_COST == 1) & (ONLY_BASE == 0)
+,,index_hov_toll_cost,(skims_build['mf.0001hln'] > 0) & (SPLIT_TOLL_COST == 1) & (ONLY_BASE == 0)
+,,index_hp_toll_cost,(skims_build['mf.0001hpln'] > 0) & (SPLIT_TOLL_COST == 1) & (ONLY_BASE == 0)
+,,index_mp_toll_cost,(skims_build['mf.0001mpln'] > 0) & (SPLIT_TOLL_COST == 1) & (ONLY_BASE == 0)
 ,average parameter,_AVERAGE_PARAMETER,-0.5 if ONLY_BASE==0 else -1
 ,,_,logger.info('pa table to od tables using peaking factors')
 ,,_PKPERIODS,"['0708','0809','1617','1718']"

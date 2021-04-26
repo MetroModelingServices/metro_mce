@@ -27,7 +27,7 @@ dest_zone_matrices:
 CONSTANTS:
   #Scenarios to include in calcuations
   ONLY_BASE: 0
-  INCLUDE_TOLL_COST: 1
+  SPLIT_TOLL_COST: 1
   INCLUDE_PARKING_COST_BENEFIT: 0
   INCLUDE_TRANSIT_FARE_BENEFIT: 0
   #value-of-time ($/hour; currently all equal to 2010$ in Kate) for travel time benefit calculations

@@ -11,10 +11,10 @@ silos,description,target,expression
 ,,base_mptt,skims_base['mf.1920mptn']
 ,with tolls as minutes,build_mptt,skims_build['mf.1920mptn'] * (1 - ONLY_BASE)
 ,,_,logger.info('origin destination pairs that have toll cost')
-,,index_sov_toll_cost,(skims_build['mf.1920sln'] > 0) & (INCLUDE_TOLL_COST == 1) & (ONLY_BASE == 0)
-,,index_hov_toll_cost,(skims_build['mf.1920hln'] > 0) & (INCLUDE_TOLL_COST == 1) & (ONLY_BASE == 0)
-,,index_hp_toll_cost,(skims_build['mf.1920hpln'] > 0) & (INCLUDE_TOLL_COST == 1) & (ONLY_BASE == 0)
-,,index_mp_toll_cost,(skims_build['mf.1920mpln'] > 0) & (INCLUDE_TOLL_COST == 1) & (ONLY_BASE == 0)
+,,index_sov_toll_cost,(skims_build['mf.1920sln'] > 0) & (SPLIT_TOLL_COST == 1) & (ONLY_BASE == 0)
+,,index_hov_toll_cost,(skims_build['mf.1920hln'] > 0) & (SPLIT_TOLL_COST == 1) & (ONLY_BASE == 0)
+,,index_hp_toll_cost,(skims_build['mf.1920hpln'] > 0) & (SPLIT_TOLL_COST == 1) & (ONLY_BASE == 0)
+,,index_mp_toll_cost,(skims_build['mf.1920mpln'] > 0) & (SPLIT_TOLL_COST == 1) & (ONLY_BASE == 0)
 ,average parameter,_AVERAGE_PARAMETER,-0.5 if ONLY_BASE==0 else -1
 ,,_,logger.info('pa table to od tables using peaking factors')
 ,,_PKPERIODS,"['0708','0809','1617','1718']"
@@ -836,27 +836,27 @@ silos,description,target,expression
 ,,daily_base_hbc_auto_trips_highinc,mode_choice_pa_hc_base['mf.hcda.cv0.h.op'] + mode_choice_pa_hc_base['mf.hcda.cv1.h.op'] + mode_choice_pa_hc_base['mf.hcda.cv23.h.op'] + mode_choice_pa_hc_base['mf.hcdp.cv0.h.op'] + mode_choice_pa_hc_base['mf.hcdp.cv1.h.op'] + mode_choice_pa_hc_base['mf.hcdp.cv23.h.op'] + mode_choice_pa_hc_base['mf.hcpa.cv0.h.op'] + mode_choice_pa_hc_base['mf.hcpa.cv1.h.op'] + mode_choice_pa_hc_base['mf.hcpa.cv23.h.op']
 ,,daily_base_sch_auto_trips,mode_choice_pa_sc_base['mf.schveh'] + base_p_pa_trips_sch
 ,,daily_build_sch_auto_trips,mode_choice_pa_sc_build['mf.schveh'] + build_p_pa_trips_sch
-,,daily_build_hbw_auto_trips_lowinc,daily_build_hbw_auto_trips_lowinc * (1 - ONLY_BASE),
-,,daily_build_hbw_auto_trips_medinc,daily_build_hbw_auto_trips_medinc * (1 - ONLY_BASE),
-,,daily_build_hbw_auto_trips_highinc,daily_build_hbw_auto_trips_highinc * (1 - ONLY_BASE),
-,,daily_build_nhbw_auto_trips_lowinc,daily_build_nhbw_auto_trips_lowinc * (1 - ONLY_BASE),
-,,daily_build_nhbw_auto_trips_medinc,daily_build_nhbw_auto_trips_medinc * (1 - ONLY_BASE),
-,,daily_build_nhbw_auto_trips_highinc,daily_build_nhbw_auto_trips_highinc * (1 - ONLY_BASE),
-,,daily_build_nhbnw_auto_trips_lowinc,daily_build_nhbnw_auto_trips_lowinc * (1 - ONLY_BASE),
-,,daily_build_nhbnw_auto_trips_medinc,daily_build_nhbnw_auto_trips_medinc * (1 - ONLY_BASE),
-,,daily_build_nhbnw_auto_trips_highinc,daily_build_nhbnw_auto_trips_highinc * (1 - ONLY_BASE),
-,,daily_build_hbo_auto_trips_lowinc,daily_build_hbo_auto_trips_lowinc * (1 - ONLY_BASE),
-,,daily_build_hbo_auto_trips_medinc,daily_build_hbo_auto_trips_medinc * (1 - ONLY_BASE),
-,,daily_build_hbo_auto_trips_highinc,daily_build_hbo_auto_trips_highinc * (1 - ONLY_BASE),
-,,daily_build_hbs_auto_trips_lowinc,daily_build_hbs_auto_trips_lowinc * (1 - ONLY_BASE),
-,,daily_build_hbs_auto_trips_medinc,daily_build_hbs_auto_trips_medinc * (1 - ONLY_BASE),
-,,daily_build_hbs_auto_trips_highinc,daily_build_hbs_auto_trips_highinc * (1 - ONLY_BASE),
-,,daily_build_hbr_auto_trips_lowinc,daily_build_hbr_auto_trips_lowinc * (1 - ONLY_BASE),
-,,daily_build_hbr_auto_trips_medinc,daily_build_hbr_auto_trips_medinc * (1 - ONLY_BASE),
-,,daily_build_hbr_auto_trips_highinc,daily_build_hbr_auto_trips_highinc * (1 - ONLY_BASE),
-,,daily_build_hbc_auto_trips_lowinc,daily_build_hbc_auto_trips_lowinc * (1 - ONLY_BASE),
-,,daily_build_hbc_auto_trips_medinc,daily_build_hbc_auto_trips_medinc * (1 - ONLY_BASE),
-,,daily_build_hbc_auto_trips_highinc,daily_build_hbc_auto_trips_highinc * (1 - ONLY_BASE),
+,,daily_build_hbw_auto_trips_lowinc,daily_build_hbw_auto_trips_lowinc * (1 - ONLY_BASE)
+,,daily_build_hbw_auto_trips_medinc,daily_build_hbw_auto_trips_medinc * (1 - ONLY_BASE)
+,,daily_build_hbw_auto_trips_highinc,daily_build_hbw_auto_trips_highinc * (1 - ONLY_BASE)
+,,daily_build_nhbw_auto_trips_lowinc,daily_build_nhbw_auto_trips_lowinc * (1 - ONLY_BASE)
+,,daily_build_nhbw_auto_trips_medinc,daily_build_nhbw_auto_trips_medinc * (1 - ONLY_BASE)
+,,daily_build_nhbw_auto_trips_highinc,daily_build_nhbw_auto_trips_highinc * (1 - ONLY_BASE)
+,,daily_build_nhbnw_auto_trips_lowinc,daily_build_nhbnw_auto_trips_lowinc * (1 - ONLY_BASE)
+,,daily_build_nhbnw_auto_trips_medinc,daily_build_nhbnw_auto_trips_medinc * (1 - ONLY_BASE)
+,,daily_build_nhbnw_auto_trips_highinc,daily_build_nhbnw_auto_trips_highinc * (1 - ONLY_BASE)
+,,daily_build_hbo_auto_trips_lowinc,daily_build_hbo_auto_trips_lowinc * (1 - ONLY_BASE)
+,,daily_build_hbo_auto_trips_medinc,daily_build_hbo_auto_trips_medinc * (1 - ONLY_BASE)
+,,daily_build_hbo_auto_trips_highinc,daily_build_hbo_auto_trips_highinc * (1 - ONLY_BASE)
+,,daily_build_hbs_auto_trips_lowinc,daily_build_hbs_auto_trips_lowinc * (1 - ONLY_BASE)
+,,daily_build_hbs_auto_trips_medinc,daily_build_hbs_auto_trips_medinc * (1 - ONLY_BASE)
+,,daily_build_hbs_auto_trips_highinc,daily_build_hbs_auto_trips_highinc * (1 - ONLY_BASE)
+,,daily_build_hbr_auto_trips_lowinc,daily_build_hbr_auto_trips_lowinc * (1 - ONLY_BASE)
+,,daily_build_hbr_auto_trips_medinc,daily_build_hbr_auto_trips_medinc * (1 - ONLY_BASE)
+,,daily_build_hbr_auto_trips_highinc,daily_build_hbr_auto_trips_highinc * (1 - ONLY_BASE)
+,,daily_build_hbc_auto_trips_lowinc,daily_build_hbc_auto_trips_lowinc * (1 - ONLY_BASE)
+,,daily_build_hbc_auto_trips_medinc,daily_build_hbc_auto_trips_medinc * (1 - ONLY_BASE)
+,,daily_build_hbc_auto_trips_highinc,daily_build_hbc_auto_trips_highinc * (1 - ONLY_BASE)
 ,,daily_build_sch_auto_trips,daily_build_sch_auto_trips * (1 - ONLY_BASE)
 ,,hbw_reliability_benefit_lowinc, _AVERAGE_PARAMETER * (daily_build_hbw_auto_trips_lowinc + daily_base_hbw_auto_trips_lowinc) * (_ALLPERIODHBWAUTOFACTORS[19]) * ((build_reliability - base_reliability) * VOT_HBW/60.0) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 ,,hbw_reliability_benefit_medinc, _AVERAGE_PARAMETER * (daily_build_hbw_auto_trips_medinc + daily_base_hbw_auto_trips_medinc) * (_ALLPERIODHBWAUTOFACTORS[19]) * ((build_reliability - base_reliability) * VOT_HBW/60.0) * DISCOUNT_RATE * ANNUALIZATION_FACTOR
