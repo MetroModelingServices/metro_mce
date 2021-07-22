@@ -30,6 +30,14 @@ CONSTANTS:
   SPLIT_TOLL_COST: 1
   INCLUDE_PARKING_COST_BENEFIT: 0
   INCLUDE_TRANSIT_FARE_BENEFIT: 0
+  # School weights between income segments
+  SCH_LOWINC_WGT: 0.33
+  SCH_MEDINC_WGT: 0.34
+  SCH_HIGHINC_WGT: 0.33  
+  # Reliability weights between income segments
+  REL_LOWINC_WGT: 0.33
+  REL_MEDINC_WGT: 0.34
+  REL_HIGHINC_WGT: 0.33
   #value-of-time ($/hour; currently all equal to 2010$ in Kate) for travel time benefit calculations
   VOT_HBC: 11.07
   VOT_HBO: 12.48
@@ -61,9 +69,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.0
       HBR_AUTO_PA: 0.0
       HBR_AUTO_AP: 0.0044
-      NHBW_AUTO_PA: 0.00373
-      NHBW_AUTO_AP: 0.0
-      NHBNW_AUTO_OD: 0.00041
+      NHBW_AUTO_PA: 0.0172225
+      NHBW_AUTO_AP: 0.0015
+      NHBNW_AUTO_OD: 0.0013271
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.0
       School_AUTO_PA: 0.0
@@ -88,19 +96,19 @@ CONSTANTS:
       TrucksMedium: 0.0055
       CountBasedFactors: 0.00641
       AdjustmentVeh: 3.76925
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '0102':
       HBW_AUTO_PA: 0.00024
       HBW_AUTO_AP: 0.00315
-      HBO_AUTO_PA: 9.0e-05
+      HBO_AUTO_PA: 0.0
       HBO_AUTO_AP: 0.00125
       HBS_AUTO_PA: 0.0
       HBS_AUTO_AP: 0.0
       HBR_AUTO_PA: 0.0
       HBR_AUTO_AP: 0.00143
-      NHBW_AUTO_PA: 0.00051
+      NHBW_AUTO_PA: 0.0157881
       NHBW_AUTO_AP: 0.0
-      NHBNW_AUTO_OD: 0.00076
+      NHBNW_AUTO_OD: 0.0026322
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.0
       School_AUTO_PA: 0.0
@@ -125,7 +133,7 @@ CONSTANTS:
       TrucksMedium: 0.0048
       CountBasedFactors: 0.00446
       AdjustmentVeh: 4.79568
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '0203':
       HBW_AUTO_PA: 0.0
       HBW_AUTO_AP: 0.00105
@@ -136,8 +144,8 @@ CONSTANTS:
       HBR_AUTO_PA: 0.0
       HBR_AUTO_AP: 0.00074
       NHBW_AUTO_PA: 0.0
-      NHBW_AUTO_AP: 0.0
-      NHBNW_AUTO_OD: 0.00025
+      NHBW_AUTO_AP: 0.004
+      NHBNW_AUTO_OD: 0.0121781
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.0
       School_AUTO_PA: 0.0
@@ -162,7 +170,7 @@ CONSTANTS:
       TrucksMedium: 0.0062
       CountBasedFactors: 0.00422
       AdjustmentVeh: 11.761
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '0304':
       HBW_AUTO_PA: 0.00374
       HBW_AUTO_AP: 0.00101
@@ -173,8 +181,8 @@ CONSTANTS:
       HBR_AUTO_PA: 0.0
       HBR_AUTO_AP: 0.0
       NHBW_AUTO_PA: 0.0
-      NHBW_AUTO_AP: 0.00022
-      NHBNW_AUTO_OD: 0.00594
+      NHBW_AUTO_AP: 0.0075589
+      NHBNW_AUTO_OD: 0.0149056
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.00142
       School_AUTO_PA: 0.0
@@ -199,7 +207,7 @@ CONSTANTS:
       TrucksMedium: 0.0068
       CountBasedFactors: 0.00531
       AdjustmentVeh: 3.34833
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '0405':
       HBW_AUTO_PA: 0.01241
       HBW_AUTO_AP: 0.00125
@@ -209,9 +217,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.0
       HBR_AUTO_PA: 0.00663
       HBR_AUTO_AP: 0.00208
-      NHBW_AUTO_PA: 0.00066
-      NHBW_AUTO_AP: 0.00206
-      NHBNW_AUTO_OD: 0.00165
+      NHBW_AUTO_PA: 0.0036045
+      NHBW_AUTO_AP: 0.007008
+      NHBNW_AUTO_OD: 0.0119624
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.0
       School_AUTO_PA: 0.0
@@ -236,7 +244,7 @@ CONSTANTS:
       TrucksMedium: 0.014
       CountBasedFactors: 0.01098
       AdjustmentVeh: 2.95164
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '0506':
       HBW_AUTO_PA: 0.03951
       HBW_AUTO_AP: 0.00166
@@ -246,9 +254,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.00017
       HBR_AUTO_PA: 0.03325
       HBR_AUTO_AP: 0.0027
-      NHBW_AUTO_PA: 0.00019
-      NHBW_AUTO_AP: 0.00398
-      NHBNW_AUTO_OD: 0.00096
+      NHBW_AUTO_PA: 0.0034154
+      NHBW_AUTO_AP: 0.0077011
+      NHBNW_AUTO_OD: 0.0100732
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.0
       School_AUTO_PA: 0.00037
@@ -273,7 +281,7 @@ CONSTANTS:
       TrucksMedium: 0.02
       CountBasedFactors: 0.02876
       AdjustmentVeh: 2.48609
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '0607':
       HBW_AUTO_PA: 0.09051
       HBW_AUTO_AP: 0.00085
@@ -283,9 +291,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.00093
       HBR_AUTO_PA: 0.02276
       HBR_AUTO_AP: 0.01404
-      NHBW_AUTO_PA: 0.00127
-      NHBW_AUTO_AP: 0.01706
-      NHBNW_AUTO_OD: 0.00528
+      NHBW_AUTO_PA: 0.0034201
+      NHBW_AUTO_AP: 0.0086139
+      NHBNW_AUTO_OD: 0.0087481
       College_AUTO_PA: 0.00746
       College_AUTO_AP: 0.0
       School_AUTO_PA: 0.02522
@@ -310,7 +318,7 @@ CONSTANTS:
       TrucksMedium: 0.0355
       CountBasedFactors: 0.05273
       AdjustmentVeh: 1.92455
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     0708:
       HBW_AUTO_PA: 0.15149
       HBW_AUTO_AP: 0.00362
@@ -320,9 +328,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.00479
       HBR_AUTO_PA: 0.02318
       HBR_AUTO_AP: 0.01088
-      NHBW_AUTO_PA: 0.0073
-      NHBW_AUTO_AP: 0.06379
-      NHBNW_AUTO_OD: 0.02614
+      NHBW_AUTO_PA: 0.0076074
+      NHBW_AUTO_AP: 0.0127378
+      NHBNW_AUTO_OD: 0.0103719
       College_AUTO_PA: 0.10822
       College_AUTO_AP: 0.0
       School_AUTO_PA: 0.2034
@@ -347,7 +355,7 @@ CONSTANTS:
       TrucksMedium: 0.054
       CountBasedFactors: 0.06688
       AdjustmentVeh: 0.75244
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     0809:
       HBW_AUTO_PA: 0.08414
       HBW_AUTO_AP: 0.0043
@@ -357,9 +365,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.00564
       HBR_AUTO_PA: 0.03211
       HBR_AUTO_AP: 0.00949
-      NHBW_AUTO_PA: 0.01548
-      NHBW_AUTO_AP: 0.0606
-      NHBNW_AUTO_OD: 0.04554
+      NHBW_AUTO_PA: 0.0127062
+      NHBW_AUTO_AP: 0.0315707
+      NHBNW_AUTO_OD: 0.0257369
       College_AUTO_PA: 0.08079
       College_AUTO_AP: 0.00126
       School_AUTO_PA: 0.15487
@@ -384,7 +392,7 @@ CONSTANTS:
       TrucksMedium: 0.083
       CountBasedFactors: 0.06431
       AdjustmentVeh: 0.77973
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     0910:
       HBW_AUTO_PA: 0.03764
       HBW_AUTO_AP: 0.00394
@@ -394,9 +402,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.01448
       HBR_AUTO_PA: 0.03444
       HBR_AUTO_AP: 0.02243
-      NHBW_AUTO_PA: 0.02229
-      NHBW_AUTO_AP: 0.03837
-      NHBNW_AUTO_OD: 0.05087
+      NHBW_AUTO_PA: 0.0155489
+      NHBW_AUTO_AP: 0.0389798
+      NHBNW_AUTO_OD: 0.0625977
       College_AUTO_PA: 0.06297
       College_AUTO_AP: 0.00398
       School_AUTO_PA: 0.01736
@@ -421,7 +429,7 @@ CONSTANTS:
       TrucksMedium: 0.0869
       CountBasedFactors: 0.05591
       AdjustmentVeh: 1.07786
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1011':
       HBW_AUTO_PA: 0.01952
       HBW_AUTO_AP: 0.00769
@@ -431,9 +439,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.03693
       HBR_AUTO_PA: 0.03257
       HBR_AUTO_AP: 0.01494
-      NHBW_AUTO_PA: 0.02968
-      NHBW_AUTO_AP: 0.02917
-      NHBNW_AUTO_OD: 0.07558
+      NHBW_AUTO_PA: 0.0501985
+      NHBW_AUTO_AP: 0.0466453
+      NHBNW_AUTO_OD: 0.0659954
       College_AUTO_PA: 0.0394
       College_AUTO_AP: 0.00835
       School_AUTO_PA: 0.01063
@@ -458,7 +466,7 @@ CONSTANTS:
       TrucksMedium: 0.0847
       CountBasedFactors: 0.05305
       AdjustmentVeh: 1.07242
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1112':
       HBW_AUTO_PA: 0.01104
       HBW_AUTO_AP: 0.01176
@@ -468,9 +476,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.0453
       HBR_AUTO_PA: 0.02132
       HBR_AUTO_AP: 0.02591
-      NHBW_AUTO_PA: 0.05847
-      NHBW_AUTO_AP: 0.03514
-      NHBNW_AUTO_OD: 0.09269
+      NHBW_AUTO_PA: 0.0447424
+      NHBW_AUTO_AP: 0.0478997
+      NHBNW_AUTO_OD: 0.0857245
       College_AUTO_PA: 0.03306
       College_AUTO_AP: 0.00894
       School_AUTO_PA: 0.01283
@@ -495,7 +503,7 @@ CONSTANTS:
       TrucksMedium: 0.0837
       CountBasedFactors: 0.05572
       AdjustmentVeh: 0.96097
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1213':
       HBW_AUTO_PA: 0.01572
       HBW_AUTO_AP: 0.01802
@@ -505,9 +513,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.04582
       HBR_AUTO_PA: 0.02242
       HBR_AUTO_AP: 0.01451
-      NHBW_AUTO_PA: 0.05779
-      NHBW_AUTO_AP: 0.0541
-      NHBNW_AUTO_OD: 0.08451
+      NHBW_AUTO_PA: 0.0551695
+      NHBW_AUTO_AP: 0.0485829
+      NHBNW_AUTO_OD: 0.1011404
       College_AUTO_PA: 0.03142
       College_AUTO_AP: 0.04958
       School_AUTO_PA: 0.01206
@@ -532,7 +540,7 @@ CONSTANTS:
       TrucksMedium: 0.0821
       CountBasedFactors: 0.05793
       AdjustmentVeh: 0.93944
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1314':
       HBW_AUTO_PA: 0.01543
       HBW_AUTO_AP: 0.01726
@@ -542,9 +550,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.04725
       HBR_AUTO_PA: 0.01182
       HBR_AUTO_AP: 0.01356
-      NHBW_AUTO_PA: 0.03978
-      NHBW_AUTO_AP: 0.04251
-      NHBNW_AUTO_OD: 0.10057
+      NHBW_AUTO_PA: 0.0556927
+      NHBW_AUTO_AP: 0.0554853
+      NHBNW_AUTO_OD: 0.1016253
       College_AUTO_PA: 0.01061
       College_AUTO_AP: 0.02715
       School_AUTO_PA: 0.01183
@@ -569,7 +577,7 @@ CONSTANTS:
       TrucksMedium: 0.0791
       CountBasedFactors: 0.05922
       AdjustmentVeh: 1.09659
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1415':
       HBW_AUTO_PA: 0.01353
       HBW_AUTO_AP: 0.02918
@@ -579,9 +587,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.06607
       HBR_AUTO_PA: 0.02026
       HBR_AUTO_AP: 0.01544
-      NHBW_AUTO_PA: 0.04835
-      NHBW_AUTO_AP: 0.02712
-      NHBNW_AUTO_OD: 0.09438
+      NHBW_AUTO_PA: 0.0357597
+      NHBW_AUTO_AP: 0.0406671
+      NHBNW_AUTO_OD: 0.0902364
       College_AUTO_PA: 0.01289
       College_AUTO_AP: 0.06447
       School_AUTO_PA: 0.0667
@@ -606,7 +614,7 @@ CONSTANTS:
       TrucksMedium: 0.0801
       CountBasedFactors: 0.06448
       AdjustmentVeh: 0.82645
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1516':
       HBW_AUTO_PA: 0.01136
       HBW_AUTO_AP: 0.05439
@@ -616,9 +624,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.05592
       HBR_AUTO_PA: 0.02599
       HBR_AUTO_AP: 0.02073
-      NHBW_AUTO_PA: 0.06914
-      NHBW_AUTO_AP: 0.02281
-      NHBNW_AUTO_OD: 0.09667
+      NHBW_AUTO_PA: 0.0352371
+      NHBW_AUTO_AP: 0.0338626
+      NHBNW_AUTO_OD: 0.0803405
       College_AUTO_PA: 0.00742
       College_AUTO_AP: 0.03996
       School_AUTO_PA: 0.03401
@@ -643,7 +651,7 @@ CONSTANTS:
       TrucksMedium: 0.0727
       CountBasedFactors: 0.0697
       AdjustmentVeh: 0.90858
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1617':
       HBW_AUTO_PA: 0.00924
       HBW_AUTO_AP: 0.08089
@@ -653,9 +661,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.07997
       HBR_AUTO_PA: 0.04843
       HBR_AUTO_AP: 0.03722
-      NHBW_AUTO_PA: 0.08582
-      NHBW_AUTO_AP: 0.01355
-      NHBNW_AUTO_OD: 0.08907
+      NHBW_AUTO_PA: 0.0497471
+      NHBW_AUTO_AP: 0.0108017
+      NHBNW_AUTO_OD: 0.0966335
       College_AUTO_PA: 0.03611
       College_AUTO_AP: 0.03049
       School_AUTO_PA: 0.01718
@@ -680,7 +688,7 @@ CONSTANTS:
       TrucksMedium: 0.0551
       CountBasedFactors: 0.07272
       AdjustmentVeh: 0.88558
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1718':
       HBW_AUTO_PA: 0.00845
       HBW_AUTO_AP: 0.10688
@@ -690,9 +698,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.07158
       HBR_AUTO_PA: 0.05864
       HBR_AUTO_AP: 0.0416
-      NHBW_AUTO_PA: 0.0806
-      NHBW_AUTO_AP: 0.00519
-      NHBNW_AUTO_OD: 0.07202
+      NHBW_AUTO_PA: 0.0435306
+      NHBW_AUTO_AP: 0.010284
+      NHBNW_AUTO_OD: 0.0687247
       College_AUTO_PA: 0.06136
       College_AUTO_AP: 0.04445
       School_AUTO_PA: 0.01692
@@ -717,7 +725,7 @@ CONSTANTS:
       TrucksMedium: 0.0429
       CountBasedFactors: 0.07163
       AdjustmentVeh: 0.79846
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1819':
       HBW_AUTO_PA: 0.00753
       HBW_AUTO_AP: 0.04875
@@ -727,9 +735,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.06533
       HBR_AUTO_PA: 0.06716
       HBR_AUTO_AP: 0.06908
-      NHBW_AUTO_PA: 0.02932
-      NHBW_AUTO_AP: 0.00432
-      NHBNW_AUTO_OD: 0.06876
+      NHBW_AUTO_PA: 0.0336608
+      NHBW_AUTO_AP: 0.0070755
+      NHBNW_AUTO_OD: 0.0630793
       College_AUTO_PA: 0.03005
       College_AUTO_AP: 0.02094
       School_AUTO_PA: 0.00863
@@ -754,7 +762,7 @@ CONSTANTS:
       TrucksMedium: 0.033
       CountBasedFactors: 0.06108
       AdjustmentVeh: 0.89957
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '1920':
       HBW_AUTO_PA: 0.00212
       HBW_AUTO_AP: 0.02086
@@ -764,9 +772,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.03722
       HBR_AUTO_PA: 0.02538
       HBR_AUTO_AP: 0.06633
-      NHBW_AUTO_PA: 0.00737
-      NHBW_AUTO_AP: 0.00508
-      NHBNW_AUTO_OD: 0.03965
+      NHBW_AUTO_PA: 0.0245302
+      NHBW_AUTO_AP: 0.0078797
+      NHBNW_AUTO_OD: 0.0353329
       College_AUTO_PA: 0.02874
       College_AUTO_AP: 0.05438
       School_AUTO_PA: 0.00594
@@ -791,7 +799,7 @@ CONSTANTS:
       TrucksMedium: 0.0227
       CountBasedFactors: 0.04284
       AdjustmentVeh: 0.92494
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '2021':
       HBW_AUTO_PA: 0.00165
       HBW_AUTO_AP: 0.01439
@@ -801,9 +809,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.03169
       HBR_AUTO_PA: 0.00756
       HBR_AUTO_AP: 0.04948
-      NHBW_AUTO_PA: 0.00589
-      NHBW_AUTO_AP: 0.00141
-      NHBNW_AUTO_OD: 0.02398
+      NHBW_AUTO_PA: 0.0148005
+      NHBW_AUTO_AP: 0.0076969
+      NHBNW_AUTO_OD: 0.0185083
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.04847
       School_AUTO_PA: 0.00262
@@ -828,7 +836,7 @@ CONSTANTS:
       TrucksMedium: 0.0169
       CountBasedFactors: 0.03301
       AdjustmentVeh: 1.04062
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '2122':
       HBW_AUTO_PA: 0.00076
       HBW_AUTO_AP: 0.01533
@@ -838,9 +846,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.02518
       HBR_AUTO_PA: 0.00147
       HBR_AUTO_AP: 0.04045
-      NHBW_AUTO_PA: 0.00425
-      NHBW_AUTO_AP: 0.00099
-      NHBNW_AUTO_OD: 0.01867
+      NHBW_AUTO_PA: 0.0112314
+      NHBW_AUTO_AP: 0.0074516
+      NHBNW_AUTO_OD: 0.0170411
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.0416
       School_AUTO_PA: 0.0
@@ -865,7 +873,7 @@ CONSTANTS:
       TrucksMedium: 0.012
       CountBasedFactors: 0.02774
       AdjustmentVeh: 1.20696
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '2223':
       HBW_AUTO_PA: 0.00146
       HBW_AUTO_AP: 0.00655
@@ -875,9 +883,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.00673
       HBR_AUTO_PA: 0.00246
       HBR_AUTO_AP: 0.01748
-      NHBW_AUTO_PA: 0.00219
-      NHBW_AUTO_AP: 0.00105
-      NHBNW_AUTO_OD: 0.0045
+      NHBW_AUTO_PA: 0.0095808
+      NHBW_AUTO_AP: 0.0036757
+      NHBNW_AUTO_OD: 0.0113279
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.00409
       School_AUTO_PA: 0.00108
@@ -902,7 +910,7 @@ CONSTANTS:
       TrucksMedium: 0.0099
       CountBasedFactors: 0.01898
       AdjustmentVeh: 2.45692
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
     '2324':
       HBW_AUTO_PA: 0.00037
       HBW_AUTO_AP: 0.00612
@@ -912,9 +920,9 @@ CONSTANTS:
       HBS_AUTO_AP: 0.00093
       HBR_AUTO_PA: 0.0
       HBR_AUTO_AP: 0.00719
-      NHBW_AUTO_PA: 0.0014
-      NHBW_AUTO_AP: 0.0
-      NHBNW_AUTO_OD: 0.00115
+      NHBW_AUTO_PA: 0.0076295
+      NHBW_AUTO_AP: 0.0015
+      NHBNW_AUTO_OD: 0.0037565
       College_AUTO_PA: 0.0
       College_AUTO_AP: 0.0
       School_AUTO_PA: 0.0
@@ -939,4 +947,4 @@ CONSTANTS:
       TrucksMedium: 0.0084
       CountBasedFactors: 0.01193
       AdjustmentVeh: 3.75072
-      AdjustmentTransit: 1.0
+      AdjustmentTransit: 1
