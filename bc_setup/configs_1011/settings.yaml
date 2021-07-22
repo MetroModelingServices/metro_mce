@@ -14,14 +14,14 @@ globals:
 
 models:
   - aggregate_demographics_processor
-  - aggregate_zone_processor
-  - aggregate_zone_benefits
+#   - aggregate_zone_processor
+#   - aggregate_zone_benefits
   - aggregate_od_processor
-  - link_daily_processor
+#   - link_daily_processor
   - write_data_dictionary
   - write_tables
 
-#resume_after: aggregate_zone_benefits
+# #resume_after: aggregate_zone_benefits
 
 
 output_tables:
