@@ -225,11 +225,11 @@ coc_veryhighinc,vehicle ownership cost benefit,veh_ownership_cost_benefit_I4,(bu
 ,nhbnw logsum in build scenario,build_ls_nhbnw,"zones[""build_nhnwdcls""]"
 ,nhbw logsum in build scenario,build_ls_nhbw,"zones[""build_nhwdcls""]"
 ,sch logsum in build scenario,build_ls_sch,"zones[""build_schdcls""]"
-,Update weighted hbc logsum in build scenario,build_ls_hbc,build_ls_hbc * (1 - ONLY_BASE)
-,Update weighted hbo logsum in build scenario,build_ls_hbo,build_ls_hbo * (1 - ONLY_BASE)
-,Update weighted hbr logsum in build scenario,build_ls_hbr,build_ls_hbr * (1 - ONLY_BASE)
-,Update weighted hbs logsum in build scenario,build_ls_hbs,build_ls_hbs * (1 - ONLY_BASE)
-,Update weighted hbw logsum in build scenario,build_ls_hbw,build_ls_hbw * (1 - ONLY_BASE)
+,Update weighted hbc logsum in build scenario,build_ls_hbc,"np.where(np.isinf(build_ls_hbc), 0, build_ls_hbc)"
+,Update weighted hbo logsum in build scenario,build_ls_hbo,"np.where(np.isinf(build_ls_hbo), 0, build_ls_hbo)"
+,Update weighted hbr logsum in build scenario,build_ls_hbr,"np.where(np.isinf(build_ls_hbr), 0, build_ls_hbr)"
+,Update weighted hbs logsum in build scenario,build_ls_hbs,"np.where(np.isinf(build_ls_hbs), 0, build_ls_hbs)"
+,Update weighted hbw logsum in build scenario,build_ls_hbw,"np.where(np.isinf(build_ls_hbw), 0, build_ls_hbw)"
 ,Update nhbnw logsum in build scenario,build_ls_nhbnw,build_ls_nhbnw * (1 - ONLY_BASE)
 ,Update nhbw logsum in build scenario,build_ls_nhbw,build_ls_nhbw * (1 - ONLY_BASE)
 ,Update sch logsum in build scenario,build_ls_sch,build_ls_sch * (1 - ONLY_BASE)
