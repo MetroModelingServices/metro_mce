@@ -7,8 +7,8 @@ time_periods = [str(i).zfill(2) + str(i + 1).zfill(2) for i in range(24)]
 
 pk_periods = ['0708', '0809', '1617', '1718']
 
-# Copy all files from 1617 time period to output folder
-copy_folder = 'output_1617'
+# Copy all files from 0001 time period to output folder
+copy_folder = 'output_0001'
 for file_name in os.listdir(copy_folder):
     full_name = os.path.join(os.getcwd(), copy_folder, file_name)
     if os.path.isfile(full_name):
@@ -25,7 +25,7 @@ trace_aggregate_od_df = pd.DataFrame()
 final_aggregate_results_df = pd.DataFrame()
 final_agg_results_pk = pd.DataFrame()
 final_agg_results_op = pd.DataFrame()
-agg_variables = ['aggregate_od', 'link_daily']
+agg_variables = ['aggregate_od']
 
 idx = pd.IndexSlice
 
