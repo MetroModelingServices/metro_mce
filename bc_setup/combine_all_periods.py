@@ -15,7 +15,9 @@ for file_name in os.listdir(copy_folder):
         shutil.copy(full_name, os.path.join(os.getcwd(), 'output'))
 
 final_aggregate_od_district_summary_file = 'final_aggregate_od_district_summary.csv'
+final_aggregate_od_district_summary_agg_file = 'final_aggregate_od_district_summary_agg.csv'
 final_aggregate_od_zone_summary_file = 'final_aggregate_od_zone_summary.csv'
+final_aggregate_od_zone_summary_agg_file = 'final_aggregate_od_zone_summary_agg.csv'
 trace_aggregate_od_file = 'trace.aggregate_od.csv'
 final_aggregate_results_file = 'final_aggregate_results.csv'
 
@@ -26,6 +28,9 @@ final_aggregate_results_df = pd.DataFrame()
 final_agg_results_pk = pd.DataFrame()
 final_agg_results_op = pd.DataFrame()
 agg_variables = ['aggregate_od']
+final_results_variables = pd.read_csv(os.path.join(os.getcwd(), copy_folder,
+							final_aggregate_results_file), usecols=['Processor', 'Target'])
+agg_od_results = final_results_variables[final_results_variables.Processor=='aggregate_od'].Target.values.tolist()
 
 idx = pd.IndexSlice
 
@@ -132,14 +137,31 @@ final_aggregate_od_district_summary_df.to_csv(os.path.join(os.getcwd(), 'output'
                                                            final_aggregate_od_district_summary_file),
                                               index=False,
                                               chunksize=1E6)
+
+final_aggregate_od_district_summary_agg_df = final_aggregate_od_district_summary_df.groupby(['orig','dest'])[agg_od_results].agg(sum).reset_index()
+
+final_aggregate_od_district_summary_agg_df.to_csv(os.path.join(os.getcwd(), 'output',
+                                                           final_aggregate_od_district_summary_agg_file),
+                                              index=False,
+                                              chunksize=1E6)
+
 final_aggregate_od_zone_summary_df.to_csv(os.path.join(os.getcwd(), 'output',
                                                        final_aggregate_od_zone_summary_file),
                                           index=False,
                                           chunksize=1E6)
+
+final_aggregate_od_zone_summary_agg_df = final_aggregate_od_zone_summary_df.groupby(['orig'])[agg_od_results].agg(sum).reset_index()
+
+final_aggregate_od_zone_summary_agg_df.to_csv(os.path.join(os.getcwd(), 'output',
+                                                           final_aggregate_od_zone_summary_agg_file),
+                                              index=False,
+                                              chunksize=1E6)
+
 trace_aggregate_od_df.to_csv(os.path.join(os.getcwd(), 'output',
                                           trace_aggregate_od_file),
                              index=True,
                              chunksize=1E6)
+
 final_aggregate_results_df.to_csv(os.path.join(os.getcwd(), 'output',
                                                final_aggregate_results_file),
                                   index=True,
