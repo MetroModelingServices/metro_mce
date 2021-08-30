@@ -89,6 +89,7 @@ link_daily_table_column_map:
   num_lanes : num_lanes
   type : type
   volume_delay_func : volume_delay_func
+  study_area : study_area
 
 
 CONSTANTS:
