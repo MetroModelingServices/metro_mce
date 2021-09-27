@@ -436,6 +436,10 @@ Silos,Description,Target,Expression
 *,,f_crashes_urb,_nf_urb+_nf_urb_x
 *,,p_crashes_urb,_npdo_urb+_np_urb_x
 *,,i_crashes_urb,_ni_urb+_ni_urb_x
+*,Total Urban Arterial RS+Intrsn Crashes in Study Area,_tot_crashes_urb_study_area,(_ntot_urb+_ntot_urb_x) * _study_area
+*,,f_crashes_urb_study_area,(_nf_urb+_nf_urb_x) * _study_area
+*,,p_crashes_urb_study_area,(_npdo_urb+_np_urb_x) * _study_area
+*,,i_crashes_urb_study_area,(_ni_urb+_ni_urb_x) * _study_area
 # safety costs,,,
 *, total annual  PDO crashes,total_pdo_crashes,p_crashes_fwy+p_crashes_rxl+p_crashes_r2l+p_crashes_urb
 *, total annual injury crashes,total_inj_crashes,i_crashes_fwy+i_crashes_rxl+i_crashes_r2l+i_crashes_urb
