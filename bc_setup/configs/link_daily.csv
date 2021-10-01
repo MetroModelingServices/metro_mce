@@ -480,17 +480,17 @@ Silos,Description,Target,Expression
 ,,_pm10_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
 ,,_nox_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
 ,,_vocs_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
-,co2 emissions cost,emissions_co2,_co2_rate * vmt_total * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,pm25 emissons cost,emissions_pm25,_pm25_rate * vmt_total * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,pm10 emissions cost,emissions_pm10,_pm10_rate * vmt_total * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,nox emissions costs,emissions_nox,_nox_rate * vmt_total * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,vocs emissions costs,emissions_vocs,_vocs_rate * vmt_total * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,co2 emissions cost,emissions_co2,_co2_rate.fillna(0) * vmt_total * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25,_pm25_rate.fillna(0) * vmt_total * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10,_pm10_rate.fillna(0)* vmt_total * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox,_nox_rate.fillna(0) * vmt_total * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs,_vocs_rate.fillna(0) * vmt_total * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
 *,emissions cost benefit,emissions_cost_benefit,(emissions_co2 + emissions_pm25 + emissions_pm10 + emissions_nox + emissions_vocs) * -1
 *,emissions cost benefit in Study Area,emissions_cost_benefit_study_area,emissions_cost_benefit * _study_area
 #vehicle operating costs - fuel,,,
 ,million BTUs per mile,_fuelconsump_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
-,,auto_fuel_cost,((_auto_volume_daily * _length * _fuelconsump_rate) * 1000000 / GALLON_TO_BTU) * GAS_COST
-,,truck_fuel_cost,((_truck_volume_daily * _length * _fuelconsump_rate) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,auto_fuel_cost,((_auto_volume_daily * _length * _fuelconsump_rate.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost,((_truck_volume_daily * _length * _fuelconsump_rate.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
 ,fuel auto operating cost,fuel_cost,((auto_fuel_cost + truck_fuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
 #vehicle operating costs - non-fuel,,,
 ,,auto_nonfuel_cost,_auto_volume_daily * _length * CAR_COST_PER_MILE
