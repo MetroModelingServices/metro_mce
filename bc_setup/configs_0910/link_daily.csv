@@ -500,5 +500,9 @@ Silos,Description,Target,Expression
 ,auto fuel and other costs,auto_cost,((_auto_volume_daily * _length * CAR_ALLCOST_PER_MILE) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
 *,vehicle operating cost benefit,veh_operating_cost_benefit,auto_cost + truck_cost
 *,vehicle operating cost benefit in Study Area,veh_operating_cost_benefit_study_area,veh_operating_cost_benefit * _study_area
+*,auto vmt for reporting,vmt_auto,_auto_volume_daily * _length
+*,auto vmt for reporting in Study Area,vmt_auto_study_area,vmt_auto * _study_area
+*,truck vmt for reporting,vmt_truck,_truck_volume_daily * _length
+*,truck vmt for reporting in Study Area,vmt_truck_study_area,vmt_truck * _study_area
 *,vmt for reporting,vmt_total,vmt_total
 *,vmt for reporting in Study Area,vmt_total_study_area,vmt_total * _study_area

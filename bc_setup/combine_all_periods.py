@@ -31,6 +31,10 @@ agg_variables = ['aggregate_od']
 final_results_variables = pd.read_csv(os.path.join(os.getcwd(), copy_folder,
 							final_aggregate_results_file), usecols=['Processor', 'Target'])
 agg_od_results = final_results_variables[final_results_variables.Processor=='aggregate_od'].Target.values.tolist()
+annual_trip_variables = pd.read_csv(os.path.join(os.getcwd(), copy_folder,
+							final_aggregate_od_district_summary_file), nrows=0).columns.tolist()
+annual_trip_variables = [temp_var for temp_var in annual_trip_variables if 'annual' in temp_var]
+# agg_od_results = agg_od_results + annual_trip_variables
 
 idx = pd.IndexSlice
 
@@ -138,7 +142,10 @@ final_aggregate_od_district_summary_df.to_csv(os.path.join(os.getcwd(), 'output'
                                               index=False,
                                               chunksize=1E6)
 
-final_aggregate_od_district_summary_agg_df = final_aggregate_od_district_summary_df.groupby(['orig','dest'])[agg_od_results].agg(sum).reset_index()
+final_aggregate_od_district_summary_agg_df = final_aggregate_od_district_summary_df.groupby(['orig','dest'])[agg_od_results].agg(sum)
+final_aggregate_od_district_summary_agg_df = final_aggregate_od_district_summary_df[final_aggregate_od_district_summary_df.time_period.isin(['0001','0708'])].\
+                                                groupby(['orig','dest'])[annual_trip_variables].agg(sum).\
+                                                join(final_aggregate_od_district_summary_agg_df, how='outer').reset_index()
 
 final_aggregate_od_district_summary_agg_df.to_csv(os.path.join(os.getcwd(), 'output',
                                                            final_aggregate_od_district_summary_agg_file),
@@ -150,7 +157,10 @@ final_aggregate_od_zone_summary_df.to_csv(os.path.join(os.getcwd(), 'output',
                                           index=False,
                                           chunksize=1E6)
 
-final_aggregate_od_zone_summary_agg_df = final_aggregate_od_zone_summary_df.groupby(['orig'])[agg_od_results].agg(sum).reset_index()
+final_aggregate_od_zone_summary_agg_df = final_aggregate_od_zone_summary_df.groupby(['orig'])[agg_od_results].agg(sum)
+final_aggregate_od_zone_summary_agg_df = final_aggregate_od_zone_summary_df[final_aggregate_od_zone_summary_df.time_period.isin(['0001','0708'])].\
+                                                groupby(['orig'])[annual_trip_variables].agg(sum).\
+                                                join(final_aggregate_od_zone_summary_agg_df, how='outer').reset_index()
 
 final_aggregate_od_zone_summary_agg_df.to_csv(os.path.join(os.getcwd(), 'output',
                                                            final_aggregate_od_zone_summary_agg_file),
