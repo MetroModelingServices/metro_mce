@@ -474,23 +474,472 @@ Silos,Description,Target,Expression
 ,,_ltype,"_ltype.replace(2,'Art')"
 ,,_ltype,"_ltype.replace(3,'Local')"
 ,,_ltype,"_ltype.replace(4,'Ramp')"
-,,_emissions_key,"_ltype.astype(str) + '_' + _speed.clip(lower=3, upper=65).round().astype(int).astype(str)"
-,,_co2_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
-,,_pm25_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
-,,_pm10_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
-,,_nox_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
-,,_vocs_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
-,co2 emissions cost,emissions_co2,_co2_rate.fillna(0) * vmt_total * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,pm25 emissons cost,emissions_pm25,_pm25_rate.fillna(0) * vmt_total * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,pm10 emissions cost,emissions_pm10,_pm10_rate.fillna(0)* vmt_total * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,nox emissions costs,emissions_nox,_nox_rate.fillna(0) * vmt_total * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
-,vocs emissions costs,emissions_vocs,_vocs_rate.fillna(0) * vmt_total * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h1,"links.auto_time_h1.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h1.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h1,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h1,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h1,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h1,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h1,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h1,"(links.auto_volume_h1 + links.mtvol_h1 + links.htvol_h1).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h1,_co2_rate_h1.fillna(0) * vmt_h1 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h1,_pm25_rate_h1.fillna(0) * vmt_h1 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h1,_pm10_rate_h1.fillna(0)* vmt_h1 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h1,_nox_rate_h1.fillna(0) * vmt_h1 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h1,_vocs_rate_h1.fillna(0) * vmt_h1 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h2,"links.auto_time_h2.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h2.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h2,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h2,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h2,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h2,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h2,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h2,"(links.auto_volume_h2 + links.mtvol_h2 + links.htvol_h2).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h2,_co2_rate_h2.fillna(0) * vmt_h2 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h2,_pm25_rate_h2.fillna(0) * vmt_h2 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h2,_pm10_rate_h2.fillna(0)* vmt_h2 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h2,_nox_rate_h2.fillna(0) * vmt_h2 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h2,_vocs_rate_h2.fillna(0) * vmt_h2 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h3,"links.auto_time_h3.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h3.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h3,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h3,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h3,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h3,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h3,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h3,"(links.auto_volume_h3 + links.mtvol_h3 + links.htvol_h3).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h3,_co2_rate_h3.fillna(0) * vmt_h3 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h3,_pm25_rate_h3.fillna(0) * vmt_h3 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h3,_pm10_rate_h3.fillna(0)* vmt_h3 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h3,_nox_rate_h3.fillna(0) * vmt_h3 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h3,_vocs_rate_h3.fillna(0) * vmt_h3 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h4,"links.auto_time_h4.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h4.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h4,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h4,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h4,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h4,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h4,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h4,"(links.auto_volume_h4 + links.mtvol_h4 + links.htvol_h4).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h4,_co2_rate_h4.fillna(0) * vmt_h4 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h4,_pm25_rate_h4.fillna(0) * vmt_h4 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h4,_pm10_rate_h4.fillna(0)* vmt_h4 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h4,_nox_rate_h4.fillna(0) * vmt_h4 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h4,_vocs_rate_h4.fillna(0) * vmt_h4 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h5,"links.auto_time_h5.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h5.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h5,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h5,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h5,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h5,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h5,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h5,"(links.auto_volume_h5 + links.mtvol_h5 + links.htvol_h5).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h5,_co2_rate_h5.fillna(0) * vmt_h5 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h5,_pm25_rate_h5.fillna(0) * vmt_h5 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h5,_pm10_rate_h5.fillna(0)* vmt_h5 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h5,_nox_rate_h5.fillna(0) * vmt_h5 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h5,_vocs_rate_h5.fillna(0) * vmt_h5 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h6,"links.auto_time_h6.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h6.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h6,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h6,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h6,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h6,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h6,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h6,"(links.auto_volume_h6 + links.mtvol_h6 + links.htvol_h6).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h6,_co2_rate_h6.fillna(0) * vmt_h6 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h6,_pm25_rate_h6.fillna(0) * vmt_h6 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h6,_pm10_rate_h6.fillna(0)* vmt_h6 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h6,_nox_rate_h6.fillna(0) * vmt_h6 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h6,_vocs_rate_h6.fillna(0) * vmt_h6 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h7,"links.auto_time_h7.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h7.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h7,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h7,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h7,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h7,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h7,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h7,"(links.auto_volume_h7 + links.mtvol_h7 + links.htvol_h7).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h7,_co2_rate_h7.fillna(0) * vmt_h7 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h7,_pm25_rate_h7.fillna(0) * vmt_h7 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h7,_pm10_rate_h7.fillna(0)* vmt_h7 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h7,_nox_rate_h7.fillna(0) * vmt_h7 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h7,_vocs_rate_h7.fillna(0) * vmt_h7 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h8,"links.auto_time_h8.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h8.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h8,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h8,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h8,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h8,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h8,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h8,"(links.auto_volume_h8 + links.mtvol_h8 + links.htvol_h8).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h8,_co2_rate_h8.fillna(0) * vmt_h8 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h8,_pm25_rate_h8.fillna(0) * vmt_h8 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h8,_pm10_rate_h8.fillna(0)* vmt_h8 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h8,_nox_rate_h8.fillna(0) * vmt_h8 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h8,_vocs_rate_h8.fillna(0) * vmt_h8 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h9,"links.auto_time_h9.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h9.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h9,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h9,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h9,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h9,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h9,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h9,"(links.auto_volume_h9 + links.mtvol_h9 + links.htvol_h9).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h9,_co2_rate_h9.fillna(0) * vmt_h9 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h9,_pm25_rate_h9.fillna(0) * vmt_h9 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h9,_pm10_rate_h9.fillna(0)* vmt_h9 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h9,_nox_rate_h9.fillna(0) * vmt_h9 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h9,_vocs_rate_h9.fillna(0) * vmt_h9 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h10,"links.auto_time_h10.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h10.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h10,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h10,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h10,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h10,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h10,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h10,"(links.auto_volume_h10 + links.mtvol_h10 + links.htvol_h10).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h10,_co2_rate_h10.fillna(0) * vmt_h10 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h10,_pm25_rate_h10.fillna(0) * vmt_h10 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h10,_pm10_rate_h10.fillna(0)* vmt_h10 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h10,_nox_rate_h10.fillna(0) * vmt_h10 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h10,_vocs_rate_h10.fillna(0) * vmt_h10 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h11,"links.auto_time_h11.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h11.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h11,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h11,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h11,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h11,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h11,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h11,"(links.auto_volume_h11 + links.mtvol_h11 + links.htvol_h11).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h11,_co2_rate_h11.fillna(0) * vmt_h11 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h11,_pm25_rate_h11.fillna(0) * vmt_h11 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h11,_pm10_rate_h11.fillna(0)* vmt_h11 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h11,_nox_rate_h11.fillna(0) * vmt_h11 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h11,_vocs_rate_h11.fillna(0) * vmt_h11 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h12,"links.auto_time_h12.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h12.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h12,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h12,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h12,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h12,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h12,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h12,"(links.auto_volume_h12 + links.mtvol_h12 + links.htvol_h12).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h12,_co2_rate_h12.fillna(0) * vmt_h12 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h12,_pm25_rate_h12.fillna(0) * vmt_h12 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h12,_pm10_rate_h12.fillna(0)* vmt_h12 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h12,_nox_rate_h12.fillna(0) * vmt_h12 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h12,_vocs_rate_h12.fillna(0) * vmt_h12 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h13,"links.auto_time_h13.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h13.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h13,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h13,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h13,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h13,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h13,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h13,"(links.auto_volume_h13 + links.mtvol_h13 + links.htvol_h13).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h13,_co2_rate_h13.fillna(0) * vmt_h13 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h13,_pm25_rate_h13.fillna(0) * vmt_h13 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h13,_pm10_rate_h13.fillna(0)* vmt_h13 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h13,_nox_rate_h13.fillna(0) * vmt_h13 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h13,_vocs_rate_h13.fillna(0) * vmt_h13 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h14,"links.auto_time_h14.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h14.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h14,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h14,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h14,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h14,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h14,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h14,"(links.auto_volume_h14 + links.mtvol_h14 + links.htvol_h14).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h14,_co2_rate_h14.fillna(0) * vmt_h14 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h14,_pm25_rate_h14.fillna(0) * vmt_h14 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h14,_pm10_rate_h14.fillna(0)* vmt_h14 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h14,_nox_rate_h14.fillna(0) * vmt_h14 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h14,_vocs_rate_h14.fillna(0) * vmt_h14 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h15,"links.auto_time_h15.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h15.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h15,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h15,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h15,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h15,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h15,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h15,"(links.auto_volume_h15 + links.mtvol_h15 + links.htvol_h15).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h15,_co2_rate_h15.fillna(0) * vmt_h15 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h15,_pm25_rate_h15.fillna(0) * vmt_h15 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h15,_pm10_rate_h15.fillna(0)* vmt_h15 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h15,_nox_rate_h15.fillna(0) * vmt_h15 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h15,_vocs_rate_h15.fillna(0) * vmt_h15 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h16,"links.auto_time_h16.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h16.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h16,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h16,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h16,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h16,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h16,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h16,"(links.auto_volume_h16 + links.mtvol_h16 + links.htvol_h16).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h16,_co2_rate_h16.fillna(0) * vmt_h16 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h16,_pm25_rate_h16.fillna(0) * vmt_h16 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h16,_pm10_rate_h16.fillna(0)* vmt_h16 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h16,_nox_rate_h16.fillna(0) * vmt_h16 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h16,_vocs_rate_h16.fillna(0) * vmt_h16 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h17,"links.auto_time_h17.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h17.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h17,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h17,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h17,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h17,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h17,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h17,"(links.auto_volume_h17 + links.mtvol_h17 + links.htvol_h17).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h17,_co2_rate_h17.fillna(0) * vmt_h17 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h17,_pm25_rate_h17.fillna(0) * vmt_h17 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h17,_pm10_rate_h17.fillna(0)* vmt_h17 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h17,_nox_rate_h17.fillna(0) * vmt_h17 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h17,_vocs_rate_h17.fillna(0) * vmt_h17 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h18,"links.auto_time_h18.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h18.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h18,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h18,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h18,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h18,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h18,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h18,"(links.auto_volume_h18 + links.mtvol_h18 + links.htvol_h18).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h18,_co2_rate_h18.fillna(0) * vmt_h18 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h18,_pm25_rate_h18.fillna(0) * vmt_h18 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h18,_pm10_rate_h18.fillna(0)* vmt_h18 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h18,_nox_rate_h18.fillna(0) * vmt_h18 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h18,_vocs_rate_h18.fillna(0) * vmt_h18 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h19,"links.auto_time_h19.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h19.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h19,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h19,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h19,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h19,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h19,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h19,"(links.auto_volume_h19 + links.mtvol_h19 + links.htvol_h19).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h19,_co2_rate_h19.fillna(0) * vmt_h19 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h19,_pm25_rate_h19.fillna(0) * vmt_h19 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h19,_pm10_rate_h19.fillna(0)* vmt_h19 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h19,_nox_rate_h19.fillna(0) * vmt_h19 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h19,_vocs_rate_h19.fillna(0) * vmt_h19 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h20,"links.auto_time_h20.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h20.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h20,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h20,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h20,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h20,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h20,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h20,"(links.auto_volume_h20 + links.mtvol_h20 + links.htvol_h20).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h20,_co2_rate_h20.fillna(0) * vmt_h20 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h20,_pm25_rate_h20.fillna(0) * vmt_h20 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h20,_pm10_rate_h20.fillna(0)* vmt_h20 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h20,_nox_rate_h20.fillna(0) * vmt_h20 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h20,_vocs_rate_h20.fillna(0) * vmt_h20 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h21,"links.auto_time_h21.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h21.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h21,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h21,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h21,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h21,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h21,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h21,"(links.auto_volume_h21 + links.mtvol_h21 + links.htvol_h21).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h21,_co2_rate_h21.fillna(0) * vmt_h21 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h21,_pm25_rate_h21.fillna(0) * vmt_h21 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h21,_pm10_rate_h21.fillna(0)* vmt_h21 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h21,_nox_rate_h21.fillna(0) * vmt_h21 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h21,_vocs_rate_h21.fillna(0) * vmt_h21 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h22,"links.auto_time_h22.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h22.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h22,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h22,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h22,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h22,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h22,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h22,"(links.auto_volume_h22 + links.mtvol_h22 + links.htvol_h22).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h22,_co2_rate_h22.fillna(0) * vmt_h22 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h22,_pm25_rate_h22.fillna(0) * vmt_h22 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h22,_pm10_rate_h22.fillna(0)* vmt_h22 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h22,_nox_rate_h22.fillna(0) * vmt_h22 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h22,_vocs_rate_h22.fillna(0) * vmt_h22 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h23,"links.auto_time_h23.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h23.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h23,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h23,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h23,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h23,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h23,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h23,"(links.auto_volume_h23 + links.mtvol_h23 + links.htvol_h23).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h23,_co2_rate_h23.fillna(0) * vmt_h23 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h23,_pm25_rate_h23.fillna(0) * vmt_h23 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h23,_pm10_rate_h23.fillna(0)* vmt_h23 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h23,_nox_rate_h23.fillna(0) * vmt_h23 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h23,_vocs_rate_h23.fillna(0) * vmt_h23 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,,_speed_h24,"links.auto_time_h24.rdiv(60).fillna(0).mul(_length,axis=0)"
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h24.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_co2_rate_h24,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(CO2_PTYPE)])
+,,_pm25_rate_h24,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM25_PTYPE)])
+,,_pm10_rate_h24,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(PM10_PTYPE)])
+,,_nox_rate_h24,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(NOX_PTYPE)])
+,,_vocs_rate_h24,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(VOCS_PTYPE)])
+,,vmt_h24,"(links.auto_volume_h24 + links.mtvol_h24 + links.htvol_h24).mul(_length, axis=0)"
+,co2 emissions cost,emissions_co2_h24,_co2_rate_h24.fillna(0) * vmt_h24 * GRAMS_TO_METRIC_TONS * CO2_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm25 emissons cost,emissions_pm25_h24,_pm25_rate_h24.fillna(0) * vmt_h24 * GRAMS_TO_METRIC_TONS * PM25_COST *DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,pm10 emissions cost,emissions_pm10_h24,_pm10_rate_h24.fillna(0)* vmt_h24 * GRAMS_TO_METRIC_TONS * PM10_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,nox emissions costs,emissions_nox_h24,_nox_rate_h24.fillna(0) * vmt_h24 * GRAMS_TO_METRIC_TONS * NOX_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,vocs emissions costs,emissions_vocs_h24,_vocs_rate_h24.fillna(0) * vmt_h24 * GRAMS_TO_METRIC_TONS * VOCS_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR
+,co2 emissions cost,emissions_co2,emissions_co2_h1 + emissions_co2_h2 + emissions_co2_h3 + emissions_co2_h4 + emissions_co2_h5 + emissions_co2_h6 + emissions_co2_h7 + emissions_co2_h8 + emissions_co2_h9 + emissions_co2_h10 + emissions_co2_h11 + emissions_co2_h12 + emissions_co2_h13 + emissions_co2_h14 + emissions_co2_h15 + emissions_co2_h16 + emissions_co2_h17 + emissions_co2_h18 + emissions_co2_h19 + emissions_co2_h20 + emissions_co2_h21 + emissions_co2_h22 + emissions_co2_h23 + emissions_co2_h24
+,pm25 emissons cost,emissions_pm25,emissions_pm25_h1 + emissions_pm25_h2 + emissions_pm25_h3 + emissions_pm25_h4 + emissions_pm25_h5 + emissions_pm25_h6 + emissions_pm25_h7 + emissions_pm25_h8 + emissions_pm25_h9 + emissions_pm25_h10 + emissions_pm25_h11 + emissions_pm25_h12 + emissions_pm25_h13 + emissions_pm25_h14 + emissions_pm25_h15 + emissions_pm25_h16 + emissions_pm25_h17 + emissions_pm25_h18 + emissions_pm25_h19 + emissions_pm25_h20 + emissions_pm25_h21 + emissions_pm25_h22 + emissions_pm25_h23 + emissions_pm25_h24
+,pm10 emissions cost,emissions_pm10,emissions_pm10_h1 + emissions_pm10_h2 + emissions_pm10_h3 + emissions_pm10_h4 + emissions_pm10_h5 + emissions_pm10_h6 + emissions_pm10_h7 + emissions_pm10_h8 + emissions_pm10_h9 + emissions_pm10_h10 + emissions_pm10_h11 + emissions_pm10_h12 + emissions_pm10_h13 + emissions_pm10_h14 + emissions_pm10_h15 + emissions_pm10_h16 + emissions_pm10_h17 + emissions_pm10_h18 + emissions_pm10_h19 + emissions_pm10_h20 + emissions_pm10_h21 + emissions_pm10_h22 + emissions_pm10_h23 + emissions_pm10_h24
+,nox emissions costs,emissions_nox,emissions_nox_h1 + emissions_nox_h2 + emissions_nox_h3 + emissions_nox_h4 + emissions_nox_h5 + emissions_nox_h6 + emissions_nox_h7 + emissions_nox_h8 + emissions_nox_h9 + emissions_nox_h10 + emissions_nox_h11 + emissions_nox_h12 + emissions_nox_h13 + emissions_nox_h14 + emissions_nox_h15 + emissions_nox_h16 + emissions_nox_h17 + emissions_nox_h18 + emissions_nox_h19 + emissions_nox_h20 + emissions_nox_h21 + emissions_nox_h22 + emissions_nox_h23 + emissions_nox_h24
+,vocs emissions costs,emissions_vocs,emissions_vocs_h1 + emissions_vocs_h2 + emissions_vocs_h3 + emissions_vocs_h4 + emissions_vocs_h5 + emissions_vocs_h6 + emissions_vocs_h7 + emissions_vocs_h8 + emissions_vocs_h9 + emissions_vocs_h10 + emissions_vocs_h11 + emissions_vocs_h12 + emissions_vocs_h13 + emissions_vocs_h14 + emissions_vocs_h15 + emissions_vocs_h16 + emissions_vocs_h17 + emissions_vocs_h18 + emissions_vocs_h19 + emissions_vocs_h20 + emissions_vocs_h21 + emissions_vocs_h22 + emissions_vocs_h23 + emissions_vocs_h24
 *,emissions cost benefit,emissions_cost_benefit,(emissions_co2 + emissions_pm25 + emissions_pm10 + emissions_nox + emissions_vocs) * -1
 *,emissions cost benefit in Study Area,emissions_cost_benefit_study_area,emissions_cost_benefit * _study_area
 #vehicle operating costs - fuel,,,
-,million BTUs per mile,_fuelconsump_rate,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
-,,auto_fuel_cost,((_auto_volume_daily * _length * _fuelconsump_rate.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
-,,truck_fuel_cost,((_truck_volume_daily * _length * _fuelconsump_rate.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h1.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h1,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h1,"(links.auto_volume_h1).mul(_length, axis=0)"
+,,vmt_truck_h1,"(links.mtvol_h1 + links.htvol_h1).mul(_length, axis=0)"
+,,auto_fuel_cost_h1,((vmt_auto_h1 * _fuelconsump_rate_h1.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h1,((vmt_truck_h1 * _fuelconsump_rate_h1.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h2.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h2,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h2,"(links.auto_volume_h2).mul(_length, axis=0)"
+,,vmt_truck_h2,"(links.mtvol_h2 + links.htvol_h2).mul(_length, axis=0)"
+,,auto_fuel_cost_h2,((vmt_auto_h2 * _fuelconsump_rate_h2.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h2,((vmt_truck_h2 * _fuelconsump_rate_h2.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h3.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h3,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h3,"(links.auto_volume_h3).mul(_length, axis=0)"
+,,vmt_truck_h3,"(links.mtvol_h3 + links.htvol_h3).mul(_length, axis=0)"
+,,auto_fuel_cost_h3,((vmt_auto_h3 * _fuelconsump_rate_h3.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h3,((vmt_truck_h3 * _fuelconsump_rate_h3.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h4.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h4,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h4,"(links.auto_volume_h4).mul(_length, axis=0)"
+,,vmt_truck_h4,"(links.mtvol_h4 + links.htvol_h4).mul(_length, axis=0)"
+,,auto_fuel_cost_h4,((vmt_auto_h4 * _fuelconsump_rate_h4.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h4,((vmt_truck_h4 * _fuelconsump_rate_h4.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h5.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h5,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h5,"(links.auto_volume_h5).mul(_length, axis=0)"
+,,vmt_truck_h5,"(links.mtvol_h5 + links.htvol_h5).mul(_length, axis=0)"
+,,auto_fuel_cost_h5,((vmt_auto_h5 * _fuelconsump_rate_h5.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h5,((vmt_truck_h5 * _fuelconsump_rate_h5.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h6.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h6,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h6,"(links.auto_volume_h6).mul(_length, axis=0)"
+,,vmt_truck_h6,"(links.mtvol_h6 + links.htvol_h6).mul(_length, axis=0)"
+,,auto_fuel_cost_h6,((vmt_auto_h6 * _fuelconsump_rate_h6.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h6,((vmt_truck_h6 * _fuelconsump_rate_h6.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h7.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h7,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h7,"(links.auto_volume_h7).mul(_length, axis=0)"
+,,vmt_truck_h7,"(links.mtvol_h7 + links.htvol_h7).mul(_length, axis=0)"
+,,auto_fuel_cost_h7,((vmt_auto_h7 * _fuelconsump_rate_h7.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h7,((vmt_truck_h7 * _fuelconsump_rate_h7.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h8.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h8,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h8,"(links.auto_volume_h8).mul(_length, axis=0)"
+,,vmt_truck_h8,"(links.mtvol_h8 + links.htvol_h8).mul(_length, axis=0)"
+,,auto_fuel_cost_h8,((vmt_auto_h8 * _fuelconsump_rate_h8.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h8,((vmt_truck_h8 * _fuelconsump_rate_h8.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h9.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h9,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h9,"(links.auto_volume_h9).mul(_length, axis=0)"
+,,vmt_truck_h9,"(links.mtvol_h9 + links.htvol_h9).mul(_length, axis=0)"
+,,auto_fuel_cost_h9,((vmt_auto_h9 * _fuelconsump_rate_h9.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h9,((vmt_truck_h9 * _fuelconsump_rate_h9.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h10.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h10,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h10,"(links.auto_volume_h10).mul(_length, axis=0)"
+,,vmt_truck_h10,"(links.mtvol_h10 + links.htvol_h10).mul(_length, axis=0)"
+,,auto_fuel_cost_h10,((vmt_auto_h10 * _fuelconsump_rate_h10.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h10,((vmt_truck_h10 * _fuelconsump_rate_h10.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h11.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h11,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h11,"(links.auto_volume_h11).mul(_length, axis=0)"
+,,vmt_truck_h11,"(links.mtvol_h11 + links.htvol_h11).mul(_length, axis=0)"
+,,auto_fuel_cost_h11,((vmt_auto_h11 * _fuelconsump_rate_h11.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h11,((vmt_truck_h11 * _fuelconsump_rate_h11.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h12.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h12,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h12,"(links.auto_volume_h12).mul(_length, axis=0)"
+,,vmt_truck_h12,"(links.mtvol_h12 + links.htvol_h12).mul(_length, axis=0)"
+,,auto_fuel_cost_h12,((vmt_auto_h12 * _fuelconsump_rate_h12.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h12,((vmt_truck_h12 * _fuelconsump_rate_h12.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h13.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h13,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h13,"(links.auto_volume_h13).mul(_length, axis=0)"
+,,vmt_truck_h13,"(links.mtvol_h13 + links.htvol_h13).mul(_length, axis=0)"
+,,auto_fuel_cost_h13,((vmt_auto_h13 * _fuelconsump_rate_h13.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h13,((vmt_truck_h13 * _fuelconsump_rate_h13.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h14.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h14,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h14,"(links.auto_volume_h14).mul(_length, axis=0)"
+,,vmt_truck_h14,"(links.mtvol_h14 + links.htvol_h14).mul(_length, axis=0)"
+,,auto_fuel_cost_h14,((vmt_auto_h14 * _fuelconsump_rate_h14.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h14,((vmt_truck_h14 * _fuelconsump_rate_h14.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h15.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h15,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h15,"(links.auto_volume_h15).mul(_length, axis=0)"
+,,vmt_truck_h15,"(links.mtvol_h15 + links.htvol_h15).mul(_length, axis=0)"
+,,auto_fuel_cost_h15,((vmt_auto_h15 * _fuelconsump_rate_h15.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h15,((vmt_truck_h15 * _fuelconsump_rate_h15.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h16.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h16,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h16,"(links.auto_volume_h16).mul(_length, axis=0)"
+,,vmt_truck_h16,"(links.mtvol_h16 + links.htvol_h16).mul(_length, axis=0)"
+,,auto_fuel_cost_h16,((vmt_auto_h16 * _fuelconsump_rate_h16.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h16,((vmt_truck_h16 * _fuelconsump_rate_h16.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h17.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h17,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h17,"(links.auto_volume_h17).mul(_length, axis=0)"
+,,vmt_truck_h17,"(links.mtvol_h17 + links.htvol_h17).mul(_length, axis=0)"
+,,auto_fuel_cost_h17,((vmt_auto_h17 * _fuelconsump_rate_h17.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h17,((vmt_truck_h17 * _fuelconsump_rate_h17.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h18.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h18,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h18,"(links.auto_volume_h18).mul(_length, axis=0)"
+,,vmt_truck_h18,"(links.mtvol_h18 + links.htvol_h18).mul(_length, axis=0)"
+,,auto_fuel_cost_h18,((vmt_auto_h18 * _fuelconsump_rate_h18.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h18,((vmt_truck_h18 * _fuelconsump_rate_h18.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h19.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h19,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h19,"(links.auto_volume_h19).mul(_length, axis=0)"
+,,vmt_truck_h19,"(links.mtvol_h19 + links.htvol_h19).mul(_length, axis=0)"
+,,auto_fuel_cost_h19,((vmt_auto_h19 * _fuelconsump_rate_h19.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h19,((vmt_truck_h19 * _fuelconsump_rate_h19.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h20.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h20,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h20,"(links.auto_volume_h20).mul(_length, axis=0)"
+,,vmt_truck_h20,"(links.mtvol_h20 + links.htvol_h20).mul(_length, axis=0)"
+,,auto_fuel_cost_h20,((vmt_auto_h20 * _fuelconsump_rate_h20.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h20,((vmt_truck_h20 * _fuelconsump_rate_h20.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h21.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h21,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h21,"(links.auto_volume_h21).mul(_length, axis=0)"
+,,vmt_truck_h21,"(links.mtvol_h21 + links.htvol_h21).mul(_length, axis=0)"
+,,auto_fuel_cost_h21,((vmt_auto_h21 * _fuelconsump_rate_h21.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h21,((vmt_truck_h21 * _fuelconsump_rate_h21.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h22.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h22,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h22,"(links.auto_volume_h22).mul(_length, axis=0)"
+,,vmt_truck_h22,"(links.mtvol_h22 + links.htvol_h22).mul(_length, axis=0)"
+,,auto_fuel_cost_h22,((vmt_auto_h22 * _fuelconsump_rate_h22.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h22,((vmt_truck_h22 * _fuelconsump_rate_h22.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h23.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h23,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h23,"(links.auto_volume_h23).mul(_length, axis=0)"
+,,vmt_truck_h23,"(links.mtvol_h23 + links.htvol_h23).mul(_length, axis=0)"
+,,auto_fuel_cost_h23,((vmt_auto_h23 * _fuelconsump_rate_h23.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h23,((vmt_truck_h23 * _fuelconsump_rate_h23.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h24.clip(lower=3, upper=65).round().astype(int).astype(str)"
+,,_fuelconsump_rate_h24,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
+,,vmt_auto_h24,"(links.auto_volume_h24).mul(_length, axis=0)"
+,,vmt_truck_h24,"(links.mtvol_h24 + links.htvol_h24).mul(_length, axis=0)"
+,,auto_fuel_cost_h24,((vmt_auto_h24 * _fuelconsump_rate_h24.fillna(0)) * 1000000 / GALLON_TO_BTU) * GAS_COST
+,,truck_fuel_cost_h24,((vmt_truck_h24 * _fuelconsump_rate_h24.fillna(0)) * 1000000 / GALLON_TO_BTU) * TRUCK_GAS_COST
+,,auto_fuel_cost,auto_fuel_cost_h1 + auto_fuel_cost_h2 + auto_fuel_cost_h3 + auto_fuel_cost_h4 + auto_fuel_cost_h5 + auto_fuel_cost_h6 + auto_fuel_cost_h7 + auto_fuel_cost_h8 + auto_fuel_cost_h9 + auto_fuel_cost_h10 + auto_fuel_cost_h11 + auto_fuel_cost_h12 + auto_fuel_cost_h13 + auto_fuel_cost_h14 + auto_fuel_cost_h15 + auto_fuel_cost_h16 + auto_fuel_cost_h17 + auto_fuel_cost_h18 + auto_fuel_cost_h19 + auto_fuel_cost_h20 + auto_fuel_cost_h21 + auto_fuel_cost_h22 + auto_fuel_cost_h23 + auto_fuel_cost_h24
+,,truck_fuel_cost,truck_fuel_cost_h1 + truck_fuel_cost_h2 + truck_fuel_cost_h3 + truck_fuel_cost_h4 + truck_fuel_cost_h5 + truck_fuel_cost_h6 + truck_fuel_cost_h7 + truck_fuel_cost_h8 + truck_fuel_cost_h9 + truck_fuel_cost_h10 + truck_fuel_cost_h11 + truck_fuel_cost_h12 + truck_fuel_cost_h13 + truck_fuel_cost_h14 + truck_fuel_cost_h15 + truck_fuel_cost_h16 + truck_fuel_cost_h17 + truck_fuel_cost_h18 + truck_fuel_cost_h19 + truck_fuel_cost_h20 + truck_fuel_cost_h21 + truck_fuel_cost_h22 + truck_fuel_cost_h23 + truck_fuel_cost_h24
 ,fuel auto operating cost,fuel_cost,((auto_fuel_cost + truck_fuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
 #vehicle operating costs - non-fuel,,,
 ,,auto_nonfuel_cost,_auto_volume_daily * _length * CAR_COST_PER_MILE
