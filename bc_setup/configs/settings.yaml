@@ -11,6 +11,24 @@ chunk_size: 40000
 globals:
   DISCOUNT_RATE: 1.0
   ANNUALIZATION_FACTOR: 326 #Orange Line New Starts fct.
+  #value-of-time ($/hour; currently all equal to 2010$ in Kate) for travel time benefit calculations
+  VOT_HBC: 11.07
+  VOT_HBO: 12.48
+  VOT_HBR: 12.48
+  VOT_HBS: 12.48
+  VOT_HBW: 12.29
+  VOT_NHBNW: 12.05
+  VOT_NHBW: 12.32
+  VOT_SCH: 12.48
+  VOT_MEDTRK: 28.20
+  VOT_HVYTRK: 30.72
+  VOT_DRIVE_TRANSIT: 12.48
+  VOT_WALK_TRANSIT: 12.48
+  #value-of-time ($/hour; currently all equal to 2010$ in Kate) for toll travel time benefit calculations
+  VOT_TOLL_PK: 19.27
+  VOT_TOLL_OP: 12.80
+  VOT_TOLL_MEDTRK: 28.20
+  VOT_TOLL_HVYTRK: 30.72
 
 models:
   - aggregate_demographics_processor
@@ -21,7 +39,7 @@ models:
   - write_data_dictionary
   - write_tables
 
-#resume_after: aggregate_zone_benefits
+# #resume_after: aggregate_zone_benefits
 
 
 output_tables:

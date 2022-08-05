@@ -25,7 +25,8 @@ Silos,Description,Target,Expression
 ,,_divhwy,"pd.Series(links.divhwy_h1, dtype='bool')"
 ,,_signal,"pd.Series(links.signal_h1, dtype='bool')"
 ,,_stop,"pd.Series(links.stop_h1, dtype='bool')"
-,,_study_area,links.study_area_h1
+,,_study_area_1,(links.study_area_h1==1).astype(int)
+,,_study_area_2,(links.study_area_h1==2).astype(int)
 # calculations,,,
 ,HSM - Freeway,_hsm_fwy,(_freeway==1) | (_ramp==1)
 ,HSM - Rural Multi Lane Highways,_hsm_rural_XL,(((_urbrur==0) & (_arterial==1)) | ((_urbrur==0) & (_collector==1))) & (_num_lanes>1)
@@ -94,11 +95,15 @@ Silos,Description,Target,Expression
 *,,f_crashes_fwy,_nf_fwy*CfwyF
 *,,i_crashes_fwy,_ni_fwy*CfwyI
 *,,p_crashes_fwy,_npdo_fwy*CfwyP
-*,,f_crashes_fwy_study_area,f_crashes_fwy * _study_area
-*,,i_crashes_fwy_study_area,i_crashes_fwy * _study_area
-*,,p_crashes_fwy_study_area,p_crashes_fwy * _study_area
+*,,f_crashes_fwy_study_area_1,f_crashes_fwy * _study_area_1
+*,,i_crashes_fwy_study_area_1,i_crashes_fwy * _study_area_1
+*,,p_crashes_fwy_study_area_1,p_crashes_fwy * _study_area_1
+*,,f_crashes_fwy_study_area_2,f_crashes_fwy * _study_area_2
+*,,i_crashes_fwy_study_area_2,i_crashes_fwy * _study_area_2
+*,,p_crashes_fwy_study_area_2,p_crashes_fwy * _study_area_2
 *,Final Total Freeway Crashes,_ntot_fwy,f_crashes_fwy+i_crashes_fwy+p_crashes_fwy
-*,Final Total Freeway Crashes in the study area,_ntot_fwy_study_area,_ntot_fwy * _study_area
+*,Final Total Freeway Crashes in the Study Area 1,_ntot_fwy_study_area_1,_ntot_fwy * _study_area_1
+*,Final Total Freeway Crashes in the Study Area 2,_ntot_fwy_study_area_2,_ntot_fwy * _study_area_2
 # Rural X Lane Highways,,,
 ,,_ntot_rxl,"np.where((_hsm_rural_XL==1) & (_divhwy==1),CrxlD*(np.exp(-9.025 + 1.049*np.log(_adt) + np.log(_length))),0)"
 ,,_ntot_rxl,"np.where((_hsm_rural_XL==1) & (_divhwy==0),CrxlU*(np.exp(-9.653 + 1.176*np.log(_adt) + np.log(_length))),_ntot_rxl)"
@@ -166,13 +171,17 @@ Silos,Description,Target,Expression
 ,,_np_rxl_x,_ntot_rxl_x-_nfi_rxl_x
 ,,_ntot_rxl_x,_nf_rxl_x+_ni_rxl_x+_np_rxl_x
 *,Total Rural X Lane RS+Intrsn Crashes,_tot_crashes_rxl,_ntot_rxl+_ntot_rxl_x
-*,Total Rural X Lane RS+Intrsn Crashes in Study Area,_tot_crashes_rxl_study_area,_tot_crashes_rxl * _study_area
+*,Total Rural X Lane RS+Intrsn Crashes in Study Area 1,_tot_crashes_rxl_study_area_1,_tot_crashes_rxl * _study_area_1
+*,Total Rural X Lane RS+Intrsn Crashes in Study Area 2,_tot_crashes_rxl_study_area_2,_tot_crashes_rxl * _study_area_2
 *,,f_crashes_rxl,_nf_rxl+_nf_rxl_x
 *,,p_crashes_rxl,_npdo_rxl+_np_rxl_x
 *,,i_crashes_rxl,_ni_rxl+_ni_rxl_x
-*,,f_crashes_rxl_study_area,f_crashes_rxl * _study_area
-*,,p_crashes_rxl_study_area,p_crashes_rxl * _study_area
-*,,i_crashes_rxl_study_area,i_crashes_rxl * _study_area
+*,,f_crashes_rxl_study_area_1,f_crashes_rxl * _study_area_1
+*,,p_crashes_rxl_study_area_1,p_crashes_rxl * _study_area_1
+*,,i_crashes_rxl_study_area_1,i_crashes_rxl * _study_area_1
+*,,f_crashes_rxl_study_area_2,f_crashes_rxl * _study_area_2
+*,,p_crashes_rxl_study_area_2,p_crashes_rxl * _study_area_2
+*,,i_crashes_rxl_study_area_2,i_crashes_rxl * _study_area_2
 # Rural 2 Lane Highways,,,
 ,Rural two lane baseline crashes,_ntot_r2l,"np.where((_hsm_rural_2L==1),(_adt*_length*365*np.power(10.0,-6.0)*np.exp(-0.312)),0)"
 ,,_cmfra,"np.where((_hsm_rural_2L==1),(1.05 + 0.000281*(_adt - 400)),0)"
@@ -220,13 +229,17 @@ Silos,Description,Target,Expression
 ,,_ni_r2l_x,_ntot_r2l_x-_nf_r2l_x-_np_r2l_x
 ,,_ntot_r2l_x,_nf_r2l_x+_ni_r2l_x+_np_r2l_x
 *,Total Rural X Lane RS+Intrsn Crashes,_tot_crashes_r2l,_ntot_r2l+_ntot_r2l_x
-*,Total Rural X Lane RS+Intrsn Crashes in Study Area,_tot_crashes_r2l_study_area,_tot_crashes_r2l * _study_area
+*,Total Rural X Lane RS+Intrsn Crashes in Study Area 1,_tot_crashes_r2l_study_area_1,_tot_crashes_r2l * _study_area_1
+*,Total Rural X Lane RS+Intrsn Crashes in Study Area 2,_tot_crashes_r2l_study_area_2,_tot_crashes_r2l * _study_area_2
 *,,f_crashes_r2l,_nf_r2l+_nf_r2l_x
 *,,p_crashes_r2l,_npdo_r2l+_np_r2l_x
 *,,i_crashes_r2l,_ni_r2l+_ni_r2l_x
-*,,f_crashes_r2l_study_area,f_crashes_r2l * _study_area
-*,,p_crashes_r2l_study_area,p_crashes_r2l * _study_area
-*,,i_crashes_r2l_study_area,i_crashes_r2l * _study_area
+*,,f_crashes_r2l_study_area_1,f_crashes_r2l * _study_area_1
+*,,p_crashes_r2l_study_area_1,p_crashes_r2l * _study_area_1
+*,,i_crashes_r2l_study_area_1,i_crashes_r2l * _study_area_1
+*,,f_crashes_r2l_study_area_2,f_crashes_r2l * _study_area_2
+*,,p_crashes_r2l_study_area_2,p_crashes_r2l * _study_area_2
+*,,i_crashes_r2l_study_area_2,i_crashes_r2l * _study_area_2
 # Urban/Suburban Arterials,,,
 ,U2U - 2 Lane Undivided Arterials,_u2u,(_hsm_urb_Art==1) & (_divhwy==0) & (_num_lanes_original==1)
 ,U3T - 3 lane arterials with center turning,_u3t,(_hsm_urb_Art==1) & (_num_lanes_original==1.5)
@@ -436,22 +449,31 @@ Silos,Description,Target,Expression
 *,,f_crashes_urb,_nf_urb+_nf_urb_x
 *,,p_crashes_urb,_npdo_urb+_np_urb_x
 *,,i_crashes_urb,_ni_urb+_ni_urb_x
-*,Total Urban Arterial RS+Intrsn Crashes in Study Area,_tot_crashes_urb_study_area,(_ntot_urb+_ntot_urb_x) * _study_area
-*,,f_crashes_urb_study_area,(_nf_urb+_nf_urb_x) * _study_area
-*,,p_crashes_urb_study_area,(_npdo_urb+_np_urb_x) * _study_area
-*,,i_crashes_urb_study_area,(_ni_urb+_ni_urb_x) * _study_area
+*,Total Urban Arterial RS+Intrsn Crashes in Study Area 1,_tot_crashes_urb_study_area_1,(_ntot_urb+_ntot_urb_x) * _study_area_1
+*,,f_crashes_urb_study_area_1,(_nf_urb+_nf_urb_x) * _study_area_1
+*,,p_crashes_urb_study_area_1,(_npdo_urb+_np_urb_x) * _study_area_1
+*,,i_crashes_urb_study_area_1,(_ni_urb+_ni_urb_x) * _study_area_1
+*,Total Urban Arterial RS+Intrsn Crashes in Study Area 2,_tot_crashes_urb_study_area_2,(_ntot_urb+_ntot_urb_x) * _study_area_2
+*,,f_crashes_urb_study_area_2,(_nf_urb+_nf_urb_x) * _study_area_2
+*,,p_crashes_urb_study_area_2,(_npdo_urb+_np_urb_x) * _study_area_2
+*,,i_crashes_urb_study_area_2,(_ni_urb+_ni_urb_x) * _study_area_2
 # safety costs,,,
 *, total annual  PDO crashes,total_pdo_crashes,p_crashes_fwy+p_crashes_rxl+p_crashes_r2l+p_crashes_urb
 *, total annual injury crashes,total_inj_crashes,i_crashes_fwy+i_crashes_rxl+i_crashes_r2l+i_crashes_urb
 *, total annual fatal crashes,total_fat_crashes,f_crashes_fwy+f_crashes_rxl+f_crashes_r2l+f_crashes_urb
 *,roadway safety cost benefit,safety_cost_benefit,((total_pdo_crashes * CRASH_COST_PDO + total_inj_crashes * CRASH_COST_INJURY + total_fat_crashes * CRASH_COST_FATAL) * DISCOUNT_RATE) * -1
-*, total annual  PDO crashes in Study Area,total_pdo_crashes_study_area,total_pdo_crashes * _study_area
-*, total annual injury crashes in Study Area,total_inj_crashes_study_area,total_inj_crashes * _study_area
-*, total annual fatal crashes in Study Area,total_fat_crashes_study_area,total_fat_crashes * _study_area
-*,roadway safety cost benefit in Study Area,safety_cost_benefit_study_area,safety_cost_benefit * _study_area
+*, total annual  PDO crashes in Study Area 1,total_pdo_crashes_study_area_1,total_pdo_crashes * _study_area_1
+*, total annual injury crashes in Study Area 1,total_inj_crashes_study_area_1,total_inj_crashes * _study_area_1
+*, total annual fatal crashes in Study Area 1,total_fat_crashes_study_area_1,total_fat_crashes * _study_area_1
+*,roadway safety cost benefit in Study Area 1,safety_cost_benefit_study_area_1,safety_cost_benefit * _study_area_1
+*, total annual  PDO crashes in Study Area 2,total_pdo_crashes_study_area_2,total_pdo_crashes * _study_area_2
+*, total annual injury crashes in Study Area 2,total_inj_crashes_study_area_2,total_inj_crashes * _study_area_2
+*, total annual fatal crashes in Study Area 2,total_fat_crashes_study_area_2,total_fat_crashes * _study_area_2
+*,roadway safety cost benefit in Study Area 2,safety_cost_benefit_study_area_2,safety_cost_benefit * _study_area_2
 #surface water,,,
 *,surface water pollution cost benefit,surface_water_pollution_cost_benefit,(_waterf * vmt_total * WATER_POLLUTION_COST * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
-*,surface water pollution cost benefit in Study Area,surface_water_pollution_cost_benefit_study_area,surface_water_pollution_cost_benefit * _study_area
+*,surface water pollution cost benefit in Study Area 1,surface_water_pollution_cost_benefit_study_area_1,surface_water_pollution_cost_benefit * _study_area_1
+*,surface water pollution cost benefit in Study Area 2,surface_water_pollution_cost_benefit_study_area_2,surface_water_pollution_cost_benefit * _study_area_2
 #noise,,,
 , Auto freeway noise cost,_auto_noise_cost_fwy,(_freeway | _ramp ) * _auto_volume_daily * _length * (NOISE_COST_AUTO_FREEWAY /1000)
 , Med trucks freeway noise cost,_mtrucks_noise_cost_fwy,(_freeway | _ramp )  *_med_truck_volume_daily * _length *(NOISE_COST_MEDTRUCKS_FREEWAY/1000)
@@ -466,7 +488,8 @@ Silos,Description,Target,Expression
 , ,_arterial_noise_cost,_auto_noise_cost_art + _mtrucks_noise_cost_art + _htrucks_noise_cost_art
 , ,_collector_noise_cost,_auto_noise_cost_col + _mtrucks_noise_cost_col + _htrucks_noise_cost_col
 *,noise pollution cost benefit,noise_pollution_cost_benefit,(_noisef * (_freeway_noise_cost + _arterial_noise_cost + _collector_noise_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
-*,noise pollution cost benefit in Study Area,noise_pollution_cost_benefit_study_area,noise_pollution_cost_benefit * _study_area
+*,noise pollution cost benefit in Study Area 1,noise_pollution_cost_benefit_study_area_1,noise_pollution_cost_benefit * _study_area_1
+*,noise pollution cost benefit in Study Area 2,noise_pollution_cost_benefit_study_area_2,noise_pollution_cost_benefit * _study_area_2
 #emissions lookup table,,,
 ,set lookup index on table,_EMISSIONS_TABLE,EMISSIONS.set_index(EMISSIONS['Ltype'] + '_' +  EMISSIONS['Speed'].astype(str))
 ,,_ltype,_freeway * 1 + _arterial * 2 + _collector * 3 + _ramp * 4
@@ -792,7 +815,8 @@ Silos,Description,Target,Expression
 ,nox emissions costs,emissions_nox,emissions_nox_h1 + emissions_nox_h2 + emissions_nox_h3 + emissions_nox_h4 + emissions_nox_h5 + emissions_nox_h6 + emissions_nox_h7 + emissions_nox_h8 + emissions_nox_h9 + emissions_nox_h10 + emissions_nox_h11 + emissions_nox_h12 + emissions_nox_h13 + emissions_nox_h14 + emissions_nox_h15 + emissions_nox_h16 + emissions_nox_h17 + emissions_nox_h18 + emissions_nox_h19 + emissions_nox_h20 + emissions_nox_h21 + emissions_nox_h22 + emissions_nox_h23 + emissions_nox_h24
 ,vocs emissions costs,emissions_vocs,emissions_vocs_h1 + emissions_vocs_h2 + emissions_vocs_h3 + emissions_vocs_h4 + emissions_vocs_h5 + emissions_vocs_h6 + emissions_vocs_h7 + emissions_vocs_h8 + emissions_vocs_h9 + emissions_vocs_h10 + emissions_vocs_h11 + emissions_vocs_h12 + emissions_vocs_h13 + emissions_vocs_h14 + emissions_vocs_h15 + emissions_vocs_h16 + emissions_vocs_h17 + emissions_vocs_h18 + emissions_vocs_h19 + emissions_vocs_h20 + emissions_vocs_h21 + emissions_vocs_h22 + emissions_vocs_h23 + emissions_vocs_h24
 *,emissions cost benefit,emissions_cost_benefit,(emissions_co2 + emissions_pm25 + emissions_pm10 + emissions_nox + emissions_vocs) * -1
-*,emissions cost benefit in Study Area,emissions_cost_benefit_study_area,emissions_cost_benefit * _study_area
+*,emissions cost benefit in Study Area 1,emissions_cost_benefit_study_area_1,emissions_cost_benefit * _study_area_1
+*,emissions cost benefit in Study Area 2,emissions_cost_benefit_study_area_2,emissions_cost_benefit * _study_area_2
 #vehicle operating costs - fuel,,,
 ,,_emissions_key,"_ltype.astype(str) + '_' + _speed_h1.clip(lower=3, upper=65).round().astype(int).astype(str)"
 ,,_fuelconsump_rate_h1,_emissions_key.map(_EMISSIONS_TABLE['pollutantID_' + str(FUEL_CONSUMPTION_PTYPE)])
@@ -948,10 +972,29 @@ Silos,Description,Target,Expression
 ,truck operating cost benefit,truck_cost,((truck_fuel_cost + truck_nonfuel_cost) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
 ,auto fuel and other costs,auto_cost,((_auto_volume_daily * _length * CAR_ALLCOST_PER_MILE) * DISCOUNT_RATE * ANNUALIZATION_FACTOR) * -1
 *,vehicle operating cost benefit,veh_operating_cost_benefit,auto_cost + truck_cost
-*,vehicle operating cost benefit in Study Area,veh_operating_cost_benefit_study_area,veh_operating_cost_benefit * _study_area
+*,vehicle operating cost benefit in Study Area 1,veh_operating_cost_benefit_study_area_1,veh_operating_cost_benefit * _study_area_1
+*,vehicle operating cost benefit in Study Area 2,veh_operating_cost_benefit_study_area_2,veh_operating_cost_benefit * _study_area_2
 *,auto vmt for reporting,vmt_auto,_auto_volume_daily * _length
-*,auto vmt for reporting in Study Area,vmt_auto_study_area,vmt_auto * _study_area
+*,auto vmt for reporting in Study Area 1,vmt_auto_study_area_1,vmt_auto * _study_area_1
+*,auto vmt for reporting in Study Area 2,vmt_auto_study_area_2,vmt_auto * _study_area_2
 *,truck vmt for reporting,vmt_truck,_truck_volume_daily * _length
-*,truck vmt for reporting in Study Area,vmt_truck_study_area,vmt_truck * _study_area
+*,truck vmt for reporting in Study Area 1,vmt_truck_study_area_1,vmt_truck * _study_area_1
+*,truck vmt for reporting in Study Area 2,vmt_truck_study_area_2,vmt_truck * _study_area_2
 *,vmt for reporting,vmt_total,vmt_total
-*,vmt for reporting in Study Area,vmt_total_study_area,vmt_total * _study_area
+*,vmt for reporting in Study Area 1,vmt_total_study_area_1,vmt_total * _study_area_1
+*,vmt for reporting in Study Area 2,vmt_total_study_area_2,vmt_total * _study_area_2
+#reliability calculations,,,
+,average parameter,_AVERAGE_PARAMETER,-1
+,,_VOT_AUTO,(VOT_HBC+VOT_HBO+VOT_HBR+VOT_HBS+VOT_HBW+VOT_NHBNW+VOT_NHBW+VOT_SCH)/8
+,,auto_reliability,"_AVERAGE_PARAMETER * ((links[links.columns[links.columns.str.contains('relvar')]].transform(np.sqrt).multiply(links[links.columns[links.columns.str.contains('auto_volume')]].rename(columns={'auto_volume_h'+str(i):'relvar_h'+str(i) for i in range(1,25)}))).sum(axis=1)) * (_VOT_AUTO/60.0) * DISCOUNT_RATE * ANNUALIZATION_FACTOR"
+,,med_trk_reliability,"_AVERAGE_PARAMETER * ((links[links.columns[links.columns.str.contains('relvar')]].transform(np.sqrt).multiply(links[links.columns[links.columns.str.contains('mtvol')]].rename(columns={'mtvol_h'+str(i):'relvar_h'+str(i) for i in range(1,25)}))).sum(axis=1)) * (VOT_MEDTRK/60.0) * DISCOUNT_RATE * ANNUALIZATION_FACTOR"
+,,hvy_trk_reliability,"_AVERAGE_PARAMETER * ((links[links.columns[links.columns.str.contains('relvar')]].transform(np.sqrt).multiply(links[links.columns[links.columns.str.contains('htvol')]].rename(columns={'htvol_h'+str(i):'relvar_h'+str(i) for i in range(1,25)}))).sum(axis=1)) * (VOT_HVYTRK/60.0) * DISCOUNT_RATE * ANNUALIZATION_FACTOR"
+*,travel time reliability in dollars,vehicle_reliability,auto_reliability+med_trk_reliability+hvy_trk_reliability
+,,auto_reliability_1,auto_reliability * _study_area_1
+,,med_trk_reliability_1,med_trk_reliability * _study_area_1
+,,hvy_trk_reliability_1,hvy_trk_reliability * _study_area_1
+*,travel time reliability in Study Area 1 in dollars,vehicle_reliability_1,vehicle_reliability * _study_area_1
+,,auto_reliability_2,auto_reliability * _study_area_2
+,,med_trk_reliability_2,med_trk_reliability * _study_area_2
+,,hvy_trk_reliability_2,hvy_trk_reliability * _study_area_2
+*,travel time reliability in Study Area 2 in dollars,vehicle_reliability_2,vehicle_reliability * _study_area_2
